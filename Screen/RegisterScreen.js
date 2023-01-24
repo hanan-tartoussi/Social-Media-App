@@ -1,0 +1,202 @@
+import React, {useEffect, useState, useContext} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  KeyboardAvoidingView,
+  Alert,
+} from 'react-native';
+import ButtonForm from '../Components/ButtonForm';
+import InputForm from '../Components/InputForm';
+import {AuthContext} from '../Navigation/AuthProvider';
+
+const RegisterScreen = ({navigation}) => {
+  // const [username, setUsername] = useState('');
+  // const [usernameError, setUsernameError] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [inputBackGcolor, setInputBackGcolor] = useState('#cce6ff');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+
+  const {register} = useContext(AuthContext);
+
+  const onPressRegister = () => {
+    emailOnEndEditing();
+    passwordOnEndEditing();
+    confirmPassword_OnEndEditing();
+  };
+
+  // const usernameOnEndEditing = () => {
+  //   //Can only contain letters, numbers, and these characters: - _ .
+  //   //Username be at least 8 characters long
+  //   var regex = /^(?=.{8,20}$)(?!.*[_.-]{2})[a-z]+[_\.\-]*[a-z]+[0-9]{0,3}$/;
+  //   if (!regex.test(username)) {
+  //     setUsernameError('Invalid.');
+  //   } else {
+  //     setUsernameError('');
+  //   }
+  // };
+
+  const emailOnEndEditing = () => {
+    var regex = /^[\w-\.]+@([\w]+\.)+[\w]{2,4}$/;
+    if (!regex.test(email)) {
+      setEmailError('Invalid email.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const passwordOnEndEditing = () => {
+    var regex =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    if (!regex.test(password)) {
+      setPasswordError(
+        'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
+      );
+      // Alert.alert('Invalid Password', passwordError + ' ', [
+      //   {text: 'OK', onPress: () => console.log('OK Pressed')},
+      // ]);
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const confirmPassword_OnEndEditing = () => {
+    if (confirmPassword !== password) {
+      setConfirmPasswordError('Please make sure your passwords match');
+    } else {
+      setConfirmPasswordError('');
+    }
+  };
+
+  var yourPicture = require('../Images/logo.png');
+
+  return (
+    <KeyboardAvoidingView style={styles.container}>
+      <Image style={styles.image} source={yourPicture} />
+
+      {/* <InputForm
+        inputBackgroundColor={inputBackGcolor}
+        labelValue={username}
+        onChangeText={userusername => setUsername(userusername)}
+        placeholderText="Username"
+        returnKeyType="next"
+        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+        onBlur={() => setInputBackGcolor('#cce6ff')}
+        //onEndEditing={usernameOnEndEditing}
+      />
+
+      <View>
+        <Text style={styles.TextError}>{usernameError}</Text>
+      </View> */}
+
+      <InputForm
+        inputBackgroundColor={inputBackGcolor}
+        labelValue={email}
+        onChangeText={userEmail => setEmail(userEmail)}
+        placeholderText="Email"
+        keyboardType="email-address"
+        returnKeyType="next"
+        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+        onBlur={() => setInputBackGcolor('#cce6ff')}
+        onEndEditing={emailOnEndEditing}
+      />
+
+      <View>
+        <Text style={styles.TextError}>{emailError}</Text>
+      </View>
+
+      <InputForm
+        inputBackgroundColor={inputBackGcolor}
+        labelValue={password}
+        onChangeText={userPassword => {
+          setPassword(userPassword);
+          passwordOnEndEditing();
+        }}
+        placeholderText="Password"
+        secureTextEntry={true}
+        returnKeyType="next"
+        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+        onBlur={() => setInputBackGcolor('#cce6ff')}
+        //onEndEditing={passwordOnEndEditing}
+      />
+
+      <Text style={styles.PassError}>{passwordError}</Text>
+
+      <InputForm
+        inputBackgroundColor={inputBackGcolor}
+        labelValue={confirmPassword}
+        onChangeText={userPassword => setConfirmPassword(userPassword)}
+        placeholderText="Confirm Password"
+        secureTextEntry={true}
+        returnKeyType="done"
+        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+        onBlur={() => setInputBackGcolor('#cce6ff')}
+        onEndEditing={confirmPassword_OnEndEditing}
+      />
+
+      <Text style={styles.TextError}>{confirmPasswordError}</Text>
+
+      {/* <ButtonForm
+        buttonTitle="Register"
+        onPress={() => register(email, password)}
+      /> */}
+
+      <ButtonForm
+        buttonTitle="Sign Up"
+        onPress={() => {
+          register(email, password);
+        }}
+      />
+    </KeyboardAvoidingView>
+  );
+};
+
+export default RegisterScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    marginBottom: 30,
+  },
+  TextError: {
+    paddingBottom: 5,
+    fontWeight: 'bold',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  PassError: {
+    paddingBottom: 5,
+    fontWeight: 'bold',
+    width: '70%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 30,
+  },
+  forgot_button: {
+    color: '#a6a6a6', //'#2e64e5'
+    //marginBottom: 30,
+    //fontSize: 18,
+    fontWeight: '600',
+    fontFamily: 'Lato-Regular',
+  },
+  registerTextStyle: {
+    color: '#a6a6a6',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 14,
+    alignSelf: 'center',
+    padding: 10,
+    marginTop: 10,
+  },
+});
