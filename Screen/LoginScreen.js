@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import {Alert, Switch, TouchableOpacity} from 'react-native';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import ButtonForm from '../Components/ButtonForm';
@@ -13,7 +13,8 @@ const LoginScreen = ({navigation}) => {
   const [inputBackGcolor, setInputBackGcolor] = useState('#cce6ff');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
+  const [loginError, setLoginError] = useState('');
+  const passwordRef = useRef();
   const {user, login} = useContext(AuthContext);
 
   const onPress = () => {
@@ -111,6 +112,10 @@ const LoginScreen = ({navigation}) => {
         autoCorrect={false}
         onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
         onBlur={() => setInputBackGcolor('#cce6ff')}
+        returnKeyType="next"
+        onSubmitEditing={() => {
+          passwordRef.current.focus();
+        }}
         // onEndEditing={emailOnEndEditing}
       />
 
@@ -126,10 +131,11 @@ const LoginScreen = ({navigation}) => {
         secureTextEntry={true}
         onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
         onBlur={() => setInputBackGcolor('#cce6ff')}
+        _ref={passwordRef}
         // onEndEditing={passwordOnEndEditing}
       />
 
-      <Text style={styles.TextPassword}>{passwordError}</Text>
+      <Text style={styles.TextPassword}>{}</Text>
 
       <View
         style={{

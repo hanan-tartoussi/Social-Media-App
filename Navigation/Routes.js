@@ -23,7 +23,7 @@ const Routes = () => {
   if (initializing) {
     return null;
     //when our app is establishing a connection with firebase
-    //within that time we will return null, because its not determining which page it want to display
+    //within that time we will return null, because its not determining which page it want to display.
   }
 
   return (

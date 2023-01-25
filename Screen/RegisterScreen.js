@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import {
   StyleSheet,
   View,
@@ -21,6 +21,8 @@ const RegisterScreen = ({navigation}) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
 
   const {register} = useContext(AuthContext);
 
@@ -57,11 +59,10 @@ const RegisterScreen = ({navigation}) => {
       setPasswordError(
         'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
       );
-      // Alert.alert('Invalid Password', passwordError + ' ', [
-      //   {text: 'OK', onPress: () => console.log('OK Pressed')},
-      // ]);
+      return false;
     } else {
       setPasswordError('');
+      return true;
     }
   };
 
@@ -104,6 +105,10 @@ const RegisterScreen = ({navigation}) => {
         onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
         onBlur={() => setInputBackGcolor('#cce6ff')}
         onEndEditing={emailOnEndEditing}
+        onSubmitEditing={() => {
+          console.log('passwordRef', passwordRef);
+          passwordRef.current.focus();
+        }}
       />
 
       <View>
@@ -120,8 +125,12 @@ const RegisterScreen = ({navigation}) => {
         placeholderText="Password"
         secureTextEntry={true}
         returnKeyType="next"
+        _ref={passwordRef}
         onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
         onBlur={() => setInputBackGcolor('#cce6ff')}
+        onSubmitEditing={() => {
+          confirmPasswordRef.current.focus();
+        }}
         //onEndEditing={passwordOnEndEditing}
       />
 
@@ -134,6 +143,7 @@ const RegisterScreen = ({navigation}) => {
         placeholderText="Confirm Password"
         secureTextEntry={true}
         returnKeyType="done"
+        _ref={confirmPasswordRef}
         onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
         onBlur={() => setInputBackGcolor('#cce6ff')}
         onEndEditing={confirmPassword_OnEndEditing}
@@ -149,7 +159,13 @@ const RegisterScreen = ({navigation}) => {
       <ButtonForm
         buttonTitle="Sign Up"
         onPress={() => {
-          register(email, password);
+          if (passwordOnEndEditing) {
+            register(email, password);
+          } else {
+            Alert.alert('Invalid Password', passwordError + ' ', [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          }
         }}
       />
     </KeyboardAvoidingView>

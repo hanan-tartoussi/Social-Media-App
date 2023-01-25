@@ -5,6 +5,7 @@ const InputForm = ({
   labelValue,
   placeholderText,
   inputBackgroundColor,
+  _ref,
   ...rest
 }) => {
   return (
@@ -16,6 +17,7 @@ const InputForm = ({
         numberOfLines={1}
         placeholder={placeholderText}
         placeholderTextColor="#666"
+        ref={_ref}
         {...rest}
       />
     </View>

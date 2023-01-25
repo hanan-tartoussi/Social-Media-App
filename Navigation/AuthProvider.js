@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 
 export const AuthContext = createContext();
+var AuthError = '';
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
@@ -17,7 +18,8 @@ export const AuthProvider = ({children}) => {
           try {
             await auth().signInWithEmailAndPassword(email, password);
           } catch (e) {
-            console.log(e);
+            AuthError = e.message;
+            console.log(e.message + ' ' + e.code);
           }
         },
         register: async (email, password) => {
