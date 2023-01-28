@@ -9,18 +9,27 @@ const InputForm = ({
   ...rest
 }) => {
   return (
-    <View
-      style={[styles.inputContainer, {backgroundColor: inputBackgroundColor}]}>
-      <TextInput
-        value={labelValue}
-        style={styles.input}
-        numberOfLines={1}
-        placeholder={placeholderText}
-        placeholderTextColor="#666"
-        ref={_ref}
-        {...rest}
-      />
-    </View>
+    <TextInput
+      value={labelValue}
+      style={styles.input}
+      numberOfLines={1}
+      placeholder={placeholderText}
+      placeholderTextColor="#666"
+      ref={_ref}
+      {...rest}
+    />
+    // <View
+    //   style={[styles.inputContainer, {backgroundColor: inputBackgroundColor}]}>
+    //   <TextInput
+    //     value={labelValue}
+    //     style={styles.input}
+    //     numberOfLines={1}
+    //     placeholder={placeholderText}
+    //     placeholderTextColor="#666"
+    //     ref={_ref}
+    //     {...rest}
+    //   />
+    // </View>
   );
 };
 
@@ -36,11 +45,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
+    backgroundColor: '#F6F7FB',
+    height: 58,
+    marginBottom: 20,
     fontSize: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    flex: 1,
-    padding: 10,
+    borderRadius: 10,
+    padding: 12,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+
+    // flex: 1,
   },
 });

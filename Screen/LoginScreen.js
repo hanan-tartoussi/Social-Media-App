@@ -1,7 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import {Alert, Switch, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  Switch,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {StyleSheet, View, Text, Image} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import ButtonForm from '../Components/ButtonForm';
 import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
@@ -96,13 +102,85 @@ const LoginScreen = ({navigation}) => {
     fetchRemember();
   }, [email]);
 
-  var yourPicture = require('../Images/logo.png'); //'../Images/logo.png');
+  var yourPicture = require('../Images/pic.jpg'); //wallpaper.jpg'); //appLogo.png'); // logo.png'); //'../Images/logo.png');
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Image style={styles.image} source={yourPicture} />
 
-      <InputForm
+      <View style={styles.whiteSheet} />
+
+      <SafeAreaView style={styles.form}>
+        <Text style={styles.title}>Login</Text>
+
+        <InputForm
+          inputBackgroundColor={inputBackGcolor}
+          labelValue={email}
+          onChangeText={userEmail => setEmail(userEmail)}
+          placeholderText="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+          onBlur={() => setInputBackGcolor('#cce6ff')}
+          returnKeyType="next"
+          onSubmitEditing={() => {
+            passwordRef.current.focus();
+          }}
+          // onEndEditing={emailOnEndEditing}
+        />
+
+        <InputForm
+          inputBackgroundColor={inputBackGcolor}
+          labelValue={password}
+          onChangeText={userPassword => setPassword(userPassword)}
+          placeholderText="Password"
+          secureTextEntry={true}
+          onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+          onBlur={() => setInputBackGcolor('#cce6ff')}
+          _ref={passwordRef}
+          // onEndEditing={passwordOnEndEditing}
+        />
+
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginRight: 110,
+          }}>
+          <Switch
+            value={rememberMe}
+            onValueChange={value => toggleRememberMe(value)}
+            style={{}}
+          />
+          <Text
+            style={{
+              color: '#003366', //'#262626',
+            }}>
+            Remember Me
+          </Text>
+        </View>
+
+        <ButtonForm
+          buttonTitle="Log In"
+          onPress={() => login(email, password)}
+        />
+
+        <Text
+          style={styles.registerTextStyle}
+          onPress={() => navigation.navigate('Register')}>
+          Don't have an account yet?{' '}
+          <Text
+            style={{
+              color: '#f57c00', //'#262626',
+              textDecorationLine: 'underline',
+              fontWeight: 'bold',
+            }}>
+            Sign Up Here
+          </Text>
+        </Text>
+      </SafeAreaView>
+      {/* <InputForm
         inputBackgroundColor={inputBackGcolor}
         labelValue={email}
         onChangeText={userEmail => setEmail(userEmail)}
@@ -174,8 +252,8 @@ const LoginScreen = ({navigation}) => {
           }}>
           Create Here
         </Text>
-      </Text>
-    </View>
+      </Text> */}
+    </KeyboardAvoidingView>
   );
 };
 
@@ -185,11 +263,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   image: {
-    marginBottom: 40,
+    width: '100%',
+    height: 340,
+    position: 'absolute',
+    top: 0,
+    resizeMode: 'cover',
+    // width: 100,
+    // height: 100,
+    // marginBottom: 40,
+  },
+  whiteSheet: {
+    width: '100%',
+    height: '75%',
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    marginHorizontal: 30,
+    marginTop: 90,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: 'orange',
+    paddingBottom: 24,
+    alignSelf: 'center',
   },
   TextError: {
     paddingBottom: 10,

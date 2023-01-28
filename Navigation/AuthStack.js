@@ -12,19 +12,25 @@ const AuthStack = () => {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{header: () => null}}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
-        options={({navigation}) => ({
-          title: '',
-          headerStyle: {
-            backgroundColor: '#f9fafd',
-            shadowColor: '#f9fafd',
-            elevation: 0,
-          },
-        })}
+        options={{
+          headerShown: false,
+        }}
+
+        // options={({navigation}) => ({
+        //   title: '',
+        //   headerStyle: {
+        //     backgroundColor: '#f9fafd',
+        //     shadowColor: '#f9fafd',
+        //     elevation: 0,
+        //   },
+        // })}
       />
     </Stack.Navigator>
   );
