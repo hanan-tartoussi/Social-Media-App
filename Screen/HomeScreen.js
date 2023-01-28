@@ -14,7 +14,7 @@ state = {
         { id: 4, userImg: require('../Images/user4.png'), name: 'Hanan Tartoussi', date: 'Oct 10,2021', postText: 'Hello!!!', postImg: '' }
     ],
     
-}
+}  
 renderItem = ({ item }) => (<Card cardDetails={item} />)
 
 export default function HomeScreen() {
