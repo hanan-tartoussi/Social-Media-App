@@ -108,78 +108,82 @@ const LoginScreen = ({navigation}) => {
     <KeyboardAvoidingView style={styles.container}>
       <Image style={styles.image} source={yourPicture} />
 
-      <View style={styles.whiteSheet} />
+      <View style={styles.whiteSheet}>
+        <SafeAreaView style={styles.form}>
+          <Text style={styles.title}>Login</Text>
 
-      <SafeAreaView style={styles.form}>
-        <Text style={styles.title}>Login</Text>
+          <View style={{marginBottom: 20}}>
+            <InputForm
+              // inputBackgroundColor={inputBackGcolor}
+              labelValue={email}
+              onChangeText={userEmail => setEmail(userEmail)}
+              placeholderText="Email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              returnKeyType="next"
+              onSubmitEditing={() => {
+                passwordRef.current.focus();
+              }}
+              // onEndEditing={emailOnEndEditing}
+            />
+          </View>
+          <View style={{marginBottom: 20}}>
+            <InputForm
+              //style={{marginBottom: 20}}
+              // inputBackgroundColor={inputBackGcolor}
+              labelValue={password}
+              onChangeText={userPassword => setPassword(userPassword)}
+              placeholderText="Password"
+              secureTextEntry={true}
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              _ref={passwordRef}
+              // onEndEditing={passwordOnEndEditing}
+            />
+          </View>
 
-        <InputForm
-          inputBackgroundColor={inputBackGcolor}
-          labelValue={email}
-          onChangeText={userEmail => setEmail(userEmail)}
-          placeholderText="Email"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-          onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-          onBlur={() => setInputBackGcolor('#cce6ff')}
-          returnKeyType="next"
-          onSubmitEditing={() => {
-            passwordRef.current.focus();
-          }}
-          // onEndEditing={emailOnEndEditing}
-        />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              marginRight: 110,
+            }}>
+            <Switch
+              value={rememberMe}
+              onValueChange={value => toggleRememberMe(value)}
+              style={{}}
+            />
+            <Text
+              style={{
+                color: '#003366', //'#262626',
+              }}>
+              Remember Me
+            </Text>
+          </View>
 
-        <InputForm
-          inputBackgroundColor={inputBackGcolor}
-          labelValue={password}
-          onChangeText={userPassword => setPassword(userPassword)}
-          placeholderText="Password"
-          secureTextEntry={true}
-          onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-          onBlur={() => setInputBackGcolor('#cce6ff')}
-          _ref={passwordRef}
-          // onEndEditing={passwordOnEndEditing}
-        />
-
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            marginRight: 110,
-          }}>
-          <Switch
-            value={rememberMe}
-            onValueChange={value => toggleRememberMe(value)}
-            style={{}}
+          <ButtonForm
+            buttonTitle="Log In"
+            onPress={() => login(email, password)}
           />
-          <Text
-            style={{
-              color: '#003366', //'#262626',
-            }}>
-            Remember Me
-          </Text>
-        </View>
 
-        <ButtonForm
-          buttonTitle="Log In"
-          onPress={() => login(email, password)}
-        />
-
-        <Text
-          style={styles.registerTextStyle}
-          onPress={() => navigation.navigate('Register')}>
-          Don't have an account yet?{' '}
           <Text
-            style={{
-              color: '#f57c00', //'#262626',
-              textDecorationLine: 'underline',
-              fontWeight: 'bold',
-            }}>
-            Sign Up Here
+            style={styles.registerTextStyle}
+            onPress={() => navigation.navigate('Register')}>
+            Don't have an account yet?{' '}
+            <Text
+              style={{
+                color: '#f57c00', //'#262626',
+                textDecorationLine: 'underline',
+                fontWeight: 'bold',
+              }}>
+              Sign Up Here
+            </Text>
           </Text>
-        </Text>
-      </SafeAreaView>
+        </SafeAreaView>
+      </View>
       {/* <InputForm
         inputBackgroundColor={inputBackGcolor}
         labelValue={email}
@@ -289,7 +293,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 30,
-    marginTop: 90,
+    //marginTop: 90,
   },
   title: {
     fontSize: 36,

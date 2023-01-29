@@ -30,7 +30,7 @@ export const AuthProvider = ({children}) => {
             console.log(e.message + ' ' + e.code);
           }
         },
-        register: async (email, password) => {
+        register: async (email, password, username) => {
           try {
             if (email !== '' && password !== '') {
               await auth()
@@ -41,14 +41,13 @@ export const AuthProvider = ({children}) => {
                     .database(
                       'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
                     )
-                    .ref('/Users/' + auth().currentUser.uid)
-                    .push();
+                    .ref('/Users/' + auth().currentUser.uid);
 
                   reference
                     .set({
                       userid: auth().currentUser.uid,
                       email: email,
-                      name: '',
+                      name: username,
                       image: '',
                     })
                     .catch(error => {

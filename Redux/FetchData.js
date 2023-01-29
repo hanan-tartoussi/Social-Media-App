@@ -14,7 +14,9 @@ export const fetchUser = userID => {
       .on('value', snapshot => {
         dispatch(fetchDataSuccess(snapshot.val()));
         dispatch({type: 'SET_USER_ID', payload: userID});
+        dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
         console.log('User data: ', snapshot.val());
+        console.log('User name from fetch data: ', snapshot.val().name);
       });
     // .catch(error => {
     //   dispatch(fetchDataError(error));
