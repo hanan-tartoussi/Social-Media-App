@@ -2,7 +2,7 @@ import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/database';
 import {fetchUser} from '../Redux/FetchData';
-import {useDispatch} from 'react-redux/es/exports';
+import {useDispatch} from 'react-redux';
 import {Alert} from 'react-native';
 
 export const AuthContext = createContext();
@@ -41,7 +41,7 @@ export const AuthProvider = ({children}) => {
                     .database(
                       'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
                     )
-                    .ref('/Users/user' + auth().currentUser.uid)
+                    .ref('/Users/' + auth().currentUser.uid)
                     .push();
 
                   reference

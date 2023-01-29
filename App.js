@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import Providers from './Navigation';
-import { NavigationContainer } from '@react-navigation/native';
 import AppStack from './Navigation/AppStack';
 
 export default function App() {
@@ -12,5 +11,5 @@ export default function App() {
         <AppStack />
       </NavigationContainer>
     </>
-  )
+  );
 }

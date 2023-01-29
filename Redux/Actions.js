@@ -10,12 +10,21 @@ export function fetchDataRequest() {
   };
 }
 
-export function fetchDataSuccess(item) {
-  return {
-    type: FETCH_DATA_SUCCESS,
-    item,
-  };
-}
+// export function fetchDataSuccess(item) {
+//   return {
+//     type: FETCH_DATA_SUCCESS,
+//     item,
+//   };
+// }
+
+export const fetchDataSuccess = item => async dispatch => {
+  setTimeout(() => {
+    dispatch({
+      type: FETCH_DATA_SUCCESS,
+      payload: item,
+    });
+  }, 2000);
+};
 
 export function fetchDataError(error) {
   return {
