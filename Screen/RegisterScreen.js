@@ -13,8 +13,8 @@ import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
 
 const RegisterScreen = ({navigation}) => {
-  // const [username, setUsername] = useState('');
-  // const [usernameError, setUsernameError] = useState('');
+  const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,6 +22,7 @@ const RegisterScreen = ({navigation}) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
@@ -33,16 +34,18 @@ const RegisterScreen = ({navigation}) => {
     confirmPassword_OnEndEditing();
   };
 
-  // const usernameOnEndEditing = () => {
-  //   //Can only contain letters, numbers, and these characters: - _ .
-  //   //Username be at least 8 characters long
-  //   var regex = /^(?=.{8,20}$)(?!.*[_.-]{2})[a-z]+[_\.\-]*[a-z]+[0-9]{0,3}$/;
-  //   if (!regex.test(username)) {
-  //     setUsernameError('Invalid.');
-  //   } else {
-  //     setUsernameError('');
-  //   }
-  // };
+  const usernameOnEndEditing = () => {
+    //Can only contain letters, numbers, and these characters: - _ .
+    //Username be at least 8 characters long
+    var regex = /^(?=.{5,20}$)(?!.*[_.-]{2})[a-z]+[_\.\-]*[a-z]+[0-9]{0,3}$/;
+    if (!regex.test(username)) {
+      setUsernameError(
+        'Can only contain letters, numbers, and these characters: - _ .',
+      );
+    } else {
+      setUsernameError('');
+    }
+  };
 
   const emailOnEndEditing = () => {
     var regex = /^[\w-\.]+@([\w]+\.)+[\w]{2,4}$/;
@@ -55,10 +58,10 @@ const RegisterScreen = ({navigation}) => {
 
   const passwordOnEndEditing = () => {
     var regex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
     if (!regex.test(password)) {
       setPasswordError(
-        'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
+        'A password contains at least 6 characters, including at least one number and includes both lower and uppercase letters and special characters.',
       );
       return false;
     } else {
@@ -94,99 +97,122 @@ const RegisterScreen = ({navigation}) => {
     <KeyboardAvoidingView style={styles.container}>
       <Image style={styles.image} source={yourPicture} />
 
-      <View style={styles.whiteSheet} />
+      <View style={styles.whiteSheet}>
+        <SafeAreaView style={styles.form}>
+          <View style={{marginTop: 40}}>
+            <Text style={styles.title}>Sign Up</Text>
 
-      <SafeAreaView style={styles.form}>
-        <View style={{marginTop: 40}}>
-          <Text style={styles.title}>Sign Up</Text>
+            <InputForm
+              //inputBackgroundColor={inputBackGcolor}
+              labelValue={username}
+              onChangeText={userusername => setUsername(userusername)}
+              placeholderText="Username"
+              returnKeyType="next"
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              onSubmitEditing={() => {
+                console.log('emailRef', emailRef);
+                emailRef.current.focus();
+              }}
+              onEndEditing={usernameOnEndEditing}
+            />
 
-          <InputForm
-            inputBackgroundColor={inputBackGcolor}
-            labelValue={email}
-            onChangeText={userEmail => setEmail(userEmail)}
-            placeholderText="Email"
-            keyboardType="email-address"
-            returnKeyType="next"
-            onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-            onBlur={() => setInputBackGcolor('#cce6ff')}
-            onEndEditing={emailOnEndEditing}
-            onSubmitEditing={() => {
-              console.log('passwordRef', passwordRef);
-              passwordRef.current.focus();
-            }}
-          />
+            <View>
+              <Text style={styles.TextError}>{usernameError}</Text>
+            </View>
 
-          <View>
-            <Text style={styles.TextError}>{emailError}</Text>
+            <InputForm
+              //inputBackgroundColor={inputBackGcolor}
+              labelValue={email}
+              onChangeText={userEmail => setEmail(userEmail)}
+              placeholderText="Email"
+              keyboardType="email-address"
+              returnKeyType="next"
+              _ref={emailRef}
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              onEndEditing={emailOnEndEditing}
+              onSubmitEditing={() => {
+                console.log('passwordRef', passwordRef);
+                passwordRef.current.focus();
+              }}
+            />
+
+            <View>
+              <Text style={styles.TextError}>{emailError}</Text>
+            </View>
+
+            <InputForm
+              inputBackgroundColor={inputBackGcolor}
+              labelValue={password}
+              onChangeText={userPassword => {
+                setPassword(userPassword);
+                //passwordOnEndEditing();
+              }}
+              placeholderText="Password"
+              secureTextEntry={true}
+              returnKeyType="next"
+              _ref={passwordRef}
+              onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              onBlur={() => setInputBackGcolor('#cce6ff')}
+              onSubmitEditing={() => {
+                confirmPasswordRef.current.focus();
+              }}
+              onEndEditing={passwordOnEndEditing}
+            />
+
+            <Text style={styles.PassError}>{passwordError}</Text>
+
+            <InputForm
+              //inputBackgroundColor={inputBackGcolor}
+              labelValue={confirmPassword}
+              onChangeText={userPassword => setConfirmPassword(userPassword)}
+              placeholderText="Confirm Password"
+              secureTextEntry={false}
+              returnKeyType="done"
+              _ref={confirmPasswordRef}
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              //onEndEditing={confirmPassword_OnEndEditing}
+            />
+
+            <Text style={[styles.TextError]}>{confirmPasswordError}</Text>
+
+            <View style={{marginTop: -40}}>
+              <ButtonForm
+                buttonTitle="Sign Up"
+                onPress={() => {
+                  if (
+                    (username === '') &
+                    (email === '') &
+                    (password === '') &
+                    (confirmPassword === '')
+                  ) {
+                    Alert.alert(
+                      'Signup error',
+                      'Please fill out the registration form',
+                    );
+                  }
+                  // else if (passwordOnEndEditing() === false) {
+                  //   Alert.alert(
+                  //     'Password Error',
+                  //     'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
+                  //   );
+                  // }
+                  else if (confirmPassword !== password) {
+                    Alert.alert(
+                      'Confirm password Error',
+                      'Please make sure your passwords match ',
+                    );
+                  } else {
+                    register(email, password, username);
+                  }
+                }}
+              />
+            </View>
           </View>
-
-          <InputForm
-            inputBackgroundColor={inputBackGcolor}
-            labelValue={password}
-            onChangeText={userPassword => {
-              setPassword(userPassword);
-              passwordOnEndEditing();
-            }}
-            placeholderText="Password"
-            secureTextEntry={true}
-            returnKeyType="next"
-            _ref={passwordRef}
-            onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-            onBlur={() => setInputBackGcolor('#cce6ff')}
-            onSubmitEditing={() => {
-              confirmPasswordRef.current.focus();
-            }}
-            //onEndEditing={passwordOnEndEditing}
-          />
-
-          <Text style={styles.PassError}>{passwordError}</Text>
-
-          <InputForm
-            inputBackgroundColor={inputBackGcolor}
-            labelValue={confirmPassword}
-            onChangeText={userPassword => setConfirmPassword(userPassword)}
-            placeholderText="Confirm Password"
-            secureTextEntry={true}
-            returnKeyType="done"
-            _ref={confirmPasswordRef}
-            onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-            onBlur={() => setInputBackGcolor('#cce6ff')}
-            //onEndEditing={confirmPassword_OnEndEditing}
-          />
-
-          <Text style={[styles.TextError, {paddingBottom: 0}]}>
-            {confirmPasswordError}
-          </Text>
-
-          <ButtonForm
-            buttonTitle="Sign Up"
-            onPress={() => {
-              if (
-                (email === '') &
-                (password === '') &
-                (confirmPassword === '')
-              ) {
-                Alert.alert(
-                  'Signup error',
-                  'Please fill out the registration form',
-                );
-              } else if (passwordOnEndEditing() === false) {
-                Alert.alert(
-                  'Password Error',
-                  'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
-                );
-              } else if (confirmPassword !== password) {
-                Alert.alert(
-                  'Confirm password Error',
-                  'Please make sure your passwords match ',
-                );
-              } else {
-                register(email, password);
-              }
-            }}
-          />
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </View>
 
       {/* <InputForm
         inputBackgroundColor={inputBackGcolor}
@@ -303,12 +329,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: '#fff',
     borderTopLeftRadius: 60,
+    borderTopRightRadius: 60,
+
+    paddingBottom: 30,
+    marginBottom: 20,
   },
   form: {
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 30,
-    marginTop: 100,
+    //margiBottom: 200,
   },
   title: {
     fontSize: 36,
@@ -318,21 +348,20 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   TextError: {
-    paddingBottom: 5,
+    marginBottom: 10,
     fontWeight: 'bold',
-    width: '70%',
     marginLeft: 15,
-    //justifyContent: 'center',
-    // alignItems: 'center',
+    paddingTop: 3,
   },
   PassError: {
-    paddingBottom: 5,
+    marginBottom: 10,
+    paddingTop: 3,
     fontWeight: 'bold',
-    width: '70%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 30,
-    marginTop: -10,
+    //width: '70%',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    marginLeft: 15,
+    //marginTop: -10,
   },
   forgot_button: {
     color: '#a6a6a6', //'#2e64e5'

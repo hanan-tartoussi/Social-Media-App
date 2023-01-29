@@ -5,7 +5,6 @@ let initialState = {
 };
 
 function reducer(state = initialState, action) {
-  var {item} = state;
   switch (action.type) {
     case 'FETCH_DATA_REQUEST':
       return {
@@ -17,7 +16,8 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        item: action.item,
+        //item: action.item,
+        item: action.payload,
       };
     case 'FETCH_DATA_ERROR':
       return {
