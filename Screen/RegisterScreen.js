@@ -37,13 +37,16 @@ const RegisterScreen = ({navigation}) => {
   const usernameOnEndEditing = () => {
     //Can only contain letters, numbers, and these characters: - _ .
     //Username be at least 8 characters long
-    var regex = /^(?=.{5,20}$)(?!.*[_.-]{2})[a-z]+[_\.\-]*[a-z]+[0-9]{0,3}$/;
+    var regex =
+      /^(?=.{5,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
     if (!regex.test(username)) {
       setUsernameError(
         'Can only contain letters, numbers, and these characters: - _ .',
       );
+      return false;
     } else {
       setUsernameError('');
+      return true;
     }
   };
 
@@ -192,6 +195,15 @@ const RegisterScreen = ({navigation}) => {
                       'Signup error',
                       'Please fill out the registration form',
                     );
+                  } else if (
+                    (emailOnEndEditing() === false) &
+                    (usernameOnEndEditing() === false) &
+                    (passwordOnEndEditing() === false)
+                  ) {
+                    Alert.alert(
+                      'Error',
+                      'Please make sure of your registration fill',
+                    );
                   }
                   // else if (passwordOnEndEditing() === false) {
                   //   Alert.alert(
@@ -206,6 +218,7 @@ const RegisterScreen = ({navigation}) => {
                     );
                   } else {
                     register(email, password, username);
+                    // dispatch(fetchUser(user.uid));
                   }
                 }}
               />
