@@ -7,9 +7,9 @@ export default function App() {
   return (
     <>
       <Providers />
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <AppStack />
-      </NavigationContainer>
+      </NavigationContainer> */}
     </>
   );
 }
