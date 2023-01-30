@@ -192,38 +192,19 @@ const RegisterScreen = ({navigation}) => {
 
             <Text style={styles.PassError}>{passwordError}</Text>
 
-            <View style={{flexDirection: 'row'}}>
-              <InputForm
-                //inputBackgroundColor={inputBackGcolor}
-                labelValue={confirmPassword}
-                onChangeText={userPassword => setConfirmPassword(userPassword)}
-                placeholderText="Confirm Password"
-                secureTextEntry={confPasswordVisibility}
-                returnKeyType="done"
-                _ref={confirmPasswordRef}
-                // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-                // onBlur={() => setInputBackGcolor('#cce6ff')}
-                //onEndEditing={confirmPassword_OnEndEditing}
-              />
-              <TouchableOpacity
-                style={{
-                  padding: 10,
-                  paddingRight: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginLeft: 'auto',
-                  marginRight: 0,
-                }}
-                onPress={() => {
-                  confPasswordVisibility
-                    ? (setConfPasswordVisibility(false),
-                      setconfPassEyeName('eye-outline'))
-                    : (setConfPasswordVisibility(true),
-                      setconfPassEyeName('ios-eye-off-outline'));
-                }}>
-                <Ionicons name={confPassEyeName} size={25} color="#666" />
-              </TouchableOpacity>
-            </View>
+            <InputForm
+              //inputBackgroundColor={inputBackGcolor}
+              labelValue={confirmPassword}
+              onChangeText={userPassword => setConfirmPassword(userPassword)}
+              placeholderText="Confirm Password"
+              secureTextEntry={false}
+              returnKeyType="done"
+              _ref={confirmPasswordRef}
+              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+              // onBlur={() => setInputBackGcolor('#cce6ff')}
+              //onEndEditing={confirmPassword_OnEndEditing}
+            />
+
             <Text style={[styles.TextError]}>{confirmPasswordError}</Text>
 
             <View style={{marginTop: -40}}>
