@@ -30,7 +30,7 @@ const RegisterScreen = ({navigation}) => {
   const [confPasswordVisibility, setConfPasswordVisibility] = useState(true);
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [passEyeName, setPassEyeName] = useState('ios-eye-off-outline');
-  const [confPassEyeName, setconfPassEyeName] = useState('ios-eye-off-outline');
+  const [confPassEyeName, setConfPassEyeName] = useState('ios-eye-off-outline');
 
   const {register} = useContext(AuthContext);
 
@@ -191,19 +191,38 @@ const RegisterScreen = ({navigation}) => {
             </View>
 
             <Text style={styles.PassError}>{passwordError}</Text>
-
-            <InputForm
-              //inputBackgroundColor={inputBackGcolor}
-              labelValue={confirmPassword}
-              onChangeText={userPassword => setConfirmPassword(userPassword)}
-              placeholderText="Confirm Password"
-              secureTextEntry={false}
-              returnKeyType="done"
-              _ref={confirmPasswordRef}
-              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-              // onBlur={() => setInputBackGcolor('#cce6ff')}
-              //onEndEditing={confirmPassword_OnEndEditing}
-            />
+            <View style={{flexDirection: 'row'}}>
+              <InputForm
+                //inputBackgroundColor={inputBackGcolor}
+                labelValue={confirmPassword}
+                onChangeText={userPassword => setConfirmPassword(userPassword)}
+                placeholderText="Confirm Password"
+                secureTextEntry={confPasswordVisibility}
+                returnKeyType="done"
+                _ref={confirmPasswordRef}
+                // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+                // onBlur={() => setInputBackGcolor('#cce6ff')}
+                //onEndEditing={confirmPassword_OnEndEditing}
+              />
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  paddingRight: 20,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 0,
+                }}
+                onPress={() => {
+                  confPasswordVisibility
+                    ? (setConfPasswordVisibility(false),
+                      setConfPassEyeName('eye-outline'))
+                    : (setConfPasswordVisibility(true),
+                      setConfPassEyeName('ios-eye-off-outline'));
+                }}>
+                <Ionicons name={confPassEyeName} size={25} color="#666" />
+              </TouchableOpacity>
+            </View>
 
             <Text style={[styles.TextError]}>{confirmPasswordError}</Text>
 
