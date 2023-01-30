@@ -171,7 +171,7 @@ const RegisterScreen = ({navigation}) => {
               labelValue={confirmPassword}
               onChangeText={userPassword => setConfirmPassword(userPassword)}
               placeholderText="Confirm Password"
-              secureTextEntry={false}
+              secureTextEntry={true}
               returnKeyType="done"
               _ref={confirmPasswordRef}
               // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
