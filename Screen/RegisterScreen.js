@@ -61,10 +61,10 @@ const RegisterScreen = ({navigation}) => {
 
   const passwordOnEndEditing = () => {
     var regex =
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^(&)_*-]*).{6,}$/;
     if (!regex.test(password)) {
       setPasswordError(
-        'A password contains at least 6 characters, including at least one number and includes both lower and uppercase letters and special characters.',
+        'A password contains at least 6 characters, including at least one number and includes both lower and uppercase letters.',
       );
       return false;
     } else {
