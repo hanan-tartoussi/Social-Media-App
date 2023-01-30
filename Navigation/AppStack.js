@@ -8,7 +8,6 @@ import Profile from '../Screen/Profile';
 
 const Tab = createMaterialBottomTabNavigator();
 
-
 export default function AppStack() {
   return (
     <Tab.Navigator
@@ -17,7 +16,10 @@ export default function AppStack() {
       barStyle={{ backgroundColor: '#fff' }
       }
     >
-      <Tab.Screen name="Home" component={HomeScreen}
+      <Tab.Screen
+        name="Home"
+        barStyle={{backgroundColor: '#fff'}}
+        component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: () => (
@@ -44,6 +46,17 @@ export default function AppStack() {
 
         }}
       />
+
+      <Tab.Screen
+        name="New Post"
+        component={AddPost}
+        options={{
+          tabBarLabel: 'New Post',
+          tabBarIcon: () => (
+            <MaterialIcons name="plus" color="#5b637b" size={24} />
+          ),
+        }}
+      />
     </Tab.Navigator>
-  )
+  );
 }

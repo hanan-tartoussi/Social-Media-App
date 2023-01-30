@@ -18,6 +18,7 @@ const InputForm = ({
       ref={_ref}
       {...rest}
     />
+
     // <View
     //   style={[styles.inputContainer, {backgroundColor: inputBackgroundColor}]}>
     //   <TextInput
@@ -51,6 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     padding: 12,
+    width: '100%',
+    color: 'black',
     // justifyContent: 'center',
     // alignItems: 'center',
 
