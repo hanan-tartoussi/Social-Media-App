@@ -3,7 +3,7 @@ import {View, StyleSheet, TextInput, Image, Button} from 'react-native';
 import {FloatingAction} from 'react-native-floating-action';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
-import database, {firebase} from '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
 export default function AddPost() {
   let dispatch = useDispatch();
@@ -22,9 +22,7 @@ export default function AddPost() {
         mediaType: 'photo',
       },
       selectionLimit: 1,
-      saveToPhotos: true, //Image or video captured via camera will be stored in temporary folder so will be deleted any time,
-      //so don't expect it to persist.
-      //we use saveToPhotos: true (default is false) to save the file in the public photos
+      saveToPhotos: true,
     };
 
     launchCamera(options, response => {
@@ -36,7 +34,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.assets[0].uri}; //how to save it??
+        const source = {uri: response.assets[0].uri};
         setImageUri(source);
       }
     });
@@ -108,7 +106,8 @@ export default function AddPost() {
       })
       .catch(e => console.log(e));
     //faddi textInput + imageUri krmel yfda bl addpost
-
+    setImageUri("");
+    setTextInput("");
     navigation.navigate('Home');
   };
   return (
@@ -116,14 +115,14 @@ export default function AddPost() {
       <View style={styles.BtnPost}>
         <Button onPress={btnPost} title="Post" color="#1c51de" />
       </View>
-      <Image
+      {imageUri ? <Image
         source={imageUri}
         style={{
           height: 100,
           width: 100,
           borderColor: 'black',
         }}
-      />
+      /> : null}
       <TextInput
         style={styles.InputFiled}
         placeholder="What's on your mind?"

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 export default function Header() {
     const navigation = useNavigation();
@@ -12,7 +12,7 @@ export default function Header() {
                 </Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('New Post')}>
-                <Icon name='add' size={40} color="black" />
+                <MaterialIcons name='add' size={40} color="black" />
             </TouchableOpacity>
         </View>
     )
