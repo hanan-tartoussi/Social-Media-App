@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import ButtonForm from '../Components/ButtonForm';
 import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const LoginScreen = ({navigation}) => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -22,6 +23,8 @@ const LoginScreen = ({navigation}) => {
   const [loginError, setLoginError] = useState('');
   const passwordRef = useRef();
   const {user, login} = useContext(AuthContext);
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [passEyeName, setPassEyeName] = useState('ios-eye-off-outline');
 
   const onPress = () => {
     navigation.navigate('Home');
@@ -130,19 +133,37 @@ const LoginScreen = ({navigation}) => {
               // onEndEditing={emailOnEndEditing}
             />
           </View>
-          <View style={{marginBottom: 20}}>
+          <View style={{marginBottom: 20, flexDirection: 'row'}}>
             <InputForm
               //style={{marginBottom: 20}}
               // inputBackgroundColor={inputBackGcolor}
               labelValue={password}
               onChangeText={userPassword => setPassword(userPassword)}
               placeholderText="Password"
-              secureTextEntry={true}
+              secureTextEntry={passwordVisibility}
               // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
               // onBlur={() => setInputBackGcolor('#cce6ff')}
               _ref={passwordRef}
               // onEndEditing={passwordOnEndEditing}
             />
+            <TouchableOpacity
+              style={{
+                padding: 10,
+                paddingRight: 20,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginLeft: 'auto',
+                marginRight: 0,
+              }}
+              onPress={() => {
+                passwordVisibility
+                  ? (setPasswordVisibility(false),
+                    setPassEyeName('eye-outline'))
+                  : (setPasswordVisibility(true),
+                    setPassEyeName('ios-eye-off-outline'));
+              }}>
+              <Ionicons name={passEyeName} size={25} color="#666" />
+            </TouchableOpacity>
           </View>
 
           <View

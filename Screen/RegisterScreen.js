@@ -6,11 +6,13 @@ import {
   Image,
   KeyboardAvoidingView,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ButtonForm from '../Components/ButtonForm';
 import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const RegisterScreen = ({navigation}) => {
   const [username, setUsername] = useState('');
@@ -25,6 +27,10 @@ const RegisterScreen = ({navigation}) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const [confPasswordVisibility, setConfPasswordVisibility] = useState(true);
+  const [passwordVisibility, setPasswordVisibility] = useState(true);
+  const [passEyeName, setPassEyeName] = useState('ios-eye-off-outline');
+  const [confPassEyeName, setconfPassEyeName] = useState('ios-eye-off-outline');
 
   const {register} = useContext(AuthContext);
 
@@ -145,40 +151,79 @@ const RegisterScreen = ({navigation}) => {
               <Text style={styles.TextError}>{emailError}</Text>
             </View>
 
-            <InputForm
-              inputBackgroundColor={inputBackGcolor}
-              labelValue={password}
-              onChangeText={userPassword => {
-                setPassword(userPassword);
-                //passwordOnEndEditing();
-              }}
-              placeholderText="Password"
-              secureTextEntry={true}
-              returnKeyType="next"
-              _ref={passwordRef}
-              onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-              onBlur={() => setInputBackGcolor('#cce6ff')}
-              onSubmitEditing={() => {
-                confirmPasswordRef.current.focus();
-              }}
-              onEndEditing={passwordOnEndEditing}
-            />
+            <View style={{flexDirection: 'row'}}>
+              <InputForm
+                inputBackgroundColor={inputBackGcolor}
+                labelValue={password}
+                onChangeText={userPassword => {
+                  setPassword(userPassword);
+                  //passwordOnEndEditing();
+                }}
+                placeholderText="Password"
+                secureTextEntry={passwordVisibility}
+                returnKeyType="next"
+                _ref={passwordRef}
+                onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+                onBlur={() => setInputBackGcolor('#cce6ff')}
+                onSubmitEditing={() => {
+                  confirmPasswordRef.current.focus();
+                }}
+                onEndEditing={passwordOnEndEditing}
+              />
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  paddingRight: 20,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 0,
+                }}
+                onPress={() => {
+                  passwordVisibility
+                    ? (setPasswordVisibility(false),
+                      setPassEyeName('eye-outline'))
+                    : (setPasswordVisibility(true),
+                      setPassEyeName('ios-eye-off-outline'));
+                }}>
+                <Ionicons name={passEyeName} size={25} color="#666" />
+              </TouchableOpacity>
+            </View>
 
             <Text style={styles.PassError}>{passwordError}</Text>
 
-            <InputForm
-              //inputBackgroundColor={inputBackGcolor}
-              labelValue={confirmPassword}
-              onChangeText={userPassword => setConfirmPassword(userPassword)}
-              placeholderText="Confirm Password"
-              secureTextEntry={false}
-              returnKeyType="done"
-              _ref={confirmPasswordRef}
-              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-              // onBlur={() => setInputBackGcolor('#cce6ff')}
-              //onEndEditing={confirmPassword_OnEndEditing}
-            />
-
+            <View style={{flexDirection: 'row'}}>
+              <InputForm
+                //inputBackgroundColor={inputBackGcolor}
+                labelValue={confirmPassword}
+                onChangeText={userPassword => setConfirmPassword(userPassword)}
+                placeholderText="Confirm Password"
+                secureTextEntry={confPasswordVisibility}
+                returnKeyType="done"
+                _ref={confirmPasswordRef}
+                // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
+                // onBlur={() => setInputBackGcolor('#cce6ff')}
+                //onEndEditing={confirmPassword_OnEndEditing}
+              />
+              <TouchableOpacity
+                style={{
+                  padding: 10,
+                  paddingRight: 20,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginLeft: 'auto',
+                  marginRight: 0,
+                }}
+                onPress={() => {
+                  confPasswordVisibility
+                    ? (setConfPasswordVisibility(false),
+                      setconfPassEyeName('eye-outline'))
+                    : (setConfPasswordVisibility(true),
+                      setconfPassEyeName('ios-eye-off-outline'));
+                }}>
+                <Ionicons name={confPassEyeName} size={25} color="#666" />
+              </TouchableOpacity>
+            </View>
             <Text style={[styles.TextError]}>{confirmPasswordError}</Text>
 
             <View style={{marginTop: -40}}>
