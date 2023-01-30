@@ -46,17 +46,6 @@ export default function AppStack() {
 
         }}
       />
-
-      <Tab.Screen
-        name="New Post"
-        component={AddPost}
-        options={{
-          tabBarLabel: 'New Post',
-          tabBarIcon: () => (
-            <MaterialIcons name="plus" color="#5b637b" size={24} />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
