@@ -60,19 +60,19 @@ export default function HomeScreen() {
   console.log('postsData: ', postsData);
 
   //////////////////////////////////
-  const [UsersPosts, setUsersPosts] = useState('');
-  const newReference = firebase
-    .app()
-    .database(
-      'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-    )
-    .ref('/Posts/')
-    .once('value')
-    .then(snapshot => {
-      console.log('User data: ', snapshot.val());
-    });
-  const scores = database().ref('scores').orderByValue().once('value');
-  /////////////////////////////////
+  // const [UsersPosts, setUsersPosts] = useState('');
+  // const newReference = firebase
+  //   .app()
+  //   .database(
+  //     'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+  //   )
+  //   .ref('/Posts/')
+  //   .once('value')
+  //   .then(snapshot => {
+  //     console.log('User data: ', snapshot.val());
+  //   });
+  // const scores = database().ref('scores').orderByValue().once('value');
+  // /////////////////////////////////
 
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
