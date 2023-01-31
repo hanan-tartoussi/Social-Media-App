@@ -6,8 +6,8 @@ import ButtonForm from '../Components/ButtonForm';
 import { AuthContext } from '../Navigation/AuthProvider';
 import Card from '../Components/Card';
 import Header from '../Components/Header';
-import {fetchUser} from '../Redux/FetchData';
-
+import { fetchPosts, fetchUser } from '../Redux/FetchData';
+import LogOutBtn from '../Components/LogOutBtn';
 state = {
   UsersPosts: [
     // {
@@ -90,8 +90,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Header />
-      {/* <LogOutBtn/> */}
-      <ButtonForm buttonTitle="Logout" onPress={() => logout()} />
+      
       <FlatList
         data={state.UsersPosts}
         renderItem={renderItem}
