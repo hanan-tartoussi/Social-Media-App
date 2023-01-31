@@ -132,7 +132,7 @@ export const ProfileButtons = ({ id, name, accountName, profileImage }) => {
                         }}>
                         <View
                             style={{
-                                width: '100%',
+                                //width: '50%',
                                 height: 35,
                                 borderRadius: 5,
                                 borderColor: '#DEDEDE',
@@ -148,6 +148,34 @@ export const ProfileButtons = ({ id, name, accountName, profileImage }) => {
                                     opacity: 0.8,
                                 }}>
                                 Edit Profile
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() =>
+                            logout()
+                        }
+                        style={{
+                            width: '100%',
+                        }}>
+                        <View
+                            style={{
+                                //width: '50%',
+                                height: 35,
+                                borderRadius: 5,
+                                borderColor: '#DEDEDE',
+                                borderWidth: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                            <Text
+                                style={{
+                                    fontWeight: 'bold',
+                                    fontSize: 14,
+                                    letterSpacing: 1,
+                                    opacity: 0.8,
+                                }}>
+                                Logout
                             </Text>
                         </View>
                     </TouchableOpacity>
