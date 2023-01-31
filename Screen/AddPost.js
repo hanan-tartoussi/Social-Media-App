@@ -5,6 +5,8 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import {firebase} from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
+import storage from '@react-native-firebase/storage';
+
 export default function AddPost() {
   let dispatch = useDispatch();
   const userid = useSelector(state => state.userdata.user_id);
