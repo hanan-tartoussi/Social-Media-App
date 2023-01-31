@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Image, Button} from 'react-native';
+import {View, StyleSheet, TextInput, Image, Button, Alert} from 'react-native';
 import {FloatingAction} from 'react-native-floating-action';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
@@ -79,7 +79,20 @@ export default function AddPost() {
       position: 2,
     },
   ];
-  const btnPost = () => {
+  const btnPost = async () => {
+    //Storage
+    const uri = imageUri;
+    let fileName = uri.substring(uri.lastIndexOf('/')+1);
+
+    try {
+      await storage().ref(fileName).putFile(uri);
+      Alert.alert ('Image is uploaded!!')
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+    //realTime
     const newReference = firebase
       .app()
       .database(
@@ -103,15 +116,10 @@ export default function AddPost() {
         dispatch({type: 'SET_POST_ID', payload: newReference.key});
         dispatch({type: 'SET_POST_USER_NAME', payload: username});
         dispatch({type: 'SET_POST_USER_ID', payload: userid});
-        dispatch({type: 'SET_POST_CAPTION', payload: textInput});
       })
-      .catch(e => {
-        console.log(e);
-        dispatch({type: 'SET_POST_ERROR', payload: e});
-      });
-    //faddi textInput + imageUri krmel yfda bl addpost
-    setImageUri('');
-    setTextInput('');
+      .catch(e => console.log(e));
+    setImageUri("");
+    setTextInput("");
     navigation.navigate('Home');
   };
   return (
@@ -119,16 +127,6 @@ export default function AddPost() {
       <View style={styles.BtnPost}>
         <Button onPress={btnPost} title="Post" color="#1c51de" />
       </View>
-      {imageUri ? (
-        <Image
-          source={imageUri}
-          style={{
-            height: 100,
-            width: 100,
-            borderColor: 'black',
-          }}
-        />
-      ) : null}
       <TextInput
         style={styles.InputFiled}
         placeholder="What's on your mind?"
@@ -139,6 +137,13 @@ export default function AddPost() {
         defaultValue={textInput}
         onChangeText={newText => setTextInput(newText)}
       />
+
+      {imageUri ? <Image source={imageUri} style={{
+          height: 250,
+          width:'100%',
+          borderColor: 'black',
+        }} /> : null}
+
       <FloatingAction
         actions={actions}
         onPressItem={name => {
