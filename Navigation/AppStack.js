@@ -5,7 +5,7 @@ import HomeScreen from '../Screen/HomeScreen';
 import AddPost from '../Screen/AddPost';
 import Profile from '../Screen/Profile';
 //import AddPost from '../Pages/AddPost';
-
+import ProfileScreen from '../Screen/ProfileScreen';
 const Tab = createMaterialBottomTabNavigator();
 
 export default function AppStack() {
@@ -37,7 +37,7 @@ export default function AppStack() {
 
         }}
       />
-      <Tab.Screen name="Profile" component={Profile}
+      <Tab.Screen name="Profile" component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: () => (
