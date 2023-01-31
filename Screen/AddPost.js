@@ -103,11 +103,15 @@ export default function AddPost() {
         dispatch({type: 'SET_POST_ID', payload: newReference.key});
         dispatch({type: 'SET_POST_USER_NAME', payload: username});
         dispatch({type: 'SET_POST_USER_ID', payload: userid});
+        dispatch({type: 'SET_POST_CAPTION', payload: textInput});
       })
-      .catch(e => console.log(e));
+      .catch(e => {
+        console.log(e);
+        dispatch({type: 'SET_POST_ERROR', payload: e});
+      });
     //faddi textInput + imageUri krmel yfda bl addpost
-    setImageUri("");
-    setTextInput("");
+    setImageUri('');
+    setTextInput('');
     navigation.navigate('Home');
   };
   return (
@@ -115,14 +119,16 @@ export default function AddPost() {
       <View style={styles.BtnPost}>
         <Button onPress={btnPost} title="Post" color="#1c51de" />
       </View>
-      {imageUri ? <Image
-        source={imageUri}
-        style={{
-          height: 100,
-          width: 100,
-          borderColor: 'black',
-        }}
-      /> : null}
+      {imageUri ? (
+        <Image
+          source={imageUri}
+          style={{
+            height: 100,
+            width: 100,
+            borderColor: 'black',
+          }}
+        />
+      ) : null}
       <TextInput
         style={styles.InputFiled}
         placeholder="What's on your mind?"

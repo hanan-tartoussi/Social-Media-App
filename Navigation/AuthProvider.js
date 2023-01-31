@@ -1,15 +1,12 @@
 import React, {createContext, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import {firebase} from '@react-native-firebase/database';
-import {fetchUser} from '../Redux/FetchData';
-import {useDispatch} from 'react-redux';
 import {Alert} from 'react-native';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
-  // let dispatch = useDispatch();
   return (
     // we will create different state for the authentication (login, register, and logout)
     // the value will be passed to other components within the components tree
@@ -21,7 +18,6 @@ export const AuthProvider = ({children}) => {
           try {
             if (email !== '' && password !== '') {
               await auth().signInWithEmailAndPassword(email, password);
-              //  dispatch(fetchUser(auth().currentUser.uid));
             } else {
               Alert.alert('Login error', 'Please fill out the Login form');
             }

@@ -2,7 +2,7 @@ let initialState = {
   loading: false,
   user_id: [],
   name: null,
-  posts: [],
+  email: null,
   error: '',
 };
 
@@ -12,13 +12,14 @@ function reducer(state = initialState, {type, payload}) {
       return {
         ...state,
         ...payload,
+        loading: true,
       };
     case 'SET_USER_ID':
       return {...state, user_id: payload};
     case 'SET_USER_NAME':
       return {...state, name: payload};
-    case 'SET_USER_POSTS':
-      return {...state, posts: payload};
+    case 'SET_USER_EMAIL':
+      return {...state, email: payload};
     default:
       return state;
   }

@@ -22,15 +22,6 @@ const AuthStack = () => {
         options={{
           headerShown: false,
         }}
-
-        // options={({navigation}) => ({
-        //   title: '',
-        //   headerStyle: {
-        //     backgroundColor: '#f9fafd',
-        //     shadowColor: '#f9fafd',
-        //     elevation: 0,
-        //   },
-        // })}
       />
     </Stack.Navigator>
   );

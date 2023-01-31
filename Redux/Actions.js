@@ -1,34 +1,29 @@
 import {
-  FETCH_DATA_REQUEST,
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_ERROR,
+  FETCH_USER_DATA_REQUEST,
+  FETCH_USER_DATA_SUCCESS,
+  FETCH_POSTS_DATA_SUCCESS,
 } from './ActionType';
 
-export function fetchDataRequest() {
+export function fetchUserDataRequest() {
   return {
-    type: FETCH_DATA_REQUEST,
+    type: FETCH_USER_DATA_REQUEST,
   };
 }
 
-// export function fetchDataSuccess(item) {
-//   return {
-//     type: FETCH_DATA_SUCCESS,
-//     item,
-//   };
-// }
-
-export const fetchDataSuccess = item => async dispatch => {
+export const fetchUserDataSuccess = user => async dispatch => {
   setTimeout(() => {
     dispatch({
-      type: FETCH_DATA_SUCCESS,
-      payload: item,
+      type: FETCH_USER_DATA_SUCCESS,
+      payload: user,
     });
   }, 2000);
 };
 
-export function fetchDataError(error) {
-  return {
-    type: FETCH_DATA_ERROR,
-    payload: {error},
-  };
-}
+export const fetchPostsDataSuccess = allPosts => async dispatch => {
+  setTimeout(() => {
+    dispatch({
+      type: FETCH_POSTS_DATA_SUCCESS,
+      payload: allPosts,
+    });
+  }, 2000);
+};

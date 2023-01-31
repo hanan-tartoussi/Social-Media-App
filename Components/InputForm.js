@@ -18,19 +18,6 @@ const InputForm = ({
       ref={_ref}
       {...rest}
     />
-
-    // <View
-    //   style={[styles.inputContainer, {backgroundColor: inputBackgroundColor}]}>
-    //   <TextInput
-    //     value={labelValue}
-    //     style={styles.input}
-    //     numberOfLines={1}
-    //     placeholder={placeholderText}
-    //     placeholderTextColor="#666"
-    //     ref={_ref}
-    //     {...rest}
-    //   />
-    // </View>
   );
 };
 
@@ -48,15 +35,10 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#F6F7FB',
     height: 58,
-    //marginBottom: 20,
     fontSize: 16,
     borderRadius: 10,
     padding: 12,
     width: '100%',
     color: 'black',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-
-    // flex: 1,
   },
 });

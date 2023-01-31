@@ -1,11 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import ButtonForm from '../Components/ButtonForm';
 import {AuthContext} from '../Navigation/AuthProvider';
 import Card from '../Components/Card';
 import Header from '../Components/Header';
-import {fetchUser} from '../Redux/FetchData';
+import {fetchPosts, fetchUser} from '../Redux/FetchData';
 
 state = {
   UsersPosts: [
@@ -51,9 +51,11 @@ export default function HomeScreen() {
   let dispatch = useDispatch();
   const {user, logout} = useContext(AuthContext);
 
-  const userInfo = useSelector(state => state.posts.item);
+  const userInfo = useSelector(state => state.userTabInfo.user);
   const userid = useSelector(state => state.userdata.user_id);
+  const postsData = useSelector(state => state.postdata.allPosts);
   console.log('userinfo: ', userInfo, userid);
+  console.log('postsData: ', postsData);
 
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
@@ -65,6 +67,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(fetchUser(user.uid));
+    dispatch(fetchPosts());
   }, []);
 
   return (

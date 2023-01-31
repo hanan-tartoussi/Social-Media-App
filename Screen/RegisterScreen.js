@@ -14,7 +14,7 @@ import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = () => {
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
   const [email, setEmail] = useState('');
@@ -33,12 +33,6 @@ const RegisterScreen = ({navigation}) => {
   const [confPassEyeName, setConfPassEyeName] = useState('ios-eye-off-outline');
 
   const {register} = useContext(AuthContext);
-
-  const onPressRegister = () => {
-    emailOnEndEditing();
-    passwordOnEndEditing();
-    confirmPassword_OnEndEditing();
-  };
 
   const usernameOnEndEditing = () => {
     //Can only contain letters, numbers, and these characters: - _ .
@@ -100,7 +94,7 @@ const RegisterScreen = ({navigation}) => {
     }
   };
 
-  var yourPicture = require('../Images/pic.jpg'); //var yourPicture = require('../Images/wallpaper.jpg'); //var yourPicture = require('../Images/logo.png');
+  var yourPicture = require('../Images/pic.jpg');
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -112,13 +106,10 @@ const RegisterScreen = ({navigation}) => {
             <Text style={styles.title}>Sign Up</Text>
 
             <InputForm
-              //inputBackgroundColor={inputBackGcolor}
               labelValue={username}
               onChangeText={userusername => setUsername(userusername)}
               placeholderText="Username"
               returnKeyType="next"
-              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-              // onBlur={() => setInputBackGcolor('#cce6ff')}
               onSubmitEditing={() => {
                 console.log('emailRef', emailRef);
                 emailRef.current.focus();
@@ -131,15 +122,12 @@ const RegisterScreen = ({navigation}) => {
             </View>
 
             <InputForm
-              //inputBackgroundColor={inputBackGcolor}
               labelValue={email}
               onChangeText={userEmail => setEmail(userEmail)}
               placeholderText="Email"
               keyboardType="email-address"
               returnKeyType="next"
               _ref={emailRef}
-              // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-              // onBlur={() => setInputBackGcolor('#cce6ff')}
               onEndEditing={emailOnEndEditing}
               onSubmitEditing={() => {
                 console.log('passwordRef', passwordRef);
@@ -193,16 +181,12 @@ const RegisterScreen = ({navigation}) => {
             <Text style={styles.PassError}>{passwordError}</Text>
             <View style={{flexDirection: 'row'}}>
               <InputForm
-                //inputBackgroundColor={inputBackGcolor}
                 labelValue={confirmPassword}
                 onChangeText={userPassword => setConfirmPassword(userPassword)}
                 placeholderText="Confirm Password"
                 secureTextEntry={confPasswordVisibility}
                 returnKeyType="done"
                 _ref={confirmPasswordRef}
-                // onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-                // onBlur={() => setInputBackGcolor('#cce6ff')}
-                //onEndEditing={confirmPassword_OnEndEditing}
               />
               <TouchableOpacity
                 style={{
@@ -249,21 +233,13 @@ const RegisterScreen = ({navigation}) => {
                       'Error',
                       'Please make sure of your registration fill',
                     );
-                  }
-                  // else if (passwordOnEndEditing() === false) {
-                  //   Alert.alert(
-                  //     'Password Error',
-                  //     'A password contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters.',
-                  //   );
-                  // }
-                  else if (confirmPassword !== password) {
+                  } else if (confirmPassword !== password) {
                     Alert.alert(
                       'Confirm password Error',
                       'Please make sure your passwords match ',
                     );
                   } else {
                     register(email, password, username);
-                    // dispatch(fetchUser(user.uid));
                   }
                 }}
               />
@@ -271,95 +247,6 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </SafeAreaView>
       </View>
-
-      {/* <InputForm
-        inputBackgroundColor={inputBackGcolor}
-        labelValue={username}
-        onChangeText={userusername => setUsername(userusername)}
-        placeholderText="Username"
-        returnKeyType="next"
-        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-        onBlur={() => setInputBackGcolor('#cce6ff')}
-        //onEndEditing={usernameOnEndEditing}
-      />
-
-      <View>
-        <Text style={styles.TextError}>{usernameError}</Text>
-      </View> */}
-
-      {/* <InputForm
-        inputBackgroundColor={inputBackGcolor}
-        labelValue={email}
-        onChangeText={userEmail => setEmail(userEmail)}
-        placeholderText="Email"
-        keyboardType="email-address"
-        returnKeyType="next"
-        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-        onBlur={() => setInputBackGcolor('#cce6ff')}
-        onEndEditing={emailOnEndEditing}
-        onSubmitEditing={() => {
-          console.log('passwordRef', passwordRef);
-          passwordRef.current.focus();
-        }}
-      />
-
-      <View>
-        <Text style={styles.TextError}>{emailError}</Text>
-      </View>
-
-      <InputForm
-        inputBackgroundColor={inputBackGcolor}
-        labelValue={password}
-        onChangeText={userPassword => {
-          setPassword(userPassword);
-          passwordOnEndEditing();
-        }}
-        placeholderText="Password"
-        secureTextEntry={true}
-        returnKeyType="next"
-        _ref={passwordRef}
-        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-        onBlur={() => setInputBackGcolor('#cce6ff')}
-        onSubmitEditing={() => {
-          confirmPasswordRef.current.focus();
-        }}
-        //onEndEditing={passwordOnEndEditing}
-      />
-
-      <Text style={styles.PassError}>{passwordError}</Text>
-
-      <InputForm
-        inputBackgroundColor={inputBackGcolor}
-        labelValue={confirmPassword}
-        onChangeText={userPassword => setConfirmPassword(userPassword)}
-        placeholderText="Confirm Password"
-        secureTextEntry={true}
-        returnKeyType="done"
-        _ref={confirmPasswordRef}
-        onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-        onBlur={() => setInputBackGcolor('#cce6ff')}
-        onEndEditing={confirmPassword_OnEndEditing}
-      />
-
-      <Text style={styles.TextError}>{confirmPasswordError}</Text> */}
-
-      {/* <ButtonForm
-        buttonTitle="Register"
-        onPress={() => register(email, password)}
-      /> */}
-
-      {/* <ButtonForm
-        buttonTitle="Sign Up"
-        onPress={() => {
-          if (passwordOnEndEditing) {
-            register(email, password);
-          } else {
-            Alert.alert('Invalid Password', passwordError + ' ', [
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]);
-          }
-        }}
-      /> */}
     </KeyboardAvoidingView>
   );
 };
@@ -370,8 +257,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   image: {
     width: '100%',
@@ -415,16 +300,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingTop: 3,
     fontWeight: 'bold',
-    //width: '70%',
-    // justifyContent: 'center',
-    // alignItems: 'center',
     marginLeft: 15,
-    //marginTop: -10,
   },
   forgot_button: {
-    color: '#a6a6a6', //'#2e64e5'
-    //marginBottom: 30,
-    //fontSize: 18,
+    color: '#a6a6a6',
     fontWeight: '600',
     fontFamily: 'Lato-Regular',
   },
