@@ -44,7 +44,8 @@ export const AuthProvider = ({children}) => {
                       userid: auth().currentUser.uid,
                       email: email,
                       name: username,
-                      image: '',
+                      userProfileImage:
+                        'https://static.vecteezy.com/system/resources/previews/002/534/006/non_2x/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg',
                     })
                     .catch(error => {
                       console.log(

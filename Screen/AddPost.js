@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput, Image, Button, Alert } from 'react-native';
-import { FloatingAction } from 'react-native-floating-action';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { useNavigation } from '@react-navigation/native';
-import { firebase } from '@react-native-firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, TextInput, Image, Button, Alert} from 'react-native';
+import {FloatingAction} from 'react-native-floating-action';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
+import {firebase} from '@react-native-firebase/database';
+import {useDispatch, useSelector} from 'react-redux';
 import storage from '@react-native-firebase/storage';
 
 export default function AddPost() {
   let dispatch = useDispatch();
   const userid = useSelector(state => state.userdata.user_id);
   const username = useSelector(state => state.userdata.name);
+  const userProfileImg = useSelector(state => state.userdata.userProfileImage);
 
   const navigation = useNavigation();
 
@@ -36,7 +37,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.assets[0].uri };
+        const source = {uri: response.assets[0].uri};
         setImageUri(source);
       }
     });
@@ -61,7 +62,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.assets[0].uri };
+        const source = {uri: response.assets[0].uri};
         setImageUri(source);
       }
     });
@@ -82,11 +83,9 @@ export default function AddPost() {
     },
   ];
   const btnPost = async () => {
-
     const uri = imageUri.uri;
     let fileName = uri.substring(uri.lastIndexOf('/') + 1);
     try {
-
       const fileRef = await storage().ref(fileName).putFile(uri);
 
       const ref = firebase.storage().ref(fileName);
@@ -108,21 +107,22 @@ export default function AddPost() {
           id: newReference.key,
           userID: userid,
           username: username,
+          userProfileImage: userProfileImg,
           caption: textInput,
           image: url,
         })
         .then(() => {
           console.log('Data updated.', newReference.key);
-          dispatch({ type: 'SET_POST_ID', payload: newReference.key });
-          dispatch({ type: 'SET_POST_USER_NAME', payload: username });
-          dispatch({ type: 'SET_POST_USER_ID', payload: userid });
+          dispatch({type: 'SET_POST_ID', payload: newReference.key});
+          dispatch({type: 'SET_POST_USER_NAME', payload: username});
+          dispatch({type: 'SET_POST_USER_ID', payload: userid});
         })
         .catch(e => console.log('error from realtime:', e));
     } catch (error) {
       console.log('error from storage', error);
     }
-    setImageUri("");
-    setTextInput("");
+    setImageUri('');
+    setTextInput('');
     navigation.navigate('Home');
   };
   return (
@@ -141,11 +141,16 @@ export default function AddPost() {
         onChangeText={newText => setTextInput(newText)}
       />
 
-      {imageUri ? <Image source={imageUri} style={{
-        height: 250,
-        width: '100%',
-        borderColor: 'black',
-      }} /> : null}
+      {imageUri ? (
+        <Image
+          source={imageUri}
+          style={{
+            height: 250,
+            width: '100%',
+            borderColor: 'black',
+          }}
+        />
+      ) : null}
 
       <FloatingAction
         actions={actions}
