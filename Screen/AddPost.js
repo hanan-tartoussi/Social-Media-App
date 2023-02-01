@@ -90,7 +90,7 @@ export default function AddPost() {
       const fileRef = await storage().ref(fileName).putFile(uri);
 
       const ref = firebase.storage().ref(fileName);
-      const c = await ref.getDownloadURL();
+      const url = await ref.getDownloadURL();
       console.log('this my image url:', url);
 
       const newReference = firebase
