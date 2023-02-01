@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { Divider } from 'react-native-paper';
+import {Divider} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const imageExist = (image) => {
-  {
-    image !== '' ? <Image source={{ uri: image }} /> : <Divider style={styles.dividerStyle} />
-  }
-
+//   { image !== '' ? <Image source={{uri: image}} /> : <Divider style={styles.dividerStyle} />
+// }
+  if (image == '') return <Divider style={styles.dividerStyle} />;
+  else return <Image style={styles.PostImg} source={{uri: image}} />;
 };
 
 export default function Card(props) {
@@ -30,7 +30,7 @@ export default function Card(props) {
             {/* we need 'date of added the post' to display it */}
           </View>
         </View>
-        <Text style={styles.PostText}>{props.cardDetails.caption}</Text>
+        <Text style={styles.PostText}>{props.cardDetails.caption}</Text>   
         {imageExist(props.cardDetails.image)}
         <View style={styles.InteractionWrapper}>
           <TouchableOpacity style={styles.Interaction}>
