@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const imageExist = postImg => {
-  if (postImg == '') return <Divider />;
-  else return <Image style={styles.PostImg} source={postImg} />;
+const imageExist = (image) => {
+  {
+    image !== '' ? <Image source={{ uri: image }} /> : <Divider style={styles.dividerStyle} />
+  }
+
 };
 
 export default function Card(props) {
@@ -20,14 +22,16 @@ export default function Card(props) {
     <View style={styles.Container}>
       <View style={styles.Card}>
         <View style={styles.UserInfo}>
-          <Image style={styles.UserImage} source={props.cardDetails.userImg} />
+          {/* <Image style={styles.UserImage} source={props.cardDetails.image} /> */}
+          {/* we need user Profile to display it */}
           <View style={styles.UserInfoText}>
-            <Text style={styles.UserName}>{props.cardDetails.name}</Text>
-            <Text style={styles.PostDate}>{props.cardDetails.date}</Text>
+            <Text style={styles.UserName}>{props.cardDetails.username}</Text>
+            {/* <Text style={styles.PostDate}>{props.cardDetails.date}</Text> */}
+            {/* we need 'date of added the post' to display it */}
           </View>
         </View>
-        <Text style={styles.PostText}>{props.cardDetails.postText}</Text>
-        {imageExist(props.cardDetails.postImg)}
+        <Text style={styles.PostText}>{props.cardDetails.caption}</Text>
+        {imageExist(props.cardDetails.image)}
         <View style={styles.InteractionWrapper}>
           <TouchableOpacity style={styles.Interaction}>
             <Icon name="heart-outline" size={25} color="blue" />
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     //paddingHorizontal: 2,
     //paddingVertical: 2,
   },
-  Divider: {
+  dividerStyle: {
     borderBottomColor: '#dddddd',
     borderBottomWidth: 1,
     width: '92%',

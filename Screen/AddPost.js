@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, TextInput, Image, Button, Alert} from 'react-native';
-import {FloatingAction} from 'react-native-floating-action';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {useNavigation} from '@react-navigation/native';
-import {firebase} from '@react-native-firebase/database';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, TextInput, Image, Button, Alert } from 'react-native';
+import { FloatingAction } from 'react-native-floating-action';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
+import { firebase } from '@react-native-firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
 import storage from '@react-native-firebase/storage';
 
 export default function AddPost() {
@@ -36,7 +36,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.assets[0].uri};
+        const source = { uri: response.assets[0].uri };
         setImageUri(source);
       }
     });
@@ -61,7 +61,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = {uri: response.assets[0].uri};
+        const source = { uri: response.assets[0].uri };
         setImageUri(source);
       }
     });
@@ -82,44 +82,45 @@ export default function AddPost() {
     },
   ];
   const btnPost = async () => {
-    //Storage
-    const uri = imageUri;
-    let fileName = uri.substring(uri.lastIndexOf('/')+1);
 
+    const uri = imageUri.uri;
+    let fileName = uri.substring(uri.lastIndexOf('/') + 1);
     try {
-      await storage().ref(fileName).putFile(uri);
-      Alert.alert ('Image is uploaded!!')
-      
+
+      const fileRef = await storage().ref(fileName).putFile(uri);
+
+      const ref = firebase.storage().ref(fileName);
+      const c = await ref.getDownloadURL();
+      console.log('this my image url:', url);
+
+      const newReference = firebase
+        .app()
+        .database(
+          'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+        )
+        .ref('/Posts/')
+        .push();
+
+      console.log('Auto generated key: ', newReference.key);
+
+      newReference
+        .set({
+          id: newReference.key,
+          userID: userid,
+          username: username,
+          caption: textInput,
+          image: url,
+        })
+        .then(() => {
+          console.log('Data updated.', newReference.key);
+          dispatch({ type: 'SET_POST_ID', payload: newReference.key });
+          dispatch({ type: 'SET_POST_USER_NAME', payload: username });
+          dispatch({ type: 'SET_POST_USER_ID', payload: userid });
+        })
+        .catch(e => console.log('error from realtime:', e));
     } catch (error) {
-      console.log(error);
+      console.log('error from storage', error);
     }
-
-    //realTime
-    const newReference = firebase
-      .app()
-      .database(
-        'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-      )
-      .ref('/Posts/')
-      .push();
-
-    console.log('Auto generated key: ', newReference.key);
-    //zidi storage hon
-    newReference
-      .set({
-        id: newReference.key,
-        userID: userid,
-        username: username,
-        caption: textInput,
-        image: imageUri.uri, //get uri from storage
-      })
-      .then(() => {
-        console.log('Data updated.', newReference.key);
-        dispatch({type: 'SET_POST_ID', payload: newReference.key});
-        dispatch({type: 'SET_POST_USER_NAME', payload: username});
-        dispatch({type: 'SET_POST_USER_ID', payload: userid});
-      })
-      .catch(e => console.log(e));
     setImageUri("");
     setTextInput("");
     navigation.navigate('Home');
@@ -141,10 +142,10 @@ export default function AddPost() {
       />
 
       {imageUri ? <Image source={imageUri} style={{
-          height: 250,
-          width:'100%',
-          borderColor: 'black',
-        }} /> : null}
+        height: 250,
+        width: '100%',
+        borderColor: 'black',
+      }} /> : null}
 
       <FloatingAction
         actions={actions}
