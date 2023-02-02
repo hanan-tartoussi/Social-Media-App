@@ -20,14 +20,7 @@ export const fetchUser = userID => {
         dispatch({type: 'SET_USER_ID', payload: userID});
         dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
         dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
-        dispatch({
-          type: 'SET_USER_PROFILE_IMAGE',
-          payload: snapshot.val().userProfileImage,
-        });
-        // console.log(
-        //   'User profile image data: ',
-        //   snapshot.val().userProfileImage,
-        // );
+        //console.log('User data: ', snapshot.val());
         //console.log('User name from fetch data: ', snapshot.val().name);
       });
   };
