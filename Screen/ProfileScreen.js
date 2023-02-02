@@ -9,8 +9,9 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { AuthContext } from '../Navigation/AuthProvider';
-import firebase from '@react-native-firebase/database';
-
+import EditProfileScreen from './EditProfileScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // const fetchPosts = async () => {
 //     try {
 //         const list = [];
@@ -25,8 +26,9 @@ import firebase from '@react-native-firebase/database';
 //     }
 //     catch (e) { console.log(e); }
 // }
-const ProfileScreen = ({ navigation, route }) => {
+const ProfileScreen = ({ navigation }) => {
     const { user, logout } = useContext(AuthContext);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
             <ScrollView
@@ -37,7 +39,7 @@ const ProfileScreen = ({ navigation, route }) => {
                 <Text style={styles.userName}>Shahinaz Wehbi</Text>
                 <Text style={styles.aboutUser}>Hello, we are creating our profile screen</Text>
                 <View style={styles.userBtnWrapper}>
-                    <TouchableOpacity style={styles.userBtn} onPress={() => { }}>
+                    <TouchableOpacity style={styles.userBtn} onPress={() => {navigation.navigate('EditProfileScreen') ;}}>
                         <Text style={styles.userBtnTxt}>Edit Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
@@ -73,8 +75,8 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     userImg: {
-        height: 150,
-        width: 150,
+        height: 100,
+        width: 100,
         borderRadius: 75,
     },
     userName: {
