@@ -21,7 +21,7 @@ import firebase from '@react-native-firebase/database';
 //             )
 //             .ref('/Posts')
 //             .on
-
+const ProfileScreen = ({navigation, route}) => {
     const { user, logout } = useContext(AuthContext);
     let dispatch = useDispatch();
     const userid = useSelector(state => state.userdata.user_id);
@@ -110,6 +110,49 @@ import firebase from '@react-native-firebase/database';
         </SafeAreaView>
     );
 }
+//     }
+//     catch (e) { console.log(e); }
+// }
+// const ProfileScreen = ({navigation, route}) => {
+//   const {user, logout} = useContext(AuthContext);
+//   return (
+//     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+//       <ScrollView
+//         style={styles.container}
+//         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+//         showsVerticalScrollIndicator={false}>
+//         <Image style={styles.userImg} source={require('../Images/img1.jpg')} />
+//         <Text style={styles.userName}>Shahinaz Wehbi</Text>
+//         <Text style={styles.aboutUser}>
+//           Hello, we are creating our profile screen
+//         </Text>
+//         <View style={styles.userBtnWrapper}>
+//           <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
+//             <Text style={styles.userBtnTxt}>Edit Profile</Text>
+//           </TouchableOpacity>
+//           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+//             <Text style={styles.userBtnTxt}>Logout</Text>
+//           </TouchableOpacity>
+//         </View>
+
+//         <View style={styles.userInfoWrapper}>
+//           <View style={styles.userInfoItem}>
+//             <Text style={styles.userInfoTitle}>22</Text>
+//             <Text style={styles.userInfoSubTitle}>Posts</Text>
+//           </View>
+//           <View style={styles.userInfoItem}>
+//             <Text style={styles.userInfoTitle}>10,000</Text>
+//             <Text style={styles.userInfoSubTitle}>Followers</Text>
+//           </View>
+//           <View style={styles.userInfoItem}>
+//             <Text style={styles.userInfoTitle}>100</Text>
+//             <Text style={styles.userInfoSubTitle}>Following</Text>
+//           </View>
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// };
 
 export default ProfileScreen;
 
