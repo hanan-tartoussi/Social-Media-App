@@ -14,14 +14,45 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../Components/Card';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
+import { firebase, ref,update } from '@react-native-firebase/database';
+import { Alert } from 'react-native';
 const EditProfileScreen = ({ route, navigation }) => {
+  const userid = useSelector(state => state.userdata.user_id);
   const name = useSelector(state => state.userdata.name);
   const userBio = useSelector(state => state.userdata.bio);
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(name);
   const [usernameError, setUsernameError] = useState('');
   const TostMessage = () => {
     ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
+  };
+  const btnPost = async () => {
+    //const uri = imageUri.uri;
+    //let fileName = uri.substring(uri.lastIndexOf('/') + 1);
+    try {
+      //const fileRef = await storage().ref(fileName).putFile(uri);
+
+      //const ref = firebase.storage().ref(fileName);
+      //const url = await ref.getDownloadURL();
+      //console.log('this my image url:', url);
+
+      const newReference = firebase
+        .app()
+        .database(
+          'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+        )
+        .ref('/Users/' + userid)
+        .update({ "name": setUsername })
+        .then(() => {
+          console.log('Name updated.', newReference.key);
+          dispatch({ type: 'SET_USER_NAME', payload: username });
+        })
+        .catch(e => console.log('error from realtime:', e));
+    } catch (error) {
+      console.log('error from storage', error);
+    }
+    //setUsername('');
+    //navigation.goBack();
   };
   const renderHeader = () => (<Text>Hello </Text>);
   const renderInner = () => { }
@@ -29,8 +60,6 @@ const EditProfileScreen = ({ route, navigation }) => {
   fall = new Animated.Value(1);
 
   const usernameOnEndEditing = () => {
-    //Can only contain letters, numbers, and these characters: - _ .
-    //Username be at least 8 characters long
     var regex =
       /^(?=.{5,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
     if (!regex.test(username)) {
@@ -43,6 +72,7 @@ const EditProfileScreen = ({ route, navigation }) => {
       return true;
     }
   };
+
   return (
     <View
       style={{
@@ -84,8 +114,10 @@ const EditProfileScreen = ({ route, navigation }) => {
                 'Error',
                 'Please make sure of your editing fill',
               );
+            } else {
+              { btnPost }
+              TostMessage();
             }
-            TostMessage();
             navigation.goBack();
           }}>
           <Ionic name="checkmark" style={{ fontSize: 35, color: '#3493D9' }} />
