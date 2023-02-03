@@ -23,6 +23,7 @@ const ProfileScreen = ({ navigation, route }) => {
     let dispatch = useDispatch();
     const userid = useSelector(state => state.userdata.user_id);
     const username = useSelector(state => state.userdata.name);
+    const userBio = useSelector(state => state.userdata.bio);
     const userProfileImg = useSelector(state => state.userdata.userProfileImage);
     // const mypostsData = useSelector(state => state.postdata.myPosts);
     // const myArrayPosts = Object.values(mypostsData);
@@ -74,6 +75,7 @@ const ProfileScreen = ({ navigation, route }) => {
                             }}>
                             {username}
                         </Text>
+                        <Text style={styles.aboutUser}>{userBio}</Text>
                     </View>
 
                     <View style={styles.userInfoItem}>
@@ -81,7 +83,6 @@ const ProfileScreen = ({ navigation, route }) => {
                         <Text style={styles.userInfoSubTitle}>Posts</Text>
                     </View>
                 </View>
-                {/* <Text style={styles.aboutUser}>Hello, we are creating our profile screen</Text> */}
                 <View style={styles.userBtnWrapper}>
                     <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfileScreen'); }}>
                         <Text style={styles.userBtnTxt}>Edit Profile</Text>

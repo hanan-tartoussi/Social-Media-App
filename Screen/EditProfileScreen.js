@@ -13,6 +13,7 @@ import Card from '../Components/Card';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 const EditProfileScreen = ({ route, navigation }) => {
   const username = useSelector(state => state.userdata.name);
+  const userBio = useSelector(state => state.userdata.bio);
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const TostMessage = () => {
     ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
@@ -76,6 +77,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         <View style={{ paddingVertical: 10 }}>
           <TextInput
             placeholder="Bio"
+            defaultValue={userBio}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
