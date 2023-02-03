@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import {Switch, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import {Switch, KeyboardAvoidingView} from 'react-native';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import ButtonForm from '../Components/ButtonForm';
 import InputForm from '../Components/InputForm';
 import {AuthContext} from '../Navigation/AuthProvider';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import EyePassword from '../Components/EyePassword';
 
 const LoginScreen = ({navigation}) => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -110,7 +110,17 @@ const LoginScreen = ({navigation}) => {
               _ref={passwordRef}
               // onEndEditing={passwordOnEndEditing}
             />
-            <TouchableOpacity
+            <EyePassword
+              passEyeName={passEyeName}
+              onPress={() => {
+                passwordVisibility
+                  ? (setPasswordVisibility(false),
+                    setPassEyeName('eye-outline'))
+                  : (setPasswordVisibility(true),
+                    setPassEyeName('ios-eye-off-outline'));
+              }}
+            />
+            {/* <TouchableOpacity
               style={{
                 padding: 10,
                 paddingRight: 20,
@@ -127,7 +137,7 @@ const LoginScreen = ({navigation}) => {
                     setPassEyeName('ios-eye-off-outline'));
               }}>
               <Ionicons name={passEyeName} size={25} color="#666" />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
 
           <View
@@ -166,6 +176,12 @@ const LoginScreen = ({navigation}) => {
               }}>
               Sign Up Here
             </Text>
+          </Text>
+
+          <Text
+            style={styles.registerTextStyle}
+            onPress={() => navigation.navigate('UpdatePass')}>
+            Change ur password?{' '}
           </Text>
         </SafeAreaView>
       </View>
