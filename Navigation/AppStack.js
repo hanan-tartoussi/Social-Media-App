@@ -38,9 +38,10 @@ export default function AppStack() {
       />
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={EditProfile}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'EditProfile',
+          headerShown: false,
           tabBarIcon: () => (
             <MaterialIcons name="person" color="#5b637b" size={24} />
           ),

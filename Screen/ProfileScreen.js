@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,61 +7,102 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
+  FlatList,
 } from 'react-native';
 import {AuthContext} from '../Navigation/AuthProvider';
-import firebase from '@react-native-firebase/database';
+import EditProfileScreen from './EditProfileScreen';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import Card from '../Components/Card';
+import {fetchPosts, fetchUser} from '../Redux/FetchData';
 
-// const fetchPosts = async () => {
-//     try {
-//         const list = [];
-//         firebase
-//             .app()
-//             .database(
-//                 'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-//             )
-//             .ref('/Posts')
-//             .on
-
-//     }
-//     catch (e) { console.log(e); }
-// }
+renderItem = ({item}) => <Card cardDetails={item} />;
 const ProfileScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
+  let dispatch = useDispatch();
+  const userid = useSelector(state => state.userdata.user_id);
+  const username = useSelector(state => state.userdata.name);
+  const userProfileImg = useSelector(state => state.userdata.userProfileImage);
+  // const mypostsData = useSelector(state => state.postdata.myPosts);
+  // const myArrayPosts = Object.values(mypostsData);
+  //console.log('my postsData here: ', myArrayPosts);
+  useEffect(() => {
+    dispatch(fetchUser(user.uid));
+    dispatch(fetchPosts());
+  }, []);
+  const [isRefreshing, setOnRefresh] = useState(false);
+  const handleRefresh = () => {
+    setOnRefresh(true);
+    setTimeout(() => {
+      setOnRefresh(false);
+    }, 2000);
+  };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <ScrollView
+      <View
         style={styles.container}
         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
-        <Image style={styles.userImg} source={require('../Images/img1.jpg')} />
-        <Text style={styles.userName}>Shahinaz Wehbi</Text>
-        <Text style={styles.aboutUser}>
-          Hello, we are creating our profile screen
-        </Text>
+        {/* <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <Image style={styles.userImg} source={userProfileImg.uri} />
+                    <Text style={styles.userName}>{username}</Text>
+                </View> */}
+        <View style={styles.userInfoWrapper}>
+          <View
+            style={{
+              alignItems: 'center',
+            }}>
+            <Image
+              source={require('../Images/img1.jpg')}
+              style={{
+                resizeMode: 'cover',
+                width: 80,
+                height: 80,
+                borderRadius: 100,
+              }}
+            />
+            <Text
+              style={{
+                paddingVertical: 5,
+                fontWeight: 'bold',
+              }}>
+              {username}
+            </Text>
+          </View>
+
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>0</Text>
+            <Text style={styles.userInfoSubTitle}>Posts</Text>
+          </View>
+        </View>
+        {/* <Text style={styles.aboutUser}>Hello, we are creating our profile screen</Text> */}
         <View style={styles.userBtnWrapper}>
-          <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => {
+              navigation.navigate('EditProfileScreen');
+            }}>
             <Text style={styles.userBtnTxt}>Edit Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
             <Text style={styles.userBtnTxt}>Logout</Text>
           </TouchableOpacity>
         </View>
-
-        <View style={styles.userInfoWrapper}>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>22</Text>
-            <Text style={styles.userInfoSubTitle}>Posts</Text>
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>10,000</Text>
-            <Text style={styles.userInfoSubTitle}>Followers</Text>
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>100</Text>
-            <Text style={styles.userInfoSubTitle}>Following</Text>
-          </View>
+        <View>
+          {/* <FlatList
+                        data={myArrayPosts}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        refreshing={isRefreshing}
+                        onRefresh={handleRefresh}
+                    /> */}
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };
@@ -75,8 +116,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userImg: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     borderRadius: 75,
   },
   userName: {
