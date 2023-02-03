@@ -82,6 +82,13 @@ export default function AddPost() {
       position: 2,
     },
   ];
+
+  const btnCancelPost = () => {
+    setImageUri('');
+    setTextInput('');
+    navigation.navigate('Home');
+  };
+
   const btnPost = async () => {
     const uri = imageUri.uri;
     let fileName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -127,6 +134,9 @@ export default function AddPost() {
   };
   return (
     <View style={styles.InputWrapper}>
+      <View style={styles.BtnCancelPost}>
+        <Button onPress={btnCancelPost} title="Cancel" color="#1c51de" />
+      </View>
       <View style={styles.BtnPost}>
         <Button onPress={btnPost} title="Post" color="#1c51de" />
       </View>
@@ -177,6 +187,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     width: '90%',
+  },
+  BtnCancelPost: {
+    width: 'auto',
+    position: 'absolute',
+    left: 0,
+    marginLeft: 5,
+    top: 5,
   },
   BtnPost: {
     width: 60,
