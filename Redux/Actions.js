@@ -1,7 +1,7 @@
 import {
   FETCH_USER_DATA_REQUEST,
   FETCH_USER_DATA_SUCCESS,
-  FETCH_POSTS_DATA_SUCCESS,
+  FETCH_POSTS_DATA_SUCCESS
 } from './ActionType';
 
 export function fetchUserDataRequest() {

@@ -54,7 +54,7 @@ export const EditProfile = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileScreen}
         options={{
           headerShown: false,
