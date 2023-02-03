@@ -3,6 +3,7 @@ let initialState = {
   user_id: [],
   name: null,
   email: null,
+  bio:null,
   userProfileImage: null,
   error: '',
 };
@@ -23,6 +24,8 @@ function reducer(state = initialState, { type, payload }) {
       return { ...state, email: payload };
     case 'SET_USER_PROFILE_IMAGE':
       return { ...state, userProfileImage: payload };
+    case 'SET_USER_BIO':
+      return { ...state, bio: payload };
     default:
       return state;
   }
