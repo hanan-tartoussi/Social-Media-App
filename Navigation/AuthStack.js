@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../Screen/LoginScreen';
 import RegisterScreen from '../Screen/RegisterScreen';
-// import UpdatePass from '../Screen/UpdatePass';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,13 +23,6 @@ const AuthStack = () => {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen
-        name="UpdatePass"
-        component={UpdatePass}
-        options={{
-          headerShown: false,
-        }}
-      /> */}
     </Stack.Navigator>
   );
 };

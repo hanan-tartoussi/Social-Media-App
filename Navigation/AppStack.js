@@ -3,11 +3,12 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../Screen/HomeScreen';
 import AddPost from '../Screen/AddPost';
-import Profile from '../Screen/Profile';
 //import AddPost from '../Pages/AddPost';
+import EditProfileScreen from '../Screen/EditProfileScreen';
 import ProfileScreen from '../Screen/ProfileScreen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Tab = createMaterialBottomTabNavigator();
-
+const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
     <Tab.Navigator
@@ -48,3 +49,23 @@ export default function AppStack() {
     </Tab.Navigator>
   );
 }
+export const EditProfile = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};

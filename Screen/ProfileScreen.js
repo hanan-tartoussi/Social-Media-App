@@ -27,7 +27,6 @@ import firebase from '@react-native-firebase/database';
 // }
 const ProfileScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
-
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <ScrollView
