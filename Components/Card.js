@@ -7,30 +7,33 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {Divider} from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import moment from "moment";
+
 
 const imageExist = (image) => {
-//   { image !== '' ? <Image source={{uri: image}} /> : <Divider style={styles.dividerStyle} />
-// }
-  if (image == '') return <Divider style={styles.dividerStyle} />;
-  else return <Image style={styles.PostImg} source={{uri: image}} />;
+  if (!image) return <Divider style={styles.dividerStyle} />;
+  else return <Image style={styles.PostImg} source={{ uri: image }} />;
 };
 
 export default function Card(props) {
+  //const date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY") //February 3,2023
+  //const date = moment(props.cardDetails.addedDate).startOf('hour').fromNow() //43 minutes ago
+  //const date = moment(props.cardDetails.addedDate).startOf('day').fromNow();  //21 hours ago
+
   return (
     <View style={styles.Container}>
       <View style={styles.Card}>
         <View style={styles.UserInfo}>
-          {/* <Image style={styles.UserImage} source={props.cardDetails.image} /> */}
-          {/* we need user Profile to display it */}
+          <Image style={styles.UserImage} source={{ uri: props.cardDetails.userProfileImage }} />
           <View style={styles.UserInfoText}>
             <Text style={styles.UserName}>{props.cardDetails.username}</Text>
-            {/* <Text style={styles.PostDate}>{props.cardDetails.date}</Text> */}
-            {/* we need 'date of added the post' to display it */}
+            {/* <Text style={styles.PostDate}>{date}</Text> */}
+            <Text style={styles.PostDate}>{props.cardDetails.addedDate}</Text>
           </View>
         </View>
-        <Text style={styles.PostText}>{props.cardDetails.caption}</Text>   
+        <Text style={styles.PostText}>{props.cardDetails.caption}</Text>
         {imageExist(props.cardDetails.image)}
         <View style={styles.InteractionWrapper}>
           <TouchableOpacity style={styles.Interaction}>

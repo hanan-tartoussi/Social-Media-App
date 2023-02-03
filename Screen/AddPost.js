@@ -2,16 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TextInput, Image, Button, Alert } from 'react-native';
 import { FloatingAction } from 'react-native-floating-action';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import { useNavigation } from '@react-navigation/native';
+import { LinkingContext, useNavigation } from '@react-navigation/native';
 import { firebase } from '@react-native-firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import storage from '@react-native-firebase/storage';
 
 export default function AddPost() {
   let dispatch = useDispatch();
+  const [isDisabled, setIsDisabled] = useState(true);
   const userid = useSelector(state => state.userdata.user_id);
   const username = useSelector(state => state.userdata.name);
-
+  const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const navigation = useNavigation();
 
   const [imageUri, setImageUri] = useState('');
@@ -36,7 +37,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.assets[0].uri };
+        const source = response.assets[0].uri;
         setImageUri(source);
       }
     });
@@ -61,7 +62,7 @@ export default function AddPost() {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.assets[0].uri };
+        const source = response.assets[0].uri;
         setImageUri(source);
       }
     });
@@ -83,15 +84,21 @@ export default function AddPost() {
   ];
   const btnPost = async () => {
 
-    const uri = imageUri.uri;
-    let fileName = uri.substring(uri.lastIndexOf('/') + 1);
+
     try {
+      let url = null;
+      const uri = imageUri;
+      if (uri) {
+        let fileName = uri.substring(uri.lastIndexOf('/') + 1);
 
-      const fileRef = await storage().ref(fileName).putFile(uri);
+        await storage().ref(fileName).putFile(uri);
 
-      const ref = firebase.storage().ref(fileName);
-      const url = await ref.getDownloadURL();
-      console.log('this my image url:', url);
+        const ref = firebase.storage().ref(fileName);
+        url = await ref.getDownloadURL();
+        console.log('this my image url:', url);
+      }
+
+
 
       const newReference = firebase
         .app()
@@ -109,7 +116,9 @@ export default function AddPost() {
           userID: userid,
           username: username,
           caption: textInput,
-          image: url,
+          userProfileImage: userProfileImg,
+          image: url ? url : null,
+          addedDate : Date.now(),
         })
         .then(() => {
           console.log('Data updated.', newReference.key);
@@ -121,14 +130,18 @@ export default function AddPost() {
     } catch (error) {
       console.log('error from storage', error);
     }
-    setImageUri("");
-    setTextInput("");
+    setImageUri('');
+    setTextInput('');
     navigation.navigate('Home');
   };
   return (
     <View style={styles.InputWrapper}>
       <View style={styles.BtnPost}>
-        <Button onPress={btnPost} title="Post" color="#1c51de" />
+        <Button
+          disabled={isDisabled}
+          onPress={btnPost}
+          title="Post"
+          color="#1c51de" />
       </View>
       <TextInput
         style={styles.InputFiled}
@@ -138,14 +151,19 @@ export default function AddPost() {
         multiline
         numberOfLines={4}
         defaultValue={textInput}
-        onChangeText={newText => setTextInput(newText)}
+        onChangeText={newText => { setTextInput(newText), setIsDisabled(false) }}
       />
 
-      {imageUri ? <Image source={imageUri} style={{
-        height: 250,
-        width: '100%',
-        borderColor: 'black',
-      }} /> : null}
+      {imageUri ? (
+        <Image
+          source={{ uri: imageUri }}
+          style={{
+            height: 250,
+            width: '100%',
+            borderColor: 'black',
+          }}
+        />
+      ) : null}
 
       <FloatingAction
         actions={actions}

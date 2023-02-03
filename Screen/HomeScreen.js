@@ -15,16 +15,16 @@ export default function HomeScreen() {
   const userInfo = useSelector(state => state.userTabInfo.user);
   const userid = useSelector(state => state.userdata.user_id);
   const postsData = useSelector(state => state.postdata.allPosts);
-  const myArrayPosts = Object.values( postsData );
-  console.log('all postsData here: ', myArrayPosts);
+  //const myArrayPosts = Object.values( postsData );
+  console.log('all postsData here: ', postsData);
 
-  const [isRefreshing, setOnRefresh] = useState(false);
-  const handleRefresh = () => {
-    setOnRefresh(true);
-    setTimeout(() => {
-      setOnRefresh(false);
-    }, 2000);
-  };
+  // const [isRefreshing, setOnRefresh] = useState(false);
+  // const handleRefresh = () => {
+  //   setOnRefresh(true);
+  //   setTimeout(() => {
+  //     setOnRefresh(false);
+  //   }, 2000);
+  // };
 
   useEffect(() => {
     dispatch(fetchUser(user.uid));
@@ -35,11 +35,11 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <Header />
       <FlatList
-        data={myArrayPosts} 
+        data={postsData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        refreshing={isRefreshing}
-        onRefresh={handleRefresh}
+        //refreshing={isRefreshing}
+        //onRefresh={handleRefresh}
       />
     </SafeAreaView>
   );

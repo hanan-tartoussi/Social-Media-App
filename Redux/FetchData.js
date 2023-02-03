@@ -3,8 +3,10 @@ import {
   fetchUserDataSuccess,
   fetchPostsDataSuccess,
 } from './Actions';
-import {firebase} from '@react-native-firebase/database';
-
+import { firebase } from '@react-native-firebase/database';
+// const myArray = Object.values(snapshot.val());
+// console.log(myArray);
+// myArray.sort(()=>{})
 export const fetchUser = userID => {
   return dispatch => {
     //console.log('auth().uid from fetchData', userID);
@@ -17,16 +19,20 @@ export const fetchUser = userID => {
       .ref('/Users/' + userID)
       .on('value', snapshot => {
         dispatch(fetchUserDataSuccess(snapshot.val()));
-        dispatch({type: 'SET_USER_ID', payload: userID});
-        dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
-        dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
-        //console.log('User data: ', snapshot.val());
+        dispatch({ type: 'SET_USER_ID', payload: userID });
+        dispatch({ type: 'SET_USER_NAME', payload: snapshot.val().name });
+        dispatch({ type: 'SET_USER_EMAIL', payload: snapshot.val().email });
+        dispatch({
+          type: 'SET_USER_PROFILE_IMAGE',
+          payload: snapshot.val().userProfileImage,
+        });
         //console.log('User name from fetch data: ', snapshot.val().name);
       });
   };
 };
 
 export const fetchPosts = () => {
+
   return dispatch => {
     firebase
       .app()
@@ -35,8 +41,8 @@ export const fetchPosts = () => {
       )
       .ref('/Posts')
       .on('value', snapshot => {
-        dispatch(fetchPostsDataSuccess(snapshot.val()));
-        //console.log('Posts data: ', snapshot.val());
+        dispatch(fetchPostsDataSuccess(Object.values(snapshot.val())));
+        console.log('Posts data: ', Object.values(snapshot.val()));
       });
   };
 };
