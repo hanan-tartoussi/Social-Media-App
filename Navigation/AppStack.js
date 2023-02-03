@@ -39,7 +39,7 @@ export default function AppStack() {
         }}
       />
       <Tab.Screen name='Profile' component={EditProfile} options={{
-        tabBarLabel: 'EditProfile',
+        tabBarLabel: 'Profile',
         headerShown: false,
         tabBarIcon: () => (
           <MaterialIcons name="person" color="#5b637b" size={24} />
@@ -52,7 +52,7 @@ export default function AppStack() {
 export const EditProfile = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={ProfileScreen} options={{
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{
         headerShown: false,
       }} />
       <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} options={{

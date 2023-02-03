@@ -25,6 +25,7 @@ const ProfileScreen = ({ navigation, route }) => {
     const username = useSelector(state => state.userdata.name);
     const userBio = useSelector(state => state.userdata.bio);
     const userProfileImg = useSelector(state => state.userdata.userProfileImage);
+    const posts = useSelector(state => state.postdata.allPosts);
     // const mypostsData = useSelector(state => state.postdata.myPosts);
     // const myArrayPosts = Object.values(mypostsData);
     //console.log('my postsData here: ', myArrayPosts);
