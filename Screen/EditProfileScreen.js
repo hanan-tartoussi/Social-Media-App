@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Card from '../Components/Card';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import {useNavigation} from '@react-navigation/native';
+import { useDisclosure } from '@chakra-ui/react';
 import { Actionsheet } from "react-native-actionsheet";
 import { firebase, ref, update } from '@react-native-firebase/database';
 import { Alert } from 'react-native';
@@ -30,7 +31,7 @@ const EditProfileScreen = ({ route, navigation }) => {
     isOpen,
     onOpen,
     onClose
-  } = useDisclose();
+  } = useDisclosure();
   const btnPost = async () => {
     //const uri = imageUri.uri;
     //let fileName = uri.substring(uri.lastIndexOf('/') + 1);
