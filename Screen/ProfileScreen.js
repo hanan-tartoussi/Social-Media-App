@@ -23,8 +23,8 @@ const ProfileScreen = ({ navigation, route }) => {
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const postsData = useSelector(state => state.postdata.allPosts);
   const myArrayPosts = Object.values(postsData);
-  const myPosts = [] = myArrayPosts.filter((eachpost) => { eachpost.userid == userid });
-  console.log('all postsData here: ', myArrayPosts);
+  const myPosts = [] = myArrayPosts.filter(myArrayPosts => myArrayPosts.userID == userid);
+  console.log('my posts here: ', myPosts);
   useEffect(() => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
@@ -58,7 +58,7 @@ const ProfileScreen = ({ navigation, route }) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../Images/img1.jpg')}
+              source={userProfileImg}
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -77,7 +77,7 @@ const ProfileScreen = ({ navigation, route }) => {
           </View>
 
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>0</Text>
+            <Text style={styles.userInfoTitle}>{myPosts.length}</Text>
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
         </View>
