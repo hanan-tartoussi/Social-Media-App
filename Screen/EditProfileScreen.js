@@ -8,13 +8,14 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
-import BottomSheet from 'reanimated-bottom-sheet';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../Components/Card';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
-import { firebase, ref,update } from '@react-native-firebase/database';
+import {useNavigation} from '@react-navigation/native';
+import { useDisclosure } from '@chakra-ui/react';
+import { Actionsheet } from "react-native-actionsheet";
+import { firebase, ref, update } from '@react-native-firebase/database';
 import { Alert } from 'react-native';
 const EditProfileScreen = ({ route, navigation }) => {
   const userid = useSelector(state => state.userdata.user_id);
@@ -26,6 +27,11 @@ const EditProfileScreen = ({ route, navigation }) => {
   const TostMessage = () => {
     ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
   };
+  const {
+    isOpen,
+    onOpen,
+    onClose
+  } = useDisclosure();
   const btnPost = async () => {
     //const uri = imageUri.uri;
     //let fileName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -80,15 +86,6 @@ const EditProfileScreen = ({ route, navigation }) => {
         height: '100%',
         backgroundColor: 'white',
       }}>
-      {/* <BottomSheet
-        ref={this.bs}
-        snapPoints={[330, 0]}
-        renderContent={renderInner}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        callbackNode={this.fall}
-        enabledGestureInteraction={true}
-      /> */}
       <View
         style={{
           flexDirection: 'row',
@@ -171,6 +168,14 @@ const EditProfileScreen = ({ route, navigation }) => {
             }}
           />
         </View>
+        <Button onPress={onOpen}>Actionsheet</Button>
+        <Actionsheet isOpen={isOpen} onClose={onClose}>
+          <Actionsheet.Content>
+            <Actionsheet.Item>Option 1</Actionsheet.Item>
+            <Actionsheet.Item>Option 2</Actionsheet.Item>
+            <Actionsheet.Item>Option 3</Actionsheet.Item>
+          </Actionsheet.Content>
+        </Actionsheet>
       </View>
       {/* <View>
         <Text
@@ -185,7 +190,7 @@ const EditProfileScreen = ({ route, navigation }) => {
           Personal information setting
         </Text>
       </View> */}
-    </View>
+    </View >
   );
 };
 
