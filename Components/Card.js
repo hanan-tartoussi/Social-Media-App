@@ -21,7 +21,7 @@ export default function Card(props) {
   //const date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY") //February 3,2023
   //const date = moment(props.cardDetails.addedDate).startOf('hour').fromNow() //43 minutes ago
   //const date = moment(props.cardDetails.addedDate).startOf('day').fromNow();  //21 hours ago
-
+  const date = moment(props.cardDetails.addedDate).fromNow();
   return (
     <View style={styles.Container}>
       <View style={styles.Card}>
@@ -29,8 +29,8 @@ export default function Card(props) {
           <Image style={styles.UserImage} source={{ uri: props.cardDetails.userProfileImage }} />
           <View style={styles.UserInfoText}>
             <Text style={styles.UserName}>{props.cardDetails.username}</Text>
-            {/* <Text style={styles.PostDate}>{date}</Text> */}
-            <Text style={styles.PostDate}>{props.cardDetails.addedDate}</Text>
+            <Text style={styles.PostDate}>{date}</Text>
+            {/* <Text style={styles.PostDate}>{props.cardDetails.addedDate}</Text> */}
           </View>
         </View>
         <Text style={styles.PostText}>{props.cardDetails.caption}</Text>
