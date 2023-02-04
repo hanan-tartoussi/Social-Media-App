@@ -27,11 +27,11 @@ const EditProfileScreen = ({ route, navigation }) => {
   const TostMessage = () => {
     ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
   };
-  const {
-    isOpen,
-    onOpen,
-    onClose
-  } = useDisclosure();
+  // const {
+  //   isOpen,
+  //   onOpen,
+  //   onClose
+  // } = useDisclosure()
   const btnPost = async () => {
     //const uri = imageUri.uri;
     //let fileName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -60,10 +60,10 @@ const EditProfileScreen = ({ route, navigation }) => {
     //setUsername('');
     //navigation.goBack();
   };
-  const renderHeader = () => (<Text>Hello </Text>);
-  const renderInner = () => { }
-  bs = React.createRef();
-  fall = new Animated.Value(1);
+  // const renderHeader = () => (<Text>Hello </Text>);
+  // const renderInner = () => { }
+  // bs = React.createRef();
+  // fall = new Animated.Value(1);
 
   const usernameOnEndEditing = () => {
     var regex =
@@ -168,14 +168,14 @@ const EditProfileScreen = ({ route, navigation }) => {
             }}
           />
         </View>
-        <Button onPress={onOpen}>Actionsheet</Button>
+        {/* <Button onPress={onOpen}>Actionsheet</Button>
         <Actionsheet isOpen={isOpen} onClose={onClose}>
           <Actionsheet.Content>
             <Actionsheet.Item>Option 1</Actionsheet.Item>
             <Actionsheet.Item>Option 2</Actionsheet.Item>
             <Actionsheet.Item>Option 3</Actionsheet.Item>
           </Actionsheet.Content>
-        </Actionsheet>
+        </Actionsheet> */}
       </View>
       {/* <View>
         <Text
