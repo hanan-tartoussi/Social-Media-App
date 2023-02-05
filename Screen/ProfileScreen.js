@@ -10,22 +10,10 @@ import {
   FlatList,
 } from 'react-native';
 import {AuthContext} from '../Navigation/AuthProvider';
-import EditProfileScreen from './EditProfileScreen';
-import {useNavigation} from '@react-navigation/native';
+import firebase from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
-import Card from '../Components/Card';
 import {fetchPosts, fetchUser} from '../Redux/FetchData';
-
-// const fetchPosts = async () => {
-//     try {
-//         const list = [];
-//         firebase
-//             .app()
-//             .database(
-//                 'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-//             )
-//             .ref('/Posts')
-//             .on
+import Card from '../Components/Card';
 const ProfileScreen = ({navigation, route}) => {
   const {user, logout} = useContext(AuthContext);
   let dispatch = useDispatch();
@@ -33,14 +21,17 @@ const ProfileScreen = ({navigation, route}) => {
   const username = useSelector(state => state.userdata.name);
   const userBio = useSelector(state => state.userdata.bio);
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
-  const posts = useSelector(state => state.postdata.allPosts);
-  // const mypostsData = useSelector(state => state.postdata.myPosts);
-  // const myArrayPosts = Object.values(mypostsData);
-  //console.log('my postsData here: ', myArrayPosts);
+  const postsData = useSelector(state => state.postdata.allPosts);
+  const myArrayPosts = Object.values(postsData);
+  const myPosts = ([] = myArrayPosts.filter(
+    myArrayPosts => myArrayPosts.userID == userid,
+  ));
+  console.log('my posts here: ', myPosts);
   useEffect(() => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
+  renderItem = ({item}) => <Card cardDetails={item} />;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -69,7 +60,7 @@ const ProfileScreen = ({navigation, route}) => {
               alignItems: 'center',
             }}>
             <Image
-              source={require('../Images/img1.jpg')}
+              source={userProfileImg}
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -88,7 +79,7 @@ const ProfileScreen = ({navigation, route}) => {
           </View>
 
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>0</Text>
+            <Text style={styles.userInfoTitle}>{myPosts.length}</Text>
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
         </View>
@@ -105,62 +96,18 @@ const ProfileScreen = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
         <View>
-          {/* <FlatList
-                        data={myArrayPosts}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                        refreshing={isRefreshing}
-                        onRefresh={handleRefresh}
-                    /> */}
+          <FlatList
+            data={myPosts}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            refreshing={isRefreshing}
+            onRefresh={handleRefresh}
+          />
         </View>
       </View>
     </SafeAreaView>
   );
 };
-//     }
-//     catch (e) { console.log(e); }
-// }
-// const ProfileScreen = ({navigation, route}) => {
-//   const {user, logout} = useContext(AuthContext);
-//   return (
-//     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-//       <ScrollView
-//         style={styles.container}
-//         contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
-//         showsVerticalScrollIndicator={false}>
-//         <Image style={styles.userImg} source={require('../Images/img1.jpg')} />
-//         <Text style={styles.userName}>Shahinaz Wehbi</Text>
-//         <Text style={styles.aboutUser}>
-//           Hello, we are creating our profile screen
-//         </Text>
-//         <View style={styles.userBtnWrapper}>
-//           <TouchableOpacity style={styles.userBtn} onPress={() => {}}>
-//             <Text style={styles.userBtnTxt}>Edit Profile</Text>
-//           </TouchableOpacity>
-//           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-//             <Text style={styles.userBtnTxt}>Logout</Text>
-//           </TouchableOpacity>
-//         </View>
-
-//         <View style={styles.userInfoWrapper}>
-//           <View style={styles.userInfoItem}>
-//             <Text style={styles.userInfoTitle}>22</Text>
-//             <Text style={styles.userInfoSubTitle}>Posts</Text>
-//           </View>
-//           <View style={styles.userInfoItem}>
-//             <Text style={styles.userInfoTitle}>10,000</Text>
-//             <Text style={styles.userInfoSubTitle}>Followers</Text>
-//           </View>
-//           <View style={styles.userInfoItem}>
-//             <Text style={styles.userInfoTitle}>100</Text>
-//             <Text style={styles.userInfoSubTitle}>Following</Text>
-//           </View>
-//         </View>
-//       </ScrollView>
-//     </SafeAreaView>
-//   );
-// };
-
 export default ProfileScreen;
 
 const styles = StyleSheet.create({

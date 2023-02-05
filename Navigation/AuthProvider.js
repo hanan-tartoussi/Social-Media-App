@@ -1,11 +1,11 @@
-import React, {createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 import auth from '@react-native-firebase/auth';
-import {firebase} from '@react-native-firebase/database';
-import {Alert} from 'react-native';
+import { firebase } from '@react-native-firebase/database';
+import { Alert } from 'react-native';
 
 export const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   return (
     // we will create different state for the authentication (login, register, and logout)
