@@ -40,7 +40,8 @@ export default function AppStack() {
         name="Profile"
         component={EditProfile}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'EditProfile',
+          headerShown: false,
           tabBarIcon: () => (
             <MaterialIcons name="person" color="#5b637b" size={24} />
           ),

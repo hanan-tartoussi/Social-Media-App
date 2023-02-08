@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,15 +7,15 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  FlatList
+  FlatList,
 } from 'react-native';
-import { AuthContext } from '../Navigation/AuthProvider';
+import {AuthContext} from '../Navigation/AuthProvider';
 import firebase from '@react-native-firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, fetchUser } from '../Redux/FetchData';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchPosts, fetchUser} from '../Redux/FetchData';
 import Card from '../Components/Card';
-const ProfileScreen = ({ navigation, route }) => {
-  const { user, logout } = useContext(AuthContext);
+const ProfileScreen = ({navigation, route}) => {
+  const {user, logout} = useContext(AuthContext);
   let dispatch = useDispatch();
   const userid = useSelector(state => state.userdata.user_id);
   const username = useSelector(state => state.userdata.name);
@@ -23,13 +23,15 @@ const ProfileScreen = ({ navigation, route }) => {
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const postsData = useSelector(state => state.postdata.allPosts);
   const myArrayPosts = Object.values(postsData);
-  const myPosts = [] = myArrayPosts.filter(myArrayPosts => myArrayPosts.userID == userid);
+  const myPosts = ([] = myArrayPosts.filter(
+    myArrayPosts => myArrayPosts.userID == userid,
+  ));
   console.log('my posts here: ', myPosts);
   useEffect(() => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-  renderItem = ({ item }) => <Card cardDetails={item} />;
+  renderItem = ({item}) => <Card cardDetails={item} />;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -39,10 +41,10 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View
         style={styles.container}
-        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
         {/* <View style={{
                     flexDirection: 'row',
@@ -82,7 +84,11 @@ const ProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
         <View style={styles.userBtnWrapper}>
-          <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfileScreen'); }}>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => {
+              navigation.navigate('EditProfileScreen');
+            }}>
             <Text style={styles.userBtnTxt}>Edit Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
@@ -98,12 +104,10 @@ const ProfileScreen = ({ navigation, route }) => {
             onRefresh={handleRefresh}
           />
         </View>
-
-
       </View>
     </SafeAreaView>
   );
-}
+};
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
@@ -113,8 +117,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userImg: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     borderRadius: 75,
   },
   userName: {
