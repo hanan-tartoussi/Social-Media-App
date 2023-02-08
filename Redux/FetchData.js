@@ -16,6 +16,7 @@ export const fetchUser = userID => {
       )
       .ref('/Users/' + userID)
       .on('value', snapshot => {
+        console.log('user details changed', snapshot.val())
         dispatch(fetchUserDataSuccess(snapshot.val()));
         dispatch({type: 'SET_USER_ID', payload: userID});
         dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
