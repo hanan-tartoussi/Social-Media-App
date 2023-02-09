@@ -19,7 +19,7 @@ export const fetchUser = userID => {
       .ref('/Users/' + userID)
       .on('value', snapshot => {
         console.log('user details changed', snapshot.val())
-        dispatch(fetchUserDataSuccess(snapshot.val()));
+       // dispatch(fetchUserDataSuccess(snapshot.val()));
         dispatch({type: 'SET_USER_ID', payload: userID});
         dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
         dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
@@ -45,6 +45,21 @@ export const fetchPosts = () => {
       .on('value', snapshot => {
         dispatch(fetchPostsDataSuccess(Object.values(snapshot.val())));
         console.log('Posts data: ', Object.values(snapshot.val()));
+      });
+  };
+}
+export const fetchUsers = () => {
+
+  return dispatch => {
+    firebase
+      .app()
+      .database(
+        'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+      )
+      .ref('/Users')
+      .on('value', snapshot => {
+        dispatch(fetchUserDataSuccess(snapshot.val()));
+        console.log('Users data: ', Object.values(snapshot.val()));
       });
   };
 }

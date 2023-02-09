@@ -20,7 +20,7 @@ export default function AppStack() {
         barStyle={{backgroundColor: '#fff'}}
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: null,
           tabBarIcon: () => (
             <MaterialIcons name="home" color="#5b637b" size={24} />
           ),
@@ -30,7 +30,7 @@ export default function AppStack() {
         name="New Post"
         component={AddPost}
         options={{
-          tabBarLabel: 'New Post',
+          tabBarLabel: null,
           tabBarIcon: () => (
             <MaterialIcons name="add" color="#5b637b" size={24} />
           ),
@@ -40,7 +40,7 @@ export default function AppStack() {
         name="Profile"
         component={EditProfile}
         options={{
-          tabBarLabel: 'EditProfile',
+          tabBarLabel: null,
           headerShown: false,
           tabBarIcon: () => (
             <MaterialIcons name="person" color="#5b637b" size={24} />

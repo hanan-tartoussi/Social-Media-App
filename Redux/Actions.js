@@ -11,12 +11,11 @@ export function fetchUserDataRequest() {
 }
 
 export const fetchUserDataSuccess = user => async dispatch => {
-  setTimeout(() => {
+   
     dispatch({
       type: FETCH_USER_DATA_SUCCESS,
       payload: user,
     });
-  }, 2000);
 };
 
 export const fetchPostsDataSuccess = allPosts => async dispatch => {

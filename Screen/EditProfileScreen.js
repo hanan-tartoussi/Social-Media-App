@@ -32,9 +32,9 @@ const EditProfileScreen = ({ route, navigation }) => {
   };
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState('');
-
+  const dispatch = useDispatch();
   const storageImage = async (uri) => {
-    debugger;
+    //debugger;
     let fileName = uri.substring(uri.lastIndexOf('/') + 1);
     try {
       const fileRef = await storage().ref(`/Avatar/${fileName}`).putFile(uri);
@@ -54,10 +54,23 @@ const EditProfileScreen = ({ route, navigation }) => {
     } catch (e) {
       console.log('error from storage', e);
     }
-
-
-
   }
+  // const storageUserName = async () => {
+  //   debugger;
+  //   try {
+  //     firebase
+  //       .app()
+  //       .database(
+  //         'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+  //       )
+  //       .ref('/Users/' + userid).update({
+  //         username: url,
+  //       })
+  //       .then(() => console.log('name updated.'));
+  //   } catch (e) {
+  //     console.log('error from realtime', e);
+  //   }
+  // }
   const openCamera = () => {
     const options = {
       StorageOptions: {
@@ -119,46 +132,32 @@ const EditProfileScreen = ({ route, navigation }) => {
     });
     setModalVisible(false);
   };
-useEffect(()=>{
-  storageImage(imageUri);
-},[imageUri])
-  // const {
-  //   isOpen,
-  //   onOpen,
-  //   onClose
-  // } = useDisclosure()
+  useEffect(() => {
+    console.log("image uri "+imageUri);
+   if(imageUri) storageImage(imageUri);
+  }, [imageUri])
+  useEffect(() => { btnPost(); }, [])
   const btnPost = async () => {
-    //const uri = imageUri.uri;
-    //let fileName = uri.substring(uri.lastIndexOf('/') + 1);
+    //debugger;
     try {
-      //const fileRef = await storage().ref(fileName).putFile(uri);
-
-      //const ref = firebase.storage().ref(fileName);
-      //const url = await ref.getDownloadURL();
-      //console.log('this my image url:', url);
-
-      const newReference = firebase
+      firebase
         .app()
         .database(
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
         .ref('/Users/' + userid)
-        .update({ "name": setUsername })
+        .update({ name: username, })
         .then(() => {
-          console.log('Name updated.', newReference.key);
+          console.log('Name updated.' + username);
           dispatch({ type: 'SET_USER_NAME', payload: username });
         })
         .catch(e => console.log('error from realtime:', e));
     } catch (error) {
-      console.log('error from storage', error);
+      console.log('error from realtime', error);
     }
-    //setUsername('');
+    // setUsername('');
     //navigation.goBack();
   };
-  // const renderHeader = () => (<Text>Hello </Text>);
-  // const renderInner = () => { }
-  // bs = React.createRef();
-  // fall = new Animated.Value(1);
 
   const usernameOnEndEditing = () => {
     var regex =
@@ -173,7 +172,7 @@ useEffect(()=>{
       return true;
     }
   };
-console.log(userProfileImg)
+  console.log(userProfileImg)
   return (
     <><View style={styles.centeredView}>
       <Modal
@@ -241,16 +240,17 @@ console.log(userProfileImg)
                   'Please make sure of your editing fill'
                 );
               } else {
-                { btnPost; }
+                btnPost();
                 TostMessage();
+                navigation.goBack();
               }
-              navigation.goBack();
+
             }}>
             <Ionic name="checkmark" style={{ fontSize: 35, color: '#3493D9' }} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => { setModalVisible(true) }}>
-          <View style={{ padding: 20,  alignItems: 'center' }}>
+          <View style={{ padding: 20, alignItems: 'center' }}>
             <Image
               source={{ uri: userProfileImg }}
               style={{ width: 80, height: 80, borderRadius: 100 }} />
@@ -285,6 +285,12 @@ console.log(userProfileImg)
             </View>
           </View>
           <View style={{ paddingVertical: 10 }}>
+            <Text
+              style={{
+                opacity: 0.5,
+              }}>
+              Bio:
+            </Text>
             <TextInput
               placeholder="Bio"
               defaultValue={userBio}
@@ -294,14 +300,6 @@ console.log(userProfileImg)
                 borderColor: '#CDCDCD',
               }} />
           </View>
-          {/* <Button onPress={onOpen}>Actionsheet</Button>
-    <Actionsheet isOpen={isOpen} onClose={onClose}>
-      <Actionsheet.Content>
-        <Actionsheet.Item>Option 1</Actionsheet.Item>
-        <Actionsheet.Item>Option 2</Actionsheet.Item>
-        <Actionsheet.Item>Option 3</Actionsheet.Item>
-      </Actionsheet.Content>
-    </Actionsheet> */}
         </View>
         {/* <View>
       <Text
