@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -35,6 +35,7 @@ export default function Card(props) {
       'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
     )
     .ref('/Posts/' + props.cardDetails.id);
+  const [likeIcon, setLikeIcon] = useState('heart-outline');
 
   return (
     <View style={styles.Container}>
@@ -60,16 +61,18 @@ export default function Card(props) {
               let myLike = like.findIndex(i => i == myUserid); //return number
               if (myLike == -1) {
                 like.push(myUserid);
+                setLikeIcon('heart-sharp');
               } //not exist
               else {
                 like.splice(myLike, 1);
+                setLikeIcon('heart-outline');
               } //exist
               postReference.update({likes: like});
             }}>
-            <Icon name="heart-outline" size={25} color="blue" />
+            <Icon name={likeIcon} size={25} color="blue" />
             <Text style={styles.InteractionText}>
               {' '}
-              {props.cardDetails?.likes?.length}Like
+              {props.cardDetails?.likes?.length} Like
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.Interaction}>
