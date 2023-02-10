@@ -21,8 +21,12 @@ export default function AppStack() {
         component={HomeScreen}
         options={{
           tabBarLabel: null,
-          tabBarIcon: () => (
-            <MaterialIcons name="home" color="#5b637b" size={24} />
+          tabBarIcon: ({focused}) => (
+            <MaterialIcons
+              name="home"
+              color={focused ? '#f57c00' : '#5b637b'}
+              size={24}
+            />
           ),
         }}
       />
@@ -31,8 +35,12 @@ export default function AppStack() {
         component={AddPost}
         options={{
           tabBarLabel: null,
-          tabBarIcon: () => (
-            <MaterialIcons name="add" color="#5b637b" size={24} />
+          tabBarIcon: ({focused}) => (
+            <MaterialIcons
+              name="add"
+              color={focused ? '#f57c00' : '#5b637b'}
+              size={24}
+            />
           ),
         }}
       />
@@ -42,8 +50,12 @@ export default function AppStack() {
         options={{
           tabBarLabel: null,
           headerShown: false,
-          tabBarIcon: () => (
-            <MaterialIcons name="person" color="#5b637b" size={24} />
+          tabBarIcon: ({focused}) => (
+            <MaterialIcons
+              name="person"
+              color={focused ? '#f57c00' : '#5b637b'}
+              size={24}
+            />
           ),
         }}
       />
