@@ -15,19 +15,27 @@ import {firebase} from '@react-native-firebase/database';
 
 const imageExist = image => {
   if (!image) return <Divider style={styles.dividerStyle} />;
-  else return <Image style={styles.PostImg} resizeMode='contain' source={{ uri: image }} />;
+  else
+    return (
+      <Image
+        style={styles.PostImg}
+        resizeMode="contain"
+        source={{uri: image}}
+      />
+    );
 };
 
 export default function Card(props) {
   let date = null;
   const oneDay = 24 * 60 * 60 * 1000;
   if (props.cardDetails.addedDate + oneDay < Date.now()) {
-    date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY / hh:mm a")
-  }
-  else {
+    date = moment(props.cardDetails.addedDate).format('MMMM D, YYYY / hh:mm a');
+  } else {
     date = moment(props.cardDetails.addedDate).fromNow();
   }
-  const user = useSelector(state => state.userdata.users[props.cardDetails.userID]);
+  const user = useSelector(
+    state => state.userdata.users[props.cardDetails.userID],
+  );
   const myUserid = useSelector(state => state.userdata.user_id);
   const postReference = firebase
     .app()
@@ -68,14 +76,14 @@ export default function Card(props) {
               } //exist
               postReference.update({likes: like});
             }}>
-            <Icon name={likeIcon} size={25} color="blue" />
+            <Icon name={likeIcon} size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>
               {' '}
               {props.cardDetails?.likes?.length} Like
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.Interaction}>
-            <Icon name="md-chatbubble-outline" size={25} color="blue" />
+            <Icon name="md-chatbubble-outline" size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>Comment</Text>
           </TouchableOpacity>
         </View>
