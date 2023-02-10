@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -15,19 +15,27 @@ import {firebase} from '@react-native-firebase/database';
 
 const imageExist = image => {
   if (!image) return <Divider style={styles.dividerStyle} />;
-  else return <Image style={styles.PostImg} resizeMode='contain' source={{ uri: image }} />;
+  else
+    return (
+      <Image
+        style={styles.PostImg}
+        resizeMode="contain"
+        source={{uri: image}}
+      />
+    );
 };
 
 export default function Card(props) {
   let date = null;
   const oneDay = 24 * 60 * 60 * 1000;
   if (props.cardDetails.addedDate + oneDay < Date.now()) {
-    date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY / hh:mm a")
-  }
-  else {
+    date = moment(props.cardDetails.addedDate).format('MMMM D, YYYY / hh:mm a');
+  } else {
     date = moment(props.cardDetails.addedDate).fromNow();
   }
-  const user = useSelector(state => state.userdata.users[props.cardDetails.userID]);
+  const user = useSelector(
+    state => state.userdata.users[props.cardDetails.userID],
+  );
   const myUserid = useSelector(state => state.userdata.user_id);
   const postReference = firebase
     .app()
@@ -35,6 +43,7 @@ export default function Card(props) {
       'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
     )
     .ref('/Posts/' + props.cardDetails.id);
+  const [likeIcon, setLikeIcon] = useState('heart-outline');
 
   return (
     <View style={styles.Container}>
@@ -59,20 +68,22 @@ export default function Card(props) {
               let myLike = like.findIndex(i => i == myUserid); //return number
               if (myLike == -1) {
                 like.push(myUserid);
+                setLikeIcon('heart-sharp');
               } //not exist
               else {
                 like.splice(myLike, 1);
+                setLikeIcon('heart-outline');
               } //exist
               postReference.update({likes: like});
             }}>
-            <Icon name="heart-outline" size={25} color="blue" />
+            <Icon name={likeIcon} size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>
               {' '}
-              {props.cardDetails?.likes?.length}Like
+              {props.cardDetails?.likes?.length} Like
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.Interaction}>
-            <Icon name="md-chatbubble-outline" size={25} color="blue" />
+            <Icon name="md-chatbubble-outline" size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>Comment</Text>
           </TouchableOpacity>
         </View>

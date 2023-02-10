@@ -1,16 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { AuthContext } from '../Navigation/AuthProvider';
+import React, {useState, useContext, useEffect} from 'react';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {AuthContext} from '../Navigation/AuthProvider';
 import Card from '../Components/Card';
 import Header from '../Components/Header';
-import { fetchPosts, fetchUser, fetchUsers } from '../Redux/FetchData';
+import {fetchPosts, fetchUser, fetchUsers} from '../Redux/FetchData';
 
-renderItem = ({ item }) => <Card cardDetails={item} />;
+renderItem = ({item}) => <Card cardDetails={item} />;
 
 export default function HomeScreen() {
   let dispatch = useDispatch();
-  const { user, logout } = useContext(AuthContext);
+  const {user, logout} = useContext(AuthContext);
 
   const userInfo = useSelector(state => state.userTabInfo.user);
   const userid = useSelector(state => state.userdata.user_id);
@@ -18,7 +18,7 @@ export default function HomeScreen() {
   //const myArrayPosts = Object.values( postsData );
   console.log('all postsData here: ', postsData);
   const allUsers = useSelector(state => state.userdata.users);
-  console.log("all users :",allUsers);
+  console.log('all users :', allUsers);
   // const [isRefreshing, setOnRefresh] = useState(false);
   // const handleRefresh = () => {
   //   setOnRefresh(true);
@@ -40,8 +40,8 @@ export default function HomeScreen() {
         data={postsData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-      //refreshing={isRefreshing}
-      //onRefresh={handleRefresh}
+        //refreshing={isRefreshing}
+        //onRefresh={handleRefresh}
       />
     </SafeAreaView>
   );
