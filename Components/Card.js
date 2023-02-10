@@ -20,10 +20,22 @@ const imageExist = (image) => {
 };
 
 export default function Card(props) {
-  //const date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY") //February 3,2023
-  //const date = moment(props.cardDetails.addedDate).startOf('hour').fromNow() //43 minutes ago
-  //const date = moment(props.cardDetails.addedDate).startOf('day').fromNow();  //21 hours ago
-  const date = moment(props.cardDetails.addedDate).fromNow();
+  let date = null;
+  const oneDay = 24 * 60 * 60 * 1000;
+  if (props.cardDetails.addedDate + oneDay < Date.now()) {
+    date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY / hh:mm a")
+  }
+  else {
+    date = moment(props.cardDetails.addedDate).fromNow();
+  }
+  const user = useSelector(state => state.userdata.users[props.cardDetails.userID]);
+  const myUserid = useSelector(state => state.userdata.user_id);
+  const postReference = firebase
+    .app()
+    .database(
+      'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+    )
+    .ref('/Posts/' + props.cardDetails.id)
   return (
     <View style={styles.Container}>
       <View style={styles.Card}>
