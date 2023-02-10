@@ -25,7 +25,7 @@ export default function AppStack() {
             <MaterialIcons
               name="home"
               color={focused ? '#f57c00' : '#5b637b'}
-              size={24}
+              size={30}
             />
           ),
         }}
@@ -39,7 +39,7 @@ export default function AppStack() {
             <MaterialIcons
               name="add"
               color={focused ? '#f57c00' : '#5b637b'}
-              size={24}
+              size={30}
             />
           ),
         }}
@@ -54,7 +54,7 @@ export default function AppStack() {
             <MaterialIcons
               name="person"
               color={focused ? '#f57c00' : '#5b637b'}
-              size={24}
+              size={30}
             />
           ),
         }}
