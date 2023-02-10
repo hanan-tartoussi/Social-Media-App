@@ -1,19 +1,20 @@
 let initialState = {
   loading: false,
-  user_id: [],
+  user_id: null,
   name: null,
   email: null,
-  bio:null,
+  bio: null,
   userProfileImage: null,
   error: '',
+  users:{}
 };
-
+import { FETCH_USER_DATA_SUCCESS } from "./ActionType";
 function reducer(state = initialState, { type, payload }) {
   switch (type) {
-    case 'SET_USER_DATA':
+    case FETCH_USER_DATA_SUCCESS:
       return {
         ...state,
-        ...payload,
+        users: payload,
         loading: true,
       };
     case 'SET_USER_ID':

@@ -50,3 +50,18 @@ export const fetchPosts = () => {
       });
   };
 }
+export const fetchUsers = () => {
+
+  return dispatch => {
+    firebase
+      .app()
+      .database(
+        'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+      )
+      .ref('/Users')
+      .on('value', snapshot => {
+        dispatch(fetchUserDataSuccess(snapshot.val()));
+        console.log('Users data: ', Object.values(snapshot.val()));
+      });
+  };
+}

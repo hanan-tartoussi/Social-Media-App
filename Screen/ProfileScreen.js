@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  FlatList
+  FlatList,
 } from 'react-native';
 import { AuthContext } from '../Navigation/AuthProvider';
 import firebase from '@react-native-firebase/database';
@@ -23,7 +23,9 @@ const ProfileScreen = ({ navigation, route }) => {
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const postsData = useSelector(state => state.postdata.allPosts);
   const myArrayPosts = Object.values(postsData);
-  const myPosts = [] = myArrayPosts.filter(myArrayPosts => myArrayPosts.userID == userid);
+  const myPosts = ([] = myArrayPosts.filter(
+    myArrayPosts => myArrayPosts.userID == userid,
+  ));
   console.log('my posts here: ', myPosts);
   useEffect(() => {
     dispatch(fetchUser(user.uid));
@@ -58,7 +60,7 @@ const ProfileScreen = ({ navigation, route }) => {
               alignItems: 'center',
             }}>
             <Image
-              source={userProfileImg}
+              source={{ uri: userProfileImg }}
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -82,7 +84,11 @@ const ProfileScreen = ({ navigation, route }) => {
           </View>
         </View>
         <View style={styles.userBtnWrapper}>
-          <TouchableOpacity style={styles.userBtn} onPress={() => { navigation.navigate('EditProfileScreen'); }}>
+          <TouchableOpacity
+            style={styles.userBtn}
+            onPress={() => {
+              navigation.navigate('EditProfileScreen');
+            }}>
             <Text style={styles.userBtnTxt}>Edit Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
@@ -96,14 +102,13 @@ const ProfileScreen = ({ navigation, route }) => {
             keyExtractor={item => item.id}
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
+            contentContainerStyle={{ paddingBottom: 200 }}
           />
         </View>
-
-
       </View>
     </SafeAreaView>
   );
-}
+};
 export default ProfileScreen;
 
 const styles = StyleSheet.create({
@@ -113,8 +118,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   userImg: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     borderRadius: 75,
   },
   userName: {
