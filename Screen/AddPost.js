@@ -125,7 +125,7 @@ export default function AddPost() {
           caption: textInput,
           userProfileImage: userProfileImg,
           image: url ? url : null,
-          addedDate : Date.now(),
+          addedDate: Date.now(),
         })
         .then(() => {
           console.log('Data updated.', newReference.key);
