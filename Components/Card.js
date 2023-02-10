@@ -14,14 +14,19 @@ import moment from "moment";
 
 const imageExist = (image) => {
   if (!image) return <Divider style={styles.dividerStyle} />;
-  else return <Image style={styles.PostImg} source={{ uri: image }} />;
+  else return <Image style={styles.PostImg} resizeMode='contain' source={{ uri: image }} />;
 };
 
 export default function Card(props) {
-  //const date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY") //February 3,2023
-  //const date = moment(props.cardDetails.addedDate).startOf('hour').fromNow() //43 minutes ago
-  //const date = moment(props.cardDetails.addedDate).startOf('day').fromNow();  //21 hours ago
-  const date = moment(props.cardDetails.addedDate).fromNow();
+  let date = null;
+  const oneDay = 24*60*60*1000;
+  if(props.cardDetails.addedDate + oneDay < Date.now()){
+    date = moment(props.cardDetails.addedDate).format("MMMM D, YYYY / hh:mm a")
+  }
+  else {
+    date = moment(props.cardDetails.addedDate).fromNow();
+  }
+
   return (
     <View style={styles.Container}>
       <View style={styles.Card}>
@@ -30,7 +35,6 @@ export default function Card(props) {
           <View style={styles.UserInfoText}>
             <Text style={styles.UserName}>{props.cardDetails.username}</Text>
             <Text style={styles.PostDate}>{date}</Text>
-            {/* <Text style={styles.PostDate}>{props.cardDetails.addedDate}</Text> */}
           </View>
         </View>
         <Text style={styles.PostText}>{props.cardDetails.caption}</Text>
