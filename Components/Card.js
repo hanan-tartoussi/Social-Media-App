@@ -36,6 +36,7 @@ export default function Card(props) {
   const user = useSelector(
     state => state.userdata.users[props.cardDetails.userID],
   );
+  console.log('user: from card ', user);
   const myUserid = useSelector(state => state.userdata.user_id);
   const postReference = firebase
     .app()
@@ -43,7 +44,6 @@ export default function Card(props) {
       'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
     )
     .ref('/Posts/' + props.cardDetails.id);
-  const [likeIcon, setLikeIcon] = useState('heart-outline');
 
   return (
     <View style={styles.Container}>
@@ -51,10 +51,10 @@ export default function Card(props) {
         <View style={styles.UserInfo}>
           <Image
             style={styles.UserImage}
-            source={{uri: props.cardDetails.userProfileImage}}
+            source={{uri: user?.userProfileImage}}
           />
           <View style={styles.UserInfoText}>
-            <Text style={styles.UserName}>{props.cardDetails.username}</Text>
+            <Text style={styles.UserName}>{user?.name}</Text>
             <Text style={styles.PostDate}>{date}</Text>
           </View>
         </View>
@@ -68,25 +68,43 @@ export default function Card(props) {
               let myLike = like.findIndex(i => i == myUserid); //return number
               if (myLike == -1) {
                 like.push(myUserid);
-                setLikeIcon('heart-sharp');
+                // setLikeIcon('heart-sharp');
               } //not exist
               else {
                 like.splice(myLike, 1);
-                setLikeIcon('heart-outline');
+                // setLikeIcon('heart-outline');
               } //exist
               postReference.update({likes: like});
             }}>
-            <Icon name={likeIcon} size={25} color="#f57c00" />
+            <Icon
+              name={
+                props.cardDetails?.likes?.findIndex(i => i == myUserid) > -1
+                  ? 'heart-sharp'
+                  : 'heart-outline'
+              }
+              size={25}
+              color="#f57c00"
+            />
             <Text style={styles.InteractionText}>
               {' '}
               {props.cardDetails?.likes?.length} Like
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.Interaction}>
-            <Icon name="md-chatbubble-outline" size={25} color="#f57c00" />
+          <TouchableOpacity
+            style={styles.Interaction}
+            onPress={() => {
+              let comment = props.cardDetails?.comments ?? [];
+              const obj = {userid: myUserid, content: 'hello world'};
+              comment.push(obj);
+              postReference.update({comments: comment});
+            }}>
+            <Icon name={'md-chatbubble-outline'} size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>Comment</Text>
           </TouchableOpacity>
         </View>
+        {props?.cardDetails?.comments?.map(i => (
+          <Text>{i?.content}</Text>
+        ))}
       </View>
     </View>
   );
