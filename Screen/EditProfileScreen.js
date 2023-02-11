@@ -8,7 +8,11 @@ import {
   Image,
   TextInput,
   StyleSheet,
+  ScrollView,
   Pressable,
+  KeyboardAvoidingView,
+  Dimensions,
+  useWindowDimensions,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,6 +53,23 @@ const EditProfileScreen = ({ route, navigation }) => {
         .then(() => console.log('Data updated.'));
     } catch (e) {
       console.log('error from storage', e);
+    }
+  }
+
+  const storageRemoveImage = async () => {
+    try {
+      firebase
+        .app()
+        .database(
+          'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+        )
+        .ref('/Users/' + userid).update({
+          userProfileImage: 'https://static.vecteezy.com/system/resources/previews/002/534/006/non_2x/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.jpg',
+        })
+        .then(() => console.log('Data updated.'), setModalVisible(false));
+
+    } catch (e) {
+      console.log('error from storageRemoveImage', e);
     }
   }
 
@@ -174,47 +195,54 @@ const EditProfileScreen = ({ route, navigation }) => {
     }
   };
   console.log(userProfileImg)
+  const dimensions = useWindowDimensions();
   return (
-    <><View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Change Profile Picture</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => openCamera()}>
-              <Text style={styles.textStyle}>Take Photo</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => openGallery()}>
-              <Text style={styles.textStyle}>Choose Photo</Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
-              <Text style={styles.textStyle}>Cancel</Text>
-            </Pressable>
+    <ScrollView style={{flex:1}}>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Change Profile Picture</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => openCamera()}>
+                <Text style={styles.textStyle}>Take Photo</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => openGallery()}>
+                <Text style={styles.textStyle}>Choose Photo</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => storageRemoveImage()}>
+                <Text style={styles.textStyle}>Remove Photo</Text>
+              </Pressable>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>Cancel</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
-    </View>
+        </Modal>
+        {/* <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => setModalVisible(true)}>
+          <Text style={styles.textStyle}>Show Modal</Text>
+        </Pressable> */}
+      </View>
       <View
         style={{
-          width: '100%',
-          height: '100%',
+          flex:1,
+          height:dimensions.height,
           backgroundColor: 'white',
         }}>
         <View
@@ -248,7 +276,7 @@ const EditProfileScreen = ({ route, navigation }) => {
               }
 
             }}>
-            <Ionic name="checkmark" style={{ fontSize: 35, color: '#3493D9' }} />
+            <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={() => { setModalVisible(true) }}>
@@ -258,60 +286,67 @@ const EditProfileScreen = ({ route, navigation }) => {
               style={{ width: 80, height: 80, borderRadius: 100 }} />
             <Text
               style={{
-                color: '#3493D9',
+                color: '#f57c00',
               }}>
               Change profile photo
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{ padding: 10 }}>
-          <View>
-            <Text
-              style={{
-                opacity: 0.5,
-              }}>
-              username:
-            </Text>
-            <TextInput
-              placeholder="name"
-              defaultValue={name}
-              onChangeText={userusername => setUsername(userusername)}
-              onEndEditing={usernameOnEndEditing}
-              style={{
-                fontSize: 16,
-                borderBottomWidth: 1,
-                borderColor: '#CDCDCD',
-              }} />
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={200}
+          >
+          <View style={{ padding: 10 }}>
             <View>
-              <Text style={styles.TextError}>{usernameError}</Text>
+              <Text
+                style={{
+                  opacity: 0.5,
+                }}>
+                username:
+              </Text>
+              <TextInput
+                placeholder="name"
+                defaultValue={name}
+                onChangeText={userusername => setUsername(userusername)}
+                onEndEditing={usernameOnEndEditing}
+                style={{
+                  fontSize: 16,
+                  borderBottomWidth: 1,
+                  borderColor: '#CDCDCD',
+                }} />
+              <View>
+                <Text style={styles.TextError}>{usernameError}</Text>
+              </View>
+            </View>
+            <View style={{ paddingVertical: 10 }}>
+              <Text
+                style={{
+                  opacity: 0.5,
+                }}>
+                Bio:
+              </Text>
+              <TextInput
+                placeholder="Bio"
+                defaultValue={userBio}
+                maxLength={100}
+                multiline
+                numberOfLines={4}
+                onChangeText={useruserbio => setUserbio(useruserbio)}
+                onEndEditing={userbioOnEndEditing}
+                style={{
+                  fontSize: 16,
+                  borderBottomWidth: 1,
+                  borderColor: '#CDCDCD',
+                }} />
+              <Text
+                style={{
+                  opacity: 0.5,
+                }}>
+                {/* {100 - userbio.maxLength} */}
+              </Text>
             </View>
           </View>
-          <View style={{ paddingVertical: 10 }}>
-            <Text
-              style={{
-                opacity: 0.5,
-              }}>
-              Bio:
-            </Text>
-            <TextInput
-              placeholder="Bio"
-              defaultValue={userBio}
-              maxLength={100}
-              onChangeText={useruserbio => setUserbio(useruserbio)}
-              onEndEditing={userbioOnEndEditing}
-              style={{
-                fontSize: 16,
-                borderBottomWidth: 1,
-                borderColor: '#CDCDCD',
-              }} />
-            <Text
-              style={{
-                opacity: 0.5,
-              }}>
-              {/* {100 - userbio.maxLength} */}
-            </Text>
-          </View>
-        </View>
+        </KeyboardAvoidingView>
         {/* <View>
       <Text
         style={{
@@ -326,7 +361,7 @@ const EditProfileScreen = ({ route, navigation }) => {
       </Text>
     </View> */}
       </View>
-    </>
+    </ScrollView>
   );
 };
 
@@ -342,7 +377,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 22,
+    // marginTop: 22,
+    backgroundColor: 'white',
   },
   modalView: {
     margin: 20,
@@ -368,7 +404,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F194FF',
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#f57c00',
     marginTop: 10,
     // width: 150,
   },
