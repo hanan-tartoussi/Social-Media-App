@@ -12,11 +12,6 @@ import {
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
-import Card from '../Components/Card';
-import {fetchPosts, fetchUser} from '../Redux/FetchData';
-import {useNavigation} from '@react-navigation/native';
-import {useDisclosure} from '@chakra-ui/react';
-import {Actionsheet} from 'react-native-actionsheet';
 import {firebase, ref, update} from '@react-native-firebase/database';
 import {Alert, Modal} from 'react-native';
 import storage from '@react-native-firebase/storage';
@@ -26,6 +21,7 @@ const EditProfileScreen = ({route, navigation}) => {
   const userBio = useSelector(state => state.userdata.bio);
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
   const [username, setUsername] = useState(name);
+  const [userbio, setUserbio] = useState(userBio);
   const [usernameError, setUsernameError] = useState('');
   const TostMessage = () => {
     ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
@@ -56,22 +52,7 @@ const EditProfileScreen = ({route, navigation}) => {
       console.log('error from storage', e);
     }
   };
-  // const storageUserName = async () => {
-  //   debugger;
-  //   try {
-  //     firebase
-  //       .app()
-  //       .database(
-  //         'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-  //       )
-  //       .ref('/Users/' + userid).update({
-  //         username: url,
-  //       })
-  //       .then(() => console.log('name updated.'));
-  //   } catch (e) {
-  //     console.log('error from realtime', e);
-  //   }
-  // }
+
   const openCamera = () => {
     const options = {
       StorageOptions: {
@@ -136,6 +117,9 @@ const EditProfileScreen = ({route, navigation}) => {
   useEffect(() => {
     btnPost();
   }, []);
+  useEffect(() => {
+    userbioOnEndEditing();
+  }, []);
   const btnPost = async () => {
     //debugger;
     try {
@@ -169,6 +153,25 @@ const EditProfileScreen = ({route, navigation}) => {
     } else {
       setUsernameError('');
       return true;
+    }
+  };
+  const userbioOnEndEditing = async () => {
+    //debugger;
+    try {
+      firebase
+        .app()
+        .database(
+          'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+        )
+        .ref('/Users/' + userid)
+        .update({bio: userbio})
+        .then(() => {
+          console.log('Bio updated.' + userbio);
+          dispatch({type: 'SET_USER_BIO', payload: userbio});
+        })
+        .catch(e => console.log('error from realtime:', e));
+    } catch (error) {
+      console.log('error from realtime', error);
     }
   };
   console.log(userProfileImg);
@@ -234,6 +237,7 @@ const EditProfileScreen = ({route, navigation}) => {
               } else if (usernameOnEndEditing() === false) {
                 Alert.alert('Error', 'Please make sure of your editing fill');
               } else {
+                userbioOnEndEditing();
                 btnPost();
                 TostMessage();
                 navigation.goBack();
@@ -292,12 +296,21 @@ const EditProfileScreen = ({route, navigation}) => {
             <TextInput
               placeholder="Bio"
               defaultValue={userBio}
+              maxLength={100}
+              onChangeText={useruserbio => setUserbio(useruserbio)}
+              onEndEditing={userbioOnEndEditing}
               style={{
                 fontSize: 16,
                 borderBottomWidth: 1,
                 borderColor: '#CDCDCD',
               }}
             />
+            <Text
+              style={{
+                opacity: 0.5,
+              }}>
+              {/* {100 - userbio.maxLength} */}
+            </Text>
           </View>
         </View>
         {/* <View>

@@ -5,7 +5,7 @@ import {AuthContext} from './AuthProvider';
 
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-
+import RNBootSplash from 'react-native-bootsplash';
 const Routes = () => {
   const {user, setUser} = useContext(AuthContext);
   const [initializing, setInitializing] = useState(true);
@@ -27,7 +27,7 @@ const Routes = () => {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer onReady={() => RNBootSplash.hide()}>
       {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );

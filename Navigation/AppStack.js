@@ -14,7 +14,7 @@ export default function AppStack() {
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#5b637b"
-      barStyle={{backgroundColor: '#fff'}}>
+      barStyle={{backgroundColor: '#fff',height: '4%', marginBottom: 30}}>
       <Tab.Screen
         name="Home"
         barStyle={{backgroundColor: '#fff'}}
@@ -25,7 +25,7 @@ export default function AppStack() {
             <MaterialIcons
               name="home"
               color={focused ? '#f57c00' : '#5b637b'}
-              size={30}
+              size={25}
             />
           ),
         }}

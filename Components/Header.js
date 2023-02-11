@@ -5,11 +5,9 @@ export default function Header() {
     const navigation = useNavigation();
     return (
         <View style={styles.header}>
-            <View >
                 <Text style={styles.headerText}>
-                SMA
+                reACTIVE
                 </Text>
-            </View>
         </View>
     )
 }
@@ -17,7 +15,7 @@ export default function Header() {
 const styles = StyleSheet.create({
     header: {
         width: '100%',
-        height: '8%',
+        height: '6%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -25,7 +23,7 @@ const styles = StyleSheet.create({
         paddingRight : 10,
     },
     headerText: {
-        fontWeight: 'bold',
+        fontFamily : 'Lobster-Regular',
         fontSize: 20,
         color: '#333',
         letterSpacing: 1,
