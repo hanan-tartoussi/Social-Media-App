@@ -46,14 +46,6 @@ const ProfileScreen = ({ navigation, route }) => {
         style={styles.container}
         contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
         showsVerticalScrollIndicator={false}>
-        {/* <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }}>
-                    <Image style={styles.userImg} source={userProfileImg.uri} />
-                    <Text style={styles.userName}>{username}</Text>
-                </View> */}
         <View style={styles.userInfoWrapper}>
           <View
             style={{
@@ -75,25 +67,29 @@ const ProfileScreen = ({ navigation, route }) => {
               }}>
               {username}
             </Text>
-            <Text style={styles.aboutUser}>{userBio}</Text>
+            {/* <Text style={styles.aboutUser}>{userBio}</Text> */}
           </View>
 
           <View style={styles.userInfoItem}>
             <Text style={styles.userInfoTitle}>{myPosts.length}</Text>
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
+
+          <View style={styles.userBtnWrapper}>
+            <TouchableOpacity
+              style={styles.userBtn}
+              onPress={() => {
+                navigation.navigate('EditProfileScreen');
+              }}>
+              <Text style={styles.userBtnTxt}>Edit Profile</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+              <Text style={styles.userBtnTxt}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.userBtnWrapper}>
-          <TouchableOpacity
-            style={styles.userBtn}
-            onPress={() => {
-              navigation.navigate('EditProfileScreen');
-            }}>
-            <Text style={styles.userBtnTxt}>Edit Profile</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
-            <Text style={styles.userBtnTxt}>Logout</Text>
-          </TouchableOpacity>
+        <View>
+          <Text style={styles.aboutUser}>{userBio}</Text>
         </View>
         <View>
           <FlatList
@@ -115,11 +111,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
+    padding: 10,
   },
   userImg: {
-    height: 100,
-    width: 100,
+    height: 120,
+    width: 120,
     borderRadius: 75,
   },
   userName: {
@@ -132,17 +128,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#666',
-    textAlign: 'center',
+    textAlign: 'left',
     marginBottom: 10,
+    // marginTop: 10,
   },
   userBtnWrapper: {
     flexDirection: 'row',
     justifyContent: 'center',
-    width: '100%',
+    width: '50%',
+    height: '40%',
+    marginTop: 33,
     marginBottom: 10,
   },
   userBtn: {
-    borderColor: '#2e64e5',
+    borderColor: 'white',
+    backgroundColor: '#f57c00',
     borderWidth: 2,
     borderRadius: 3,
     paddingVertical: 8,
@@ -150,21 +150,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   userBtnTxt: {
-    color: '#2e64e5',
+    color: 'white',
   },
   userInfoWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
-    marginVertical: 20,
+    marginVertical: 5,
   },
   userInfoItem: {
     justifyContent: 'center',
+    marginTop: 5,
   },
   userInfoTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 5,
+    // marginBottom: 5,
     textAlign: 'center',
   },
   userInfoSubTitle: {
