@@ -33,7 +33,7 @@ const EditProfileScreen = ({ route, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState('');
   const dispatch = useDispatch();
-  const storageImage = async (uri) => {
+  const storageImage = async uri => {
     //debugger;
     let fileName = uri.substring(uri.lastIndexOf('/') + 1);
     try {
@@ -47,14 +47,15 @@ const EditProfileScreen = ({ route, navigation }) => {
         .database(
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
-        .ref('/Users/' + userid).update({
+        .ref('/Users/' + userid)
+        .update({
           userProfileImage: url,
         })
         .then(() => console.log('Data updated.'));
     } catch (e) {
       console.log('error from storage', e);
     }
-  }
+  };
 
   const storageRemoveImage = async () => {
     try {
@@ -96,9 +97,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         setImageUri(source);
         setTimeout(() => {
           // storageImage(source);
-
         }, 500);
-
       }
     });
     setModalVisible(false);
@@ -123,23 +122,25 @@ const EditProfileScreen = ({ route, navigation }) => {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = response.assets[0].uri
+        const source = response.assets[0].uri;
         setImageUri(source);
         setTimeout(() => {
           // storageImage(source);
-
         }, 500);
-
       }
     });
     setModalVisible(false);
   };
   useEffect(() => {
-    console.log("image uri " + imageUri);
+    console.log('image uri ' + imageUri);
     if (imageUri) storageImage(imageUri);
-  }, [imageUri])
-  useEffect(() => { btnPost(); }, [])
-  useEffect(() => { userbioOnEndEditing(); }, [])
+  }, [imageUri]);
+  useEffect(() => {
+    btnPost();
+  }, []);
+  useEffect(() => {
+    userbioOnEndEditing();
+  }, []);
   const btnPost = async () => {
     //debugger;
     try {
@@ -149,7 +150,7 @@ const EditProfileScreen = ({ route, navigation }) => {
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
         .ref('/Users/' + userid)
-        .update({ name: username, })
+        .update({ name: username })
         .then(() => {
           console.log('Name updated.' + username);
           dispatch({ type: 'SET_USER_NAME', payload: username });
@@ -184,7 +185,7 @@ const EditProfileScreen = ({ route, navigation }) => {
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
         .ref('/Users/' + userid)
-        .update({ bio: userbio, })
+        .update({ bio: userbio })
         .then(() => {
           console.log('Bio updated.' + userbio);
           dispatch({ type: 'SET_USER_BIO', payload: userbio });
@@ -197,7 +198,7 @@ const EditProfileScreen = ({ route, navigation }) => {
   console.log(userProfileImg)
   const dimensions = useWindowDimensions();
   return (
-    <ScrollView style={{flex:1}}>
+    <ScrollView style={{ flex: 1 }}>
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -241,8 +242,8 @@ const EditProfileScreen = ({ route, navigation }) => {
       </View>
       <View
         style={{
-          flex:1,
-          height:dimensions.height,
+          flex: 1,
+          height: dimensions.height,
           backgroundColor: 'white',
         }}>
         <View
@@ -258,32 +259,29 @@ const EditProfileScreen = ({ route, navigation }) => {
           <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Edit Profile</Text>
           <TouchableOpacity
             onPress={() => {
-              if ((username === '')) {
-                Alert.alert(
-                  'Edit error',
-                  'Please put a userName'
-                );
-              } else if ((usernameOnEndEditing() === false)) {
-                Alert.alert(
-                  'Error',
-                  'Please make sure of your editing fill'
-                );
+              if (username === '') {
+                Alert.alert('Edit error', 'Please put a userName');
+              } else if (usernameOnEndEditing() === false) {
+                Alert.alert('Error', 'Please make sure of your editing fill');
               } else {
                 userbioOnEndEditing();
                 btnPost();
                 TostMessage();
                 navigation.goBack();
               }
-
             }}>
             <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => { setModalVisible(true) }}>
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
+          }}>
           <View style={{ padding: 20, alignItems: 'center' }}>
             <Image
               source={{ uri: userProfileImg }}
-              style={{ width: 80, height: 80, borderRadius: 100 }} />
+              style={{ width: 80, height: 80, borderRadius: 100 }}
+            />
             <Text
               style={{
                 color: '#f57c00',
@@ -295,7 +293,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         <KeyboardAvoidingView
           style={{ flex: 1 }}
           keyboardVerticalOffset={200}
-          >
+        >
           <View style={{ padding: 10 }}>
             <View>
               <Text
