@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -9,13 +9,13 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import { AuthContext } from '../Navigation/AuthProvider';
+import {AuthContext} from '../Navigation/AuthProvider';
 import firebase from '@react-native-firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, fetchUser } from '../Redux/FetchData';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchPosts, fetchUser} from '../Redux/FetchData';
 import Card from '../Components/Card';
-const ProfileScreen = ({ navigation, route }) => {
-  const { user, logout } = useContext(AuthContext);
+const ProfileScreen = ({navigation, route}) => {
+  const {user, logout} = useContext(AuthContext);
   let dispatch = useDispatch();
   const userid = useSelector(state => state.userdata.user_id);
   const username = useSelector(state => state.userdata.name);
@@ -31,7 +31,7 @@ const ProfileScreen = ({ navigation, route }) => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-  renderItem = ({ item }) => <Card cardDetails={item} />;
+  renderItem = ({item}) => <Card cardDetails={item} />;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -41,10 +41,10 @@ const ProfileScreen = ({ navigation, route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <View
         style={styles.container}
-        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
         showsVerticalScrollIndicator={false}>
         <View style={styles.userInfoWrapper}>
           <View
@@ -52,7 +52,7 @@ const ProfileScreen = ({ navigation, route }) => {
               alignItems: 'center',
             }}>
             <Image
-              source={{ uri: userProfileImg }}
+              source={{uri: userProfileImg}}
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -64,6 +64,7 @@ const ProfileScreen = ({ navigation, route }) => {
               style={{
                 paddingVertical: 5,
                 fontWeight: 'bold',
+                color: 'black',
               }}>
               {username}
             </Text>
@@ -71,7 +72,9 @@ const ProfileScreen = ({ navigation, route }) => {
           </View>
 
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{myPosts.length}</Text>
+            <Text style={styles.userInfoTitle}>
+              {myPosts.length > 0 ? myPosts.length : '0'}
+            </Text>
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
 
@@ -98,7 +101,7 @@ const ProfileScreen = ({ navigation, route }) => {
             keyExtractor={item => item.id}
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
-            contentContainerStyle={{ paddingBottom: 200 }}
+            contentContainerStyle={{paddingBottom: 200}}
           />
         </View>
       </View>
@@ -148,6 +151,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
+    borderRadius: 20,
   },
   userBtnTxt: {
     color: 'white',
@@ -167,6 +171,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // marginBottom: 5,
     textAlign: 'center',
+    color: 'black',
   },
   userInfoSubTitle: {
     fontSize: 12,

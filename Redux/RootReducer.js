@@ -4,7 +4,6 @@ import users from './UserReducer';
 import post from './PostReducer';
 
 export default combineReducers({
-  userTabInfo: products,
   userdata: users,
   postdata: post,
 });

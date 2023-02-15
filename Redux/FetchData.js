@@ -3,7 +3,7 @@ import {
   fetchUserDataSuccess,
   fetchPostsDataSuccess,
 } from './Actions';
-import { firebase } from '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/database';
 // const myArray = Object.values(snapshot.val());
 // console.log(myArray);
 // const sortedPostes = myArray.sort((a,b)=>{a.addedDate-b.addedDate});
@@ -18,22 +18,20 @@ export const fetchUser = userID => {
       )
       .ref('/Users/' + userID)
       .on('value', snapshot => {
-        dispatch(fetchUserDataSuccess(snapshot.val()));
-        dispatch({ type: 'SET_USER_ID', payload: userID });
-        dispatch({ type: 'SET_USER_NAME', payload: snapshot.val().name });
-        dispatch({ type: 'SET_USER_EMAIL', payload: snapshot.val().email });
-        dispatch({ type: 'SET_USER_BIO', payload: snapshot.val().bio });
+        dispatch({type: 'SET_USER_ID', payload: userID});
+        dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
+        dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
+        dispatch({type: 'SET_USER_BIO', payload: snapshot.val().bio});
         dispatch({
           type: 'SET_USER_PROFILE_IMAGE',
           payload: snapshot.val().userProfileImage,
         });
-        //console.log('User name from fetch data: ', snapshot.val().name);
+        console.log('FetchUser from fetch data: ', snapshot.val());
       });
   };
 };
 
 export const fetchPosts = () => {
-
   return dispatch => {
     firebase
       .app()
@@ -44,14 +42,13 @@ export const fetchPosts = () => {
       .on('value', snapshot => {
         const myArray = Object.values(snapshot.val());
         console.log(myArray);
-        const sortedPostes = myArray.sort((a, b) => b.addedDate - a.addedDate );
+        const sortedPostes = myArray.sort((a, b) => b.addedDate - a.addedDate);
         dispatch(fetchPostsDataSuccess(sortedPostes));
         console.log('Posts data: ', sortedPostes);
       });
   };
-}
+};
 export const fetchUsers = () => {
-
   return dispatch => {
     firebase
       .app()
@@ -64,4 +61,4 @@ export const fetchUsers = () => {
         console.log('Users data: ', Object.values(snapshot.val()));
       });
   };
-}
+};

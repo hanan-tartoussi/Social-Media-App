@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
   TextError: {
     paddingBottom: 10,
     fontWeight: 'bold',
+    color: 'black',
   },
   forgot_button: {
     color: '#a6a6a6', //'#2e64e5'
