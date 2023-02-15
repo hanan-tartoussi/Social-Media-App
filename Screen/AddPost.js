@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   Alert,
+  Text,
 } from 'react-native';
 import {FloatingAction} from 'react-native-floating-action';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
@@ -148,7 +149,6 @@ export default function AddPost() {
     navigation.navigate('Home');
   };
 
-  var yourPicture = require('../Images/insertImage.png');
   return (
     <View style={styles.InputWrapper}>
       <View style={styles.BtnCancelPost}>
@@ -166,138 +166,38 @@ export default function AddPost() {
           color="#f57c00"
         />
       </View>
-
-      {/* <TouchableOpacity style={{justifyContent: 'center'}}>
-        <View
-          style={{
-            alignItems: 'center',
-          }}>
-          <Image style={styles.image} source={yourPicture} />
-        </View>
-      </TouchableOpacity> */}
-      <View style={{marginTop: -100, marginBottom: 20}}>
-        {imageUri ? (
-          <Image
-            source={{uri: imageUri}}
-            style={{
-              height: 250,
-              width: '100%',
-              borderColor: 'black',
-              marginTop: 200,
-            }}
-          />
-        ) : null}
-      </View>
-
       {imageUri ? (
-        <View
+        <Image
+          source={{uri: imageUri}}
           style={{
-            // marginTop: 290,
-            width: '95%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            marginLeft: 10,
-          }}>
-          <TextInput
-            style={styles.InputFiled}
-            placeholder="What's on your mind?"
-            placeholderTextColor={'#5b637b'}
-            color="black"
-            multiline
-            numberOfLines={4}
-            defaultValue={textInput}
-            onChangeText={newText => {
-              setTextInput(newText),
-                newText !== '' || imageUri !== ''
-                  ? setIsDisabled(false)
-                  : setIsDisabled(true);
-            }}
-          />
-
-          <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
-          <ButtonForm
-            buttonTitle="Choose Photo"
-            onPress={() => openGallery()}
-          />
-        </View>
-      ) : (
-        <View
-          style={{
-            marginTop: 290,
-            width: '95%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            marginLeft: 10,
-          }}>
-          <TextInput
-            style={styles.InputFiled}
-            placeholder="What's on your mind?"
-            placeholderTextColor={'#5b637b'}
-            color="black"
-            multiline
-            numberOfLines={4}
-            defaultValue={textInput}
-            onChangeText={newText => {
-              setTextInput(newText),
-                newText !== '' || imageUri !== ''
-                  ? setIsDisabled(false)
-                  : setIsDisabled(true);
-            }}
-          />
-
-          <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
-          <ButtonForm
-            buttonTitle="Choose Photo"
-            onPress={() => openGallery()}
-          />
-        </View>
-      )}
-      {/* <View
-        style={{
-          // marginTop: 290,
-          width: '95%',
-          justifyContent: 'center',
-          textAlign: 'center',
-          marginLeft: 10,
-        }}> */}
-      {/* <InputForm
-          placeholderText="What's on your mind?"
-          placeholderTextColor={'#5b637b'}
-          color="black"
-          multiline
-          style={{height: 78}}
-          numberOfLines={4}
-          defaultValue={textInput}
-          onChangeText={newText => {
-            setTextInput(newText), setIsDisabled(false);
-          }}
-        /> */}
-      {/* 
-        <TextInput
-          style={styles.InputFiled}
-          placeholder="What's on your mind?"
-          placeholderTextColor={'#5b637b'}
-          color="black"
-          multiline
-          numberOfLines={4}
-          defaultValue={textInput}
-          onChangeText={newText => {
-            setTextInput(newText),
-              newText !== '' ? setIsDisabled(false) : setIsDisabled(true);
+            height: 250,
+            width: '100%',
+            borderColor: 'black',
+            marginTop: 70,
+            marginBottom: 10,
           }}
         />
-
-        <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
-        <ButtonForm buttonTitle="Choose Photo" onPress={() => openGallery()} />
-      </View> */}
-
-      {/* <FloatingAction
-        actions={actions}
-        onPressItem={name => {
-          if (name == 'btn_take_photo') openCamera();
-          else openGallery();
+      ) : null}
+      <TextInput
+        style={styles.InputFiled}
+        placeholder="What's on your mind?"
+        placeholderTextColor={'#5b637b'}
+        color="black"
+        multiline
+        numberOfLines={4}
+        defaultValue={textInput}
+        onChangeText={newText => {
+          setTextInput(newText),
+            newText !== '' ? setIsDisabled(false) : setIsDisabled(true);
         }}
-      /> */}
+      />
+      <TouchableOpacity style={styles.loginBtn} onPress={() => openCamera()}>
+        <Text style={styles.loginText}>Take Photo</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={() => openGallery()}>
+        <Text style={styles.loginText}>Choose Photo</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -305,7 +205,7 @@ export default function AddPost() {
 const styles = StyleSheet.create({
   InputWrapper: {
     flex: 1,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     // alignItems: 'center',
     // width: '100%',
     backgroundColor: 'white', //'#dfe1f0',
@@ -344,5 +244,20 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     color: '#f57c00',
+  },
+  loginBtn: {
+    borderRadius: 10,
+    height: 58,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    backgroundColor: '#f57c00',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loginText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
