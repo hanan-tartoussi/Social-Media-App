@@ -64,6 +64,7 @@ const ProfileScreen = ({navigation, route}) => {
               style={{
                 paddingVertical: 5,
                 fontWeight: 'bold',
+                color: 'black',
               }}>
               {username}
             </Text>
@@ -71,7 +72,9 @@ const ProfileScreen = ({navigation, route}) => {
           </View>
 
           <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>{myPosts.length}</Text>
+            <Text style={styles.userInfoTitle}>
+              {myPosts.length > 0 ? myPosts.length : '0'}
+            </Text>
             <Text style={styles.userInfoSubTitle}>Posts</Text>
           </View>
 
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // marginBottom: 5,
     textAlign: 'center',
+    color: 'black',
   },
   userInfoSubTitle: {
     fontSize: 12,

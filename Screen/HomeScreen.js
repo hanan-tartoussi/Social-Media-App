@@ -10,9 +10,8 @@ renderItem = ({item}) => <Card cardDetails={item} />;
 
 export default function HomeScreen() {
   let dispatch = useDispatch();
-  const {user, logout} = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
 
-  const userInfo = useSelector(state => state.userTabInfo.user);
   const userid = useSelector(state => state.userdata.user_id);
   const postsData = useSelector(state => state.postdata.allPosts);
   //const myArrayPosts = Object.values( postsData );

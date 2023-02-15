@@ -37,7 +37,7 @@ const RegisterScreen = () => {
     //Can only contain letters, numbers, and these characters: - _ .
     //Username be at least 8 characters long
     var regex =
-      /^(?=.{5,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
+      /^(?=.{4,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
     if (!regex.test(username)) {
       setUsernameError(
         'Can only contain letters, numbers, and these characters: - _ .',
@@ -279,12 +279,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 15,
     paddingTop: 3,
+    color: 'black',
   },
   PassError: {
     marginBottom: 10,
     paddingTop: 3,
     fontWeight: 'bold',
     marginLeft: 15,
+    color: 'black',
   },
   forgot_button: {
     color: '#a6a6a6',

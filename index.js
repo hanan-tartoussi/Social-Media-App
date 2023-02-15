@@ -16,7 +16,6 @@ const store = createStore(RootReducer, applyMiddleware(thunk));
 
 const RNRedux = () => (
   <Provider store={store}>
-    {/* <App /> */}
     <AuthProvider>
       <Routes />
     </AuthProvider>

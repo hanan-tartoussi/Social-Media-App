@@ -27,7 +27,10 @@ const Routes = () => {
   }
 
   return (
-    <NavigationContainer onReady={() => RNBootSplash.hide()}>
+    <NavigationContainer
+      onReady={() => {
+        RNBootSplash.hide();
+      }}>
       {user ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );

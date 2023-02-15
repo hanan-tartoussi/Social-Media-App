@@ -152,7 +152,11 @@ export default function AddPost() {
   return (
     <View style={styles.InputWrapper}>
       <View style={styles.BtnCancelPost}>
-        <Button onPress={btnCancelPost} title="Cancel" color="#f57c00" />
+        <Button
+          onPress={() => btnCancelPost()}
+          title="Cancel"
+          color="#f57c00"
+        />
       </View>
       <View style={styles.BtnPost}>
         <Button
@@ -171,15 +175,92 @@ export default function AddPost() {
           <Image style={styles.image} source={yourPicture} />
         </View>
       </TouchableOpacity> */}
-      <View
+      <View style={{marginTop: -100, marginBottom: 20}}>
+        {imageUri ? (
+          <Image
+            source={{uri: imageUri}}
+            style={{
+              height: 250,
+              width: '100%',
+              borderColor: 'black',
+              marginTop: 200,
+            }}
+          />
+        ) : null}
+      </View>
+
+      {imageUri ? (
+        <View
+          style={{
+            // marginTop: 290,
+            width: '95%',
+            justifyContent: 'center',
+            textAlign: 'center',
+            marginLeft: 10,
+          }}>
+          <TextInput
+            style={styles.InputFiled}
+            placeholder="What's on your mind?"
+            placeholderTextColor={'#5b637b'}
+            color="black"
+            multiline
+            numberOfLines={4}
+            defaultValue={textInput}
+            onChangeText={newText => {
+              setTextInput(newText),
+                newText !== '' || imageUri !== ''
+                  ? setIsDisabled(false)
+                  : setIsDisabled(true);
+            }}
+          />
+
+          <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
+          <ButtonForm
+            buttonTitle="Choose Photo"
+            onPress={() => openGallery()}
+          />
+        </View>
+      ) : (
+        <View
+          style={{
+            marginTop: 290,
+            width: '95%',
+            justifyContent: 'center',
+            textAlign: 'center',
+            marginLeft: 10,
+          }}>
+          <TextInput
+            style={styles.InputFiled}
+            placeholder="What's on your mind?"
+            placeholderTextColor={'#5b637b'}
+            color="black"
+            multiline
+            numberOfLines={4}
+            defaultValue={textInput}
+            onChangeText={newText => {
+              setTextInput(newText),
+                newText !== '' || imageUri !== ''
+                  ? setIsDisabled(false)
+                  : setIsDisabled(true);
+            }}
+          />
+
+          <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
+          <ButtonForm
+            buttonTitle="Choose Photo"
+            onPress={() => openGallery()}
+          />
+        </View>
+      )}
+      {/* <View
         style={{
-          marginTop: 250,
+          // marginTop: 290,
           width: '95%',
           justifyContent: 'center',
           textAlign: 'center',
           marginLeft: 10,
-        }}>
-        {/* <InputForm
+        }}> */}
+      {/* <InputForm
           placeholderText="What's on your mind?"
           placeholderTextColor={'#5b637b'}
           color="black"
@@ -191,6 +272,7 @@ export default function AddPost() {
             setTextInput(newText), setIsDisabled(false);
           }}
         /> */}
+      {/* 
         <TextInput
           style={styles.InputFiled}
           placeholder="What's on your mind?"
@@ -204,19 +286,10 @@ export default function AddPost() {
               newText !== '' ? setIsDisabled(false) : setIsDisabled(true);
           }}
         />
+
         <ButtonForm buttonTitle="Take Photo" onPress={() => openCamera()} />
         <ButtonForm buttonTitle="Choose Photo" onPress={() => openGallery()} />
-      </View>
-      {imageUri ? (
-        <Image
-          source={{uri: imageUri}}
-          style={{
-            height: 250,
-            width: '100%',
-            borderColor: 'black',
-          }}
-        />
-      ) : null}
+      </View> */}
 
       {/* <FloatingAction
         actions={actions}
