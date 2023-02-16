@@ -8,10 +8,10 @@ let initialState = {
   error: '',
   users: {},
 };
-import {FETCH_USER_DATA_SUCCESS} from './ActionType';
+
 function reducer(state = initialState, {type, payload}) {
   switch (type) {
-    case FETCH_USER_DATA_SUCCESS:
+    case 'FETCH_USER_DATA_SUCCESS':
       return {
         ...state,
         users: payload,

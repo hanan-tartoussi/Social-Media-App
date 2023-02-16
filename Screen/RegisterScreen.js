@@ -140,18 +140,14 @@ const RegisterScreen = () => {
 
             <View style={{flexDirection: 'row'}}>
               <InputForm
-                inputBackgroundColor={inputBackGcolor}
                 labelValue={password}
                 onChangeText={userPassword => {
                   setPassword(userPassword);
-                  //passwordOnEndEditing();
                 }}
                 placeholderText="Password"
                 secureTextEntry={passwordVisibility}
                 returnKeyType="next"
                 _ref={passwordRef}
-                onFocus={() => setInputBackGcolor('#b3daff')} //e6f3ff
-                onBlur={() => setInputBackGcolor('#cce6ff')}
                 onSubmitEditing={() => {
                   confirmPasswordRef.current.focus();
                 }}

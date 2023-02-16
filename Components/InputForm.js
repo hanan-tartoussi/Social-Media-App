@@ -1,13 +1,7 @@
 import React from 'react';
 import {TextInput, View, StyleSheet} from 'react-native';
 
-const InputForm = ({
-  labelValue,
-  placeholderText,
-  inputBackgroundColor,
-  _ref,
-  ...rest
-}) => {
+const InputForm = ({labelValue, placeholderText, _ref, ...rest}) => {
   return (
     <TextInput
       value={labelValue}

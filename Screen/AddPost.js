@@ -6,7 +6,6 @@ import {
   TextInput,
   Image,
   Button,
-  Alert,
   Text,
 } from 'react-native';
 import {FloatingAction} from 'react-native-floating-action';
@@ -15,8 +14,6 @@ import {LinkingContext, useNavigation} from '@react-navigation/native';
 import {firebase} from '@react-native-firebase/database';
 import {useDispatch, useSelector} from 'react-redux';
 import storage from '@react-native-firebase/storage';
-import ButtonForm from '../Components/ButtonForm';
-import InputForm from '../Components/InputForm';
 
 export default function AddPost() {
   let dispatch = useDispatch();
@@ -139,6 +136,7 @@ export default function AddPost() {
           dispatch({type: 'SET_POST_ID', payload: newReference.key});
           dispatch({type: 'SET_POST_USER_NAME', payload: username});
           dispatch({type: 'SET_POST_USER_ID', payload: userid});
+          dispatch({type: 'SET_POST_CAPTION', payload: caption});
         })
         .catch(e => console.log('error from realtime:', e));
     } catch (error) {
@@ -171,7 +169,7 @@ export default function AddPost() {
           source={{uri: imageUri}}
           style={{
             height: 250,
-            width: '100%',
+            width: '95%',
             borderColor: 'black',
             marginTop: 70,
             marginBottom: 10,
@@ -191,12 +189,12 @@ export default function AddPost() {
             newText !== '' ? setIsDisabled(false) : setIsDisabled(true);
         }}
       />
-      <TouchableOpacity style={styles.loginBtn} onPress={() => openCamera()}>
-        <Text style={styles.loginText}>Take Photo</Text>
+      <TouchableOpacity style={styles.styleBtn} onPress={() => openCamera()}>
+        <Text style={styles.styleText}>Take Photo</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.loginBtn} onPress={() => openGallery()}>
-        <Text style={styles.loginText}>Choose Photo</Text>
+      <TouchableOpacity style={styles.styleBtn} onPress={() => openGallery()}>
+        <Text style={styles.styleText}>Choose Photo</Text>
       </TouchableOpacity>
     </View>
   );
@@ -206,7 +204,7 @@ const styles = StyleSheet.create({
   InputWrapper: {
     flex: 1,
     justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
     // width: '100%',
     backgroundColor: 'white', //'#dfe1f0',
   },
@@ -216,7 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     padding: 12,
-    width: '100%',
+    width: '90%',
     color: 'black',
     justifyContent: 'center',
     alignItems: 'center',
@@ -245,17 +243,17 @@ const styles = StyleSheet.create({
   btnStyle: {
     color: '#f57c00',
   },
-  loginBtn: {
+  styleBtn: {
     borderRadius: 10,
     height: 58,
     alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 40,
     backgroundColor: '#f57c00',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '90%',
   },
-  loginText: {
+  styleText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',

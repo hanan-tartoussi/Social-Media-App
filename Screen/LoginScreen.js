@@ -17,24 +17,6 @@ const LoginScreen = ({navigation}) => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [passEyeName, setPassEyeName] = useState('ios-eye-off-outline');
 
-  const emailOnEndEditing = e => {
-    var regex = /^[\w-\.]+@([\w]+\.)+[\w]{2,4}$/;
-    if (!regex.test(e.nativeEvent.text)) {
-      setEmailError('Invalid email.');
-    } else {
-      setEmailError('');
-    }
-  };
-
-  const passwordOnEndEditing = e => {
-    var regex = /^[\w-\.]+@([\w]+\.)+[\w]{2,4}$/;
-    if (!regex.test(e.nativeEvent.text)) {
-      setPasswordError('Invalid email.');
-    } else {
-      setPasswordError('');
-    }
-  };
-
   const toggleRememberMe = value => {
     setRememberMe(value);
     if (value === true) {
@@ -120,24 +102,6 @@ const LoginScreen = ({navigation}) => {
                     setPassEyeName('ios-eye-off-outline'));
               }}
             />
-            {/* <TouchableOpacity
-              style={{
-                padding: 10,
-                paddingRight: 20,
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginLeft: 'auto',
-                marginRight: 0,
-              }}
-              onPress={() => {
-                passwordVisibility
-                  ? (setPasswordVisibility(false),
-                    setPassEyeName('eye-outline'))
-                  : (setPasswordVisibility(true),
-                    setPassEyeName('ios-eye-off-outline'));
-              }}>
-              <Ionicons name={passEyeName} size={25} color="#666" />
-            </TouchableOpacity> */}
           </View>
 
           <View
@@ -176,12 +140,6 @@ const LoginScreen = ({navigation}) => {
               }}>
               Sign Up Here
             </Text>
-          </Text>
-
-          <Text
-            style={styles.registerTextStyle}
-            onPress={() => navigation.navigate('UpdatePass')}>
-            Change ur password?{' '}
           </Text>
         </SafeAreaView>
       </View>
