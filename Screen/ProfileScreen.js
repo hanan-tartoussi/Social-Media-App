@@ -147,11 +147,10 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     backgroundColor: '#f57c00',
     borderWidth: 2,
-    borderRadius: 3,
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginHorizontal: 5,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   userBtnTxt: {
     color: 'white',
