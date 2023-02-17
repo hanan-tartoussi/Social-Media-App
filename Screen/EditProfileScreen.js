@@ -383,8 +383,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // marginTop: 22,
-    backgroundColor: 'white',
+    //backgroundColor: 'white',
+    backgroundColor: 'rgba(0,0,0,0.6)',
   },
   modalView: {
     margin: 20,
@@ -402,9 +402,12 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
+    width: 120,
+    height: 40,
+    textAlign: 'center',
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
@@ -422,5 +425,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
 });
