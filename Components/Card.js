@@ -143,10 +143,12 @@ export default function Card(props) {
       </View>
       <View style={styles.Card}>
         <View style={styles.UserInfo}>
-          <Image
-            style={styles.UserImage}
-            source={{uri: user?.userProfileImage}}
-          />
+          {user?.userProfileImage ? (
+            <Image
+              style={styles.UserImage}
+              source={{uri: user?.userProfileImage}}
+            />
+          ) : null}
           <View style={styles.UserInfoText}>
             <Text style={styles.UserName}>{user?.name}</Text>
             <Text style={styles.PostDate}>{date}</Text>

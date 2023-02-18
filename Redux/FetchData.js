@@ -20,12 +20,12 @@ export const fetchUser = userID => {
       .ref('/Users/' + userID)
       .on('value', snapshot => {
         dispatch({type: 'SET_USER_ID', payload: userID});
-        dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
-        dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
-        dispatch({type: 'SET_USER_BIO', payload: snapshot.val().bio});
+        dispatch({type: 'SET_USER_NAME', payload: snapshot?.val()?.name});
+        dispatch({type: 'SET_USER_EMAIL', payload: snapshot?.val()?.email});
+        dispatch({type: 'SET_USER_BIO', payload: snapshot?.val()?.bio});
         dispatch({
           type: 'SET_USER_PROFILE_IMAGE',
-          payload: snapshot.val().userProfileImage,
+          payload: snapshot?.val()?.userProfileImage,
         });
         console.log('FetchUser from fetch data: ', snapshot.val());
       });
