@@ -111,7 +111,7 @@ export default function Card(props) {
                 <TextInput
                   style={styles.commentInputStyle}
                   value={commentContent}
-                  placeholder="new comment"
+                  placeholder="New Comment"
                   onChangeText={cmntContent => setCommentContent(cmntContent)}
                 />
                 <TouchableOpacity
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
   },
   commentInputStyle: {
     backgroundColor: '#F6F7FB',
-    height: 18,
+    height: 20,
     fontSize: 20,
     borderRadius: 10,
     padding: 12,

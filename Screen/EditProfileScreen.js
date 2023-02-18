@@ -166,7 +166,7 @@ const EditProfileScreen = ({route, navigation}) => {
 
   const usernameOnEndEditing = () => {
     var regex =
-      /^(?=.{4,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
+      /^(?=.{3,20}$)(?!.*[_.-]{2})[a-zA-Z]+[_\.\-]*[a-zA-Z]+[0-9]{0,3}$/;
     if (!regex.test(username)) {
       setUsernameError(
         'Can only contain letters, numbers, and these characters: - _ .',
