@@ -1,65 +1,76 @@
 import React from 'react';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import { View, Dimensions}  from 'react-native'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../Screen/HomeScreen';
 import AddPost from '../Screen/AddPost';
-//import AddPost from '../Pages/AddPost';
 import EditProfileScreen from '../Screen/EditProfileScreen';
 import ProfileScreen from '../Screen/ProfileScreen';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const { width, height } = Dimensions.get("window")
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      activeColor="#5b637b"
-      barStyle={{backgroundColor: '#fff',height: '4%', marginBottom: 30}}>
-      <Tab.Screen
-        name="Home"
-        barStyle={{backgroundColor: '#fff'}}
-        component={HomeScreen}
-        options={{
-          tabBarLabel: null,
-          tabBarIcon: ({focused}) => (
-            <MaterialIcons
-              name="home"
-              color={focused ? '#f57c00' : '#5b637b'}
-              size={25}
-            />
-          ),
+    <View style={{
+      width,
+      height,
+    }}>
+      <Tab.Navigator
+        initialRouteName="Home"
+        activeColor="#5b637b"
+        barStyle={{ backgroundColor: '#fff', height: '4%', marginBottom: 30 }}
+        screenOptions={{
+          keyboardHidesTabBar: true
         }}
-      />
-      <Tab.Screen
-        name="New Post"
-        component={AddPost}
-        options={{
-          tabBarLabel: null,
-          tabBarIcon: ({focused}) => (
-            <MaterialIcons
-              name="add"
-              color={focused ? '#f57c00' : '#5b637b'}
-              size={30}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={EditProfile}
-        options={{
-          tabBarLabel: null,
-          headerShown: false,
-          tabBarIcon: ({focused}) => (
-            <MaterialIcons
-              name="person"
-              color={focused ? '#f57c00' : '#5b637b'}
-              size={30}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+
+      >
+        <Tab.Screen
+          name="Home"
+          barStyle={{ backgroundColor: '#fff' }}
+          component={HomeScreen}
+          options={{
+            tabBarLabel: null,
+            tabBarIcon: ({ focused }) => (
+              <MaterialIcons
+                name="home"
+                color={focused ? '#f57c00' : '#5b637b'}
+                size={25}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="New Post"
+          component={AddPost}
+          options={{
+            tabBarLabel: null,
+            tabBarIcon: ({ focused }) => (
+              <MaterialIcons
+                name="add"
+                color={focused ? '#f57c00' : '#5b637b'}
+                size={30}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={EditProfile}
+          options={{
+            tabBarLabel: null,
+            headerShown: false,
+            tabBarIcon: ({ focused }) => (
+              <MaterialIcons
+                name="person"
+                color={focused ? '#f57c00' : '#5b637b'}
+                size={30}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </View>
   );
 }
 export const EditProfile = () => {
