@@ -14,6 +14,7 @@ export default function HomeScreen() {
 
   const userid = useSelector(state => state.userdata.user_id);
   const postsData = useSelector(state => state.postdata.allPosts);
+
   //const myArrayPosts = Object.values( postsData );
   console.log('all postsData here: ', postsData);
   const allUsers = useSelector(state => state.userdata.users);
@@ -38,7 +39,8 @@ export default function HomeScreen() {
       <FlatList
         data={postsData}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => index.toString()}
+        removeClippedSubviews={false}
         //refreshing={isRefreshing}
         //onRefresh={handleRefresh}
       />
