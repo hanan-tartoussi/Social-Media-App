@@ -11,6 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {Divider, TextInput} from 'react-native-paper';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import {useSelector} from 'react-redux';
@@ -60,24 +61,37 @@ export default function Card(props) {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          onRequestClose={() => {
-            //Alert.alert('Modal has been closed.');
-            setModalVisible(!modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Comments</Text>
-              {console.log(
-                'props.cardDetails.comments',
-                props.cardDetails?.comments,
-              )}
+          // onRequestClose={() => {
+          //   //Alert.alert('Modal has been closed.');
+          //   setModalVisible(!modalVisible);
+          // }}
+        >
+          <View
+            style={[styles.centeredView]}
+            onPress={() => {
+              setModalVisible(false);
+            }}>
+            <View style={[styles.modalView]}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  marginLeft: 80,
+                }}>
+                <Text style={styles.modalText}>Comments</Text>
+                <TouchableOpacity
+                  style={{marginLeft: 100, marginTop: -30}}
+                  onPress={() => setModalVisible(false)}>
+                  <Ionic name="close-outline" style={{fontSize: 35}} />
+                </TouchableOpacity>
+              </View>
               <ScrollView>
-                {props.cardDetails.comments?.map(p => (
+                {props?.cardDetails?.comments?.map((p, index) => (
                   <View
+                    key={index}
                     style={{
                       flexDirection: 'row',
                       gap: 10,
-                      marginRight: 80,
+                      marginRight: 100,
                       marginBottom: 10,
                     }}>
                     <Image
@@ -129,10 +143,12 @@ export default function Card(props) {
       </View>
       <View style={styles.Card}>
         <View style={styles.UserInfo}>
-          <Image
-            style={styles.UserImage}
-            source={{uri: user?.userProfileImage}}
-          />
+          {user?.userProfileImage ? (
+            <Image
+              style={styles.UserImage}
+              source={{uri: user?.userProfileImage}}
+            />
+          ) : null}
           <View style={styles.UserInfoText}>
             <Text style={styles.UserName}>{user?.name}</Text>
             <Text style={styles.PostDate}>{date}</Text>
@@ -173,7 +189,7 @@ export default function Card(props) {
           <TouchableOpacity
             style={styles.Interaction}
             onPress={() => {
-              setModalVisible(true);
+              setModalVisible(!modalVisible);
             }}>
             <Icon name={'md-chatbubble-outline'} size={25} color="#f57c00" />
             <Text style={styles.InteractionText}>Comment</Text>
@@ -260,6 +276,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     borderRadius: 5,
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    padding: 5,
     //paddingHorizontal: 2,
     //paddingVertical: 2,
   },
@@ -275,7 +295,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     //backgroundColor: 'white',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+    backgroundColor: 'rgba(0,0,0,0.8)',
   },
   modalView: {
     width: 350,
@@ -303,6 +323,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     fontSize: 18,
+    marginLeft: 30,
   },
   modalCommentsText: {
     fontSize: 18,

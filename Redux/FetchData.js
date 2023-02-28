@@ -4,6 +4,7 @@ import {
   fetchPostsDataSuccess,
 } from './Actions';
 import {firebase} from '@react-native-firebase/database';
+import {LINK_db} from './DBLink';
 // const myArray = Object.values(snapshot.val());
 // console.log(myArray);
 // const sortedPostes = myArray.sort((a,b)=>{a.addedDate-b.addedDate});
@@ -13,18 +14,18 @@ export const fetchUser = userID => {
     dispatch(fetchUserDataRequest());
     firebase
       .app()
-      .database(
-        'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
-      )
+      .database(LINK_db)
+      //   'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
+      // )
       .ref('/Users/' + userID)
       .on('value', snapshot => {
         dispatch({type: 'SET_USER_ID', payload: userID});
-        dispatch({type: 'SET_USER_NAME', payload: snapshot.val().name});
-        dispatch({type: 'SET_USER_EMAIL', payload: snapshot.val().email});
-        dispatch({type: 'SET_USER_BIO', payload: snapshot.val().bio});
+        dispatch({type: 'SET_USER_NAME', payload: snapshot?.val()?.name});
+        dispatch({type: 'SET_USER_EMAIL', payload: snapshot?.val()?.email});
+        dispatch({type: 'SET_USER_BIO', payload: snapshot?.val()?.bio});
         dispatch({
           type: 'SET_USER_PROFILE_IMAGE',
-          payload: snapshot.val().userProfileImage,
+          payload: snapshot?.val()?.userProfileImage,
         });
         console.log('FetchUser from fetch data: ', snapshot.val());
       });

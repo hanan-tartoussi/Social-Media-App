@@ -148,7 +148,7 @@ export default function AddPost() {
   };
 
   return (
-    <View style={styles.InputWrapper}>
+    <View style={[styles.InputWrapper,!imageUri ? styles.InputWrapperCenter : null]}>
       <View style={styles.BtnCancelPost}>
         <Button
           onPress={() => btnCancelPost()}
@@ -164,14 +164,15 @@ export default function AddPost() {
           color="#f57c00"
         />
       </View>
+    
       {imageUri ? (
         <Image
           source={{uri: imageUri}}
           style={{
-            height: 250,
+            height: 230,
             width: '95%',
             borderColor: 'black',
-            marginTop: 70,
+            marginTop: 10,
             marginBottom: 10,
           }}
         />
@@ -203,10 +204,13 @@ export default function AddPost() {
 const styles = StyleSheet.create({
   InputWrapper: {
     flex: 1,
-    justifyContent: 'center',
+    paddingTop: 60,
     alignItems: 'center',
     // width: '100%',
     backgroundColor: 'white', //'#dfe1f0',
+  },
+  InputWrapperCenter: {
+    justifyContent: 'center',
   },
   InputFiled: {
     backgroundColor: '#F6F7FB',
