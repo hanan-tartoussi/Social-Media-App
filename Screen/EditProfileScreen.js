@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useContext, useRef} from 'react';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {
   View,
   Text,
@@ -15,16 +15,23 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import {useDispatch, useSelector} from 'react-redux';
-import {firebase, ref, update} from '@react-native-firebase/database';
-import {Alert, Modal} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { firebase, ref, update } from '@react-native-firebase/database';
+import { Alert, Modal } from 'react-native';
 import storage from '@react-native-firebase/storage';
-const EditProfileScreen = ({route, navigation}) => {
+
+// const scrollRef = useRef();
+// const onPressTouch = () => {
+//   scrollRef.current?.scrollTo({
+//     y: 0,
+//     // animated: true,
+//   });
+// }
+
+const EditProfileScreen = ({ route, navigation, username, name, setUsername }) => {
   const userid = useSelector(state => state.userdata.user_id);
-  const name = useSelector(state => state.userdata.name);
   const userBio = useSelector(state => state.userdata.bio);
   const userProfileImg = useSelector(state => state.userdata.userProfileImage);
-  const [username, setUsername] = useState(name);
   const [userbio, setUserbio] = useState(userBio);
   const [usernameError, setUsernameError] = useState('');
   const TostMessage = () => {
@@ -33,6 +40,8 @@ const EditProfileScreen = ({route, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [imageUri, setImageUri] = useState('');
   const dispatch = useDispatch();
+  const scroll = useRef(null);
+
   const storageImage = async uri => {
     //debugger;
     let fileName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -137,11 +146,11 @@ const EditProfileScreen = ({route, navigation}) => {
     if (imageUri) storageImage(imageUri);
   }, [imageUri]);
   useEffect(() => {
-    btnPost();
-  }, []);
-  useEffect(() => {
-    userbioOnEndEditing();
-  }, []);
+    // btnPost();
+    // updateProfileData();
+    // navigation.setOptions({ editProfile });
+    navigation.setParams({ title: 'Edit Profile', editProfile });
+  }, [username,userbio]);
   const btnPost = async () => {
     //debugger;
     try {
@@ -151,10 +160,10 @@ const EditProfileScreen = ({route, navigation}) => {
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
         .ref('/Users/' + userid)
-        .update({name: username})
+        .update({ name: username })
         .then(() => {
           console.log('Name updated.' + username);
-          dispatch({type: 'SET_USER_NAME', payload: username});
+          dispatch({ type: 'SET_USER_NAME', payload: username });
         })
         .catch(e => console.log('error from realtime:', e));
     } catch (error) {
@@ -177,8 +186,7 @@ const EditProfileScreen = ({route, navigation}) => {
       return true;
     }
   };
-  const userbioOnEndEditing = async () => {
-    //debugger;
+  const updateProfileData = async () => {
     try {
       firebase
         .app()
@@ -186,20 +194,34 @@ const EditProfileScreen = ({route, navigation}) => {
           'https://socialmediaapp-79d46-default-rtdb.europe-west1.firebasedatabase.app/',
         )
         .ref('/Users/' + userid)
-        .update({bio: userbio})
+        .update({ bio: userbio, name: username })
         .then(() => {
           console.log('Bio updated.' + userbio);
-          dispatch({type: 'SET_USER_BIO', payload: userbio});
+          dispatch({ type: 'SET_USER_BIO', payload: userbio });
+          dispatch({ type: 'SET_USER_NAME', payload: username });
         })
         .catch(e => console.log('error from realtime:', e));
     } catch (error) {
       console.log('error from realtime', error);
     }
   };
+  const editProfile = () => {
+    if (username === '') {
+      Alert.alert('Edit error', 'Please put a userName');
+    } else if (usernameOnEndEditing() === false) {
+      Alert.alert('Error', 'Please make sure of your editing fill');
+    } else {
+      updateProfileData();
+      // btnPost();
+      TostMessage();
+      navigation.goBack();
+    }
+  }
   console.log(userProfileImg);
   const dimensions = useWindowDimensions();
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1 }} ref={scroll}>
+      {/* ref={scrollRef} */}
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -235,11 +257,6 @@ const EditProfileScreen = ({route, navigation}) => {
             </View>
           </View>
         </Modal>
-        {/* <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => setModalVisible(true)}>
-          <Text style={styles.textStyle}>Show Modal</Text>
-        </Pressable> */}
       </View>
       <View
         style={{
@@ -255,9 +272,9 @@ const EditProfileScreen = ({route, navigation}) => {
             padding: 10,
           }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionic name="close-outline" style={{fontSize: 35}} />
+            <Ionic name="close-outline" style={{ fontSize: 35 }} />
           </TouchableOpacity>
-          <Text style={{fontSize: 16, fontWeight: 'bold', color: 'black'}}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: 'black' }}>
             Edit Profile
           </Text>
           <TouchableOpacity
@@ -267,23 +284,23 @@ const EditProfileScreen = ({route, navigation}) => {
               } else if (usernameOnEndEditing() === false) {
                 Alert.alert('Error', 'Please make sure of your editing fill');
               } else {
-                userbioOnEndEditing();
+                updateProfileData();
                 btnPost();
                 TostMessage();
                 navigation.goBack();
               }
             }}>
-            <Ionic name="checkmark" style={{fontSize: 35, color: '#f57c00'}} />
+            <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={() => {
             setModalVisible(true);
           }}>
-          <View style={{padding: 20, alignItems: 'center'}}>
+          <View style={{ padding: 20, alignItems: 'center' }}>
             <Image
-              source={{uri: userProfileImg}}
-              style={{width: 80, height: 80, borderRadius: 100}}
+              source={{ uri: userProfileImg }}
+              style={{ width: 80, height: 80, borderRadius: 100 }}
             />
             <Text
               style={{
@@ -293,8 +310,8 @@ const EditProfileScreen = ({route, navigation}) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <KeyboardAvoidingView style={{flex: 1}} keyboardVerticalOffset={200}>
-          <View style={{padding: 10}}>
+        <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={200}>
+          <View style={{ padding: 10 }}>
             <View>
               <Text
                 style={{
@@ -307,6 +324,7 @@ const EditProfileScreen = ({route, navigation}) => {
                 placeholder="name"
                 defaultValue={name}
                 onChangeText={userusername => setUsername(userusername)}
+                //onChangeText={setUsername}
                 onEndEditing={usernameOnEndEditing}
                 style={{
                   fontSize: 16,
@@ -319,7 +337,7 @@ const EditProfileScreen = ({route, navigation}) => {
                 <Text style={styles.TextError}>{usernameError}</Text>
               </View>
             </View>
-            <View style={{paddingVertical: 10}}>
+            <View style={{ paddingVertical: 10 }}>
               <Text
                 style={{
                   opacity: 0.5,
@@ -334,37 +352,15 @@ const EditProfileScreen = ({route, navigation}) => {
                 multiline
                 numberOfLines={4}
                 onChangeText={useruserbio => setUserbio(useruserbio)}
-                onEndEditing={userbioOnEndEditing}
+                onBlur={() => { scroll.current.scrollTo({ x: 0, y: 0, animated: true }); }}
                 style={{
                   fontSize: 16,
                   borderBottomWidth: 1,
                   borderColor: '#CDCDCD',
-                  color: 'black',
-                  marginBottom: 40,
-                }}
-              />
-              <Text
-                style={{
-                  opacity: 0.5,
-                }}>
-                {/* {100 - userbio.maxLength} */}
-              </Text>
+                }} />
             </View>
           </View>
         </KeyboardAvoidingView>
-        {/* <View>
-      <Text
-        style={{
-          marginVertical: 10,
-          padding: 10,
-          color: '#3493D9',
-          borderTopWidth: 1,
-          borderBottomWidth: 1,
-          borderColor: '#EFEFEF',
-        }}>
-        Personal information setting
-      </Text>
-    </View> */}
       </View>
     </ScrollView>
   );

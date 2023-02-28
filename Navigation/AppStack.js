@@ -1,12 +1,15 @@
-import React from 'react';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import React, { useState } from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HomeScreen from '../Screen/HomeScreen';
 import AddPost from '../Screen/AddPost';
 //import AddPost from '../Pages/AddPost';
 import EditProfileScreen from '../Screen/EditProfileScreen';
 import ProfileScreen from '../Screen/ProfileScreen';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Ionic from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 export default function AppStack() {
@@ -14,14 +17,14 @@ export default function AppStack() {
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#5b637b"
-      barStyle={{backgroundColor: '#fff',height: '4%', marginBottom: 30}}>
+      barStyle={{ backgroundColor: '#fff', height: '4%', marginBottom: 30 }}>
       <Tab.Screen
         name="Home"
-        barStyle={{backgroundColor: '#fff'}}
+        barStyle={{ backgroundColor: '#fff' }}
         component={HomeScreen}
         options={{
           tabBarLabel: null,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="home"
               color={focused ? '#f57c00' : '#5b637b'}
@@ -35,7 +38,7 @@ export default function AppStack() {
         component={AddPost}
         options={{
           tabBarLabel: null,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="add"
               color={focused ? '#f57c00' : '#5b637b'}
@@ -50,7 +53,7 @@ export default function AppStack() {
         options={{
           tabBarLabel: null,
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <MaterialIcons
               name="person"
               color={focused ? '#f57c00' : '#5b637b'}
@@ -63,6 +66,8 @@ export default function AppStack() {
   );
 }
 export const EditProfile = () => {
+  const name = useSelector(state => state.userdata.name);
+  const [username, setUsername] = useState(name);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -74,11 +79,27 @@ export const EditProfile = () => {
       />
       <Stack.Screen
         name="EditProfileScreen"
-        component={EditProfileScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
+        options={({ navigation, route }) => ({
+          title: route?.params?.title,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: 'white',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionic name="close-outline" style={{ fontSize: 35 }} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={()=>route?.params?.editProfile?.()}>
+              <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
+            </TouchableOpacity>
+          )
+        })}
+      >
+        {props => <EditProfileScreen username={username} name={name} setUsername={setUsername} {...props}/>}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

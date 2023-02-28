@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -9,13 +9,21 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import {AuthContext} from '../Navigation/AuthProvider';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { AuthContext } from '../Navigation/AuthProvider';
 import firebase from '@react-native-firebase/database';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchPosts, fetchUser} from '../Redux/FetchData';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import Card from '../Components/Card';
-const ProfileScreen = ({navigation, route}) => {
-  const {user, logout} = useContext(AuthContext);
+
+renderLeft = (progress, dragX) => {
+  const trans = dragX.interpolate({
+    inputRange: [0, 50, 100, 101],
+    outputRange: [-20, 0, 0, 1],
+  });
+}
+const ProfileScreen = ({ navigation, route }) => {
+  const { user, logout } = useContext(AuthContext);
   let dispatch = useDispatch();
   const userid = useSelector(state => state.userdata.user_id);
   const username = useSelector(state => state.userdata.name);
@@ -31,7 +39,7 @@ const ProfileScreen = ({navigation, route}) => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-  renderItem = ({item}) => <Card cardDetails={item} />;
+  renderItem = ({ item }) => <Card cardDetails={item} />;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -41,10 +49,10 @@ const ProfileScreen = ({navigation, route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View
         style={styles.container}
-        contentContainerStyle={{justifyContent: 'center', alignItems: 'center'}}
+        contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
         showsVerticalScrollIndicator={false}>
         <View style={styles.userInfoWrapper}>
           <View
@@ -52,7 +60,7 @@ const ProfileScreen = ({navigation, route}) => {
               alignItems: 'center',
             }}>
             <Image
-              source={{uri: userProfileImg}}
+              source={{ uri: userProfileImg }}
               style={{
                 resizeMode: 'cover',
                 width: 80,
@@ -95,14 +103,16 @@ const ProfileScreen = ({navigation, route}) => {
           <Text style={styles.aboutUser}>{userBio}</Text>
         </View>
         <View>
-          <FlatList
-            data={myPosts}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            refreshing={isRefreshing}
-            onRefresh={handleRefresh}
-            contentContainerStyle={{paddingBottom: 200}}
-          />
+          <Swipeable renderLeftActions={() => renderLeft()}>
+            <FlatList
+              data={myPosts}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+              contentContainerStyle={{ paddingBottom: 200 }}
+            />
+          </Swipeable>
         </View>
       </View>
     </SafeAreaView>
