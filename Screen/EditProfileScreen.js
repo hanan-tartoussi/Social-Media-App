@@ -264,7 +264,7 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
           height: dimensions.height,
           backgroundColor: 'white',
         }}>
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
@@ -292,7 +292,7 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
             }}>
             <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
           </TouchableOpacity>
-        </View>
+        </View> */}
         <TouchableOpacity
           onPress={() => {
             setModalVisible(true);

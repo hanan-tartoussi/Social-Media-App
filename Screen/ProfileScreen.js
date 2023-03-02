@@ -16,12 +16,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import Card from '../Components/Card';
 
-renderLeft = (progress, dragX) => {
-  const trans = dragX.interpolate({
-    inputRange: [0, 50, 100, 101],
-    outputRange: [-20, 0, 0, 1],
-  });
-}
+// renderLeft = (progress, dragX) => {
+//   const trans = dragX.interpolate({
+//     inputRange: [0, 50, 100, 101],
+//     outputRange: [-20, 0, 0, 1],
+//   });
+// }
 const ProfileScreen = ({ navigation, route }) => {
   const { user, logout } = useContext(AuthContext);
   let dispatch = useDispatch();
@@ -103,7 +103,7 @@ const ProfileScreen = ({ navigation, route }) => {
           <Text style={styles.aboutUser}>{userBio}</Text>
         </View>
         <View>
-          <Swipeable renderLeftActions={() => renderLeft()}>
+          {/* <Swipeable renderLeftActions={() => renderLeft()}> */}
             <FlatList
               data={myPosts}
               renderItem={renderItem}
@@ -112,7 +112,7 @@ const ProfileScreen = ({ navigation, route }) => {
               onRefresh={handleRefresh}
               contentContainerStyle={{ paddingBottom: 200 }}
             />
-          </Swipeable>
+          {/* </Swipeable> */}
         </View>
       </View>
     </SafeAreaView>
