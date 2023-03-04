@@ -12,7 +12,7 @@ import { AuthContext } from '../Navigation/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import Card from '../Components/Card';
-
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 const ProfileScreen = ({ navigation, route }) => {
   const { user, logout } = useContext(AuthContext);
   let dispatch = useDispatch();
@@ -30,7 +30,7 @@ const ProfileScreen = ({ navigation, route }) => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-  renderItem = ({ item }) => <Card cardDetails={item} />;
+  renderItem = ({ item }) => <Swipeable renderRightActions={() => <View style={{ width: 100, height: 100 }}><Text>Hello</Text></View>}><Card cardDetails={item} /></Swipeable>;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -100,6 +100,8 @@ const ProfileScreen = ({ navigation, route }) => {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             contentContainerStyle={{ paddingBottom: 200 }}
+            showsVerticalScrollIndicator={false}
+           // scrollEnabled={false}
           />
         </View>
       </View>
