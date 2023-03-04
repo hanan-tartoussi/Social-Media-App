@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {
   View,
@@ -11,22 +11,12 @@ import {
   ScrollView,
   Pressable,
   KeyboardAvoidingView,
-  Dimensions,
   useWindowDimensions,
 } from 'react-native';
-import Ionic from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-import { firebase, ref, update } from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
 import { Alert, Modal } from 'react-native';
 import storage from '@react-native-firebase/storage';
-
-// const scrollRef = useRef();
-// const onPressTouch = () => {
-//   scrollRef.current?.scrollTo({
-//     y: 0,
-//     // animated: true,
-//   });
-// }
 
 const EditProfileScreen = ({ route, navigation, username, name, setUsername }) => {
   const userid = useSelector(state => state.userdata.user_id);
@@ -150,7 +140,7 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
     // updateProfileData();
     // navigation.setOptions({ editProfile });
     navigation.setParams({ title: 'Edit Profile', editProfile });
-  }, [username,userbio]);
+  }, [username, userbio]);
   const btnPost = async () => {
     //debugger;
     try {
@@ -310,7 +300,7 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
             </Text>
           </View>
         </TouchableOpacity>
-        <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={200}>
+        <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={400}>
           <View style={{ padding: 10 }}>
             <View>
               <Text

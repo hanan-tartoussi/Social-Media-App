@@ -22,7 +22,7 @@ export default function AppStack() {
       <Tab.Navigator
         initialRouteName="Home"
         activeColor="#5b637b"
-        barStyle={{ backgroundColor: '#fff', height: '4%', marginBottom: 30 }}
+        barStyle={{ backgroundColor: '#fff', height: '7%', marginBottom: 30 }}
         screenOptions={{
           keyboardHidesTabBar: true
         }}
