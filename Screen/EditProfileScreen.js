@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { firebase } from '@react-native-firebase/database';
 import { Alert, Modal } from 'react-native';
 import storage from '@react-native-firebase/storage';
+import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 const EditProfileScreen = ({ route, navigation, username, name, setUsername }) => {
   const userid = useSelector(state => state.userdata.user_id);
@@ -345,6 +346,7 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
                 onChangeText={useruserbio => setUserbio(useruserbio)}
                 onBlur={() => { scroll.current.scrollTo({ x: 0, y: 0, animated: true }); }}
                 style={{
+                  color : "black",
                   fontSize: 16,
                   height:80,
                   flexWrap:'wrap',
