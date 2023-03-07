@@ -8,11 +8,13 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../Navigation/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import Card from '../Components/Card';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { Alert } from 'react-native';
 const ProfileScreen = ({ navigation, route }) => {
   const { user, logout } = useContext(AuthContext);
   let dispatch = useDispatch();
@@ -30,7 +32,31 @@ const ProfileScreen = ({ navigation, route }) => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-  renderItem = ({ item }) => <Swipeable renderRightActions={() => <View style={{ width: 100, height: 100 }}><Text>Hello</Text></View>}><Card cardDetails={item} /></Swipeable>;
+  renderItem = ({ item }) => {
+    <Swipeable
+      renderRightActions={() =>
+        <TouchableOpacity style={{
+          width: 100, height: '100%', justifyContent: 'center',
+          alignItems: 'center', backgroundColor: 'white'
+        }}
+          onPress={ Alert.alert(
+            'Hey There!'
+            // 'Two button alert dialog',
+            // [
+            //   { text: 'Yes', onPress: () => console.log('Yes button clicked') },
+            //   { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
+            // ],
+            // // {
+            // //   cancelable: true
+            // // }
+          )
+          }>
+          <Ionic name="trash-outline" style={{ fontSize: 35, color: 'red' }} />
+          <Text style={{ color: 'red' }}>Delete</Text>
+        </TouchableOpacity>}>
+      <Card cardDetails={item} />
+    </Swipeable>;
+  }
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -101,7 +127,6 @@ const ProfileScreen = ({ navigation, route }) => {
             onRefresh={handleRefresh}
             contentContainerStyle={{ paddingBottom: 200 }}
             showsVerticalScrollIndicator={false}
-           // scrollEnabled={false}
           />
         </View>
       </View>
