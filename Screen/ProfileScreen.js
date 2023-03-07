@@ -101,7 +101,6 @@ const ProfileScreen = ({ navigation, route }) => {
             onRefresh={handleRefresh}
             contentContainerStyle={{ paddingBottom: 200 }}
             showsVerticalScrollIndicator={false}
-           // scrollEnabled={false}
           />
         </View>
       </View>
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'left',
     marginBottom: 10,
-    // marginTop: 10,
   },
   userBtnWrapper: {
     flexDirection: 'row',
@@ -168,7 +166,6 @@ const styles = StyleSheet.create({
   userInfoTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    // marginBottom: 5,
     textAlign: 'center',
     color: 'black',
   },

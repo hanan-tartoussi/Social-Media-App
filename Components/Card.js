@@ -51,7 +51,7 @@ export default function Card(props) {
     .ref('/Posts/' + props.cardDetails.id);
 
   const [modalVisible, setModalVisible] = useState(false);
-  renderItemss = ({item}) => <Text style={{color: 'black'}}>{item}</Text>;
+//  renderItemss = ({item}) => <Text style={{color: 'black'}}>{item}</Text>;
   const [commentContent, setCommentContent] = useState('');
 
   return (
@@ -61,10 +61,6 @@ export default function Card(props) {
           animationType="slide"
           transparent={true}
           visible={modalVisible}
-          // onRequestClose={() => {
-          //   //Alert.alert('Modal has been closed.');
-          //   setModalVisible(!modalVisible);
-          // }}
         >
           <View
             style={[styles.centeredView]}
@@ -81,7 +77,7 @@ export default function Card(props) {
                 <TouchableOpacity
                   style={{marginLeft: 100, marginTop: -30}}
                   onPress={() => setModalVisible(false)}>
-                  <Ionic name="close-outline" style={{fontSize: 35}} />
+                  <Ionic name="close-outline" style={{fontSize: 35,color:"black"}} />
                 </TouchableOpacity>
               </View>
               <ScrollView>
@@ -280,8 +276,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: 5,
-    //paddingHorizontal: 2,
-    //paddingVertical: 2,
   },
   dividerStyle: {
     borderBottomColor: '#dddddd',
@@ -294,17 +288,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: 'white',
     backgroundColor: 'rgba(0,0,0,0.8)',
   },
   modalView: {
     width: 350,
     height: 420,
-    //margin: 20,
     backgroundColor: 'white',
     borderRadius: 20,
     paddingTop: 35,
-    //paddingBottom: 10,
     overflow: 'hidden',
     alignItems: 'center',
     shadowColor: '#000',
@@ -344,7 +335,6 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: '#f57c00',
     marginTop: 10,
-    // width: 150,
   },
   commentInputStyle: {
     backgroundColor: '#F6F7FB',
