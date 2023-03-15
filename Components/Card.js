@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -10,12 +10,12 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import {Divider, TextInput} from 'react-native-paper';
+import { Divider, TextInput } from 'react-native-paper';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import {useSelector} from 'react-redux';
-import {firebase} from '@react-native-firebase/database';
+import { useSelector } from 'react-redux';
+import { firebase } from '@react-native-firebase/database';
 
 const imageExist = image => {
   if (!image) return <Divider style={styles.dividerStyle} />;
@@ -24,7 +24,7 @@ const imageExist = image => {
       <Image
         style={styles.PostImg}
         resizeMode="contain"
-        source={{uri: image}}
+        source={{ uri: image }}
       />
     );
 };
@@ -51,9 +51,9 @@ export default function Card(props) {
     .ref('/Posts/' + props.cardDetails.id);
 
   const [modalVisible, setModalVisible] = useState(false);
-//  renderItemss = ({item}) => <Text style={{color: 'black'}}>{item}</Text>;
+  //  renderItemss = ({item}) => <Text style={{color: 'black'}}>{item}</Text>;
   const [commentContent, setCommentContent] = useState('');
-
+  const [isDisabled, setIsDisabled] = useState(true);
   return (
     <View style={styles.Container}>
       <View style={styles.centeredView}>
@@ -75,9 +75,9 @@ export default function Card(props) {
                 }}>
                 <Text style={styles.modalText}>Comments</Text>
                 <TouchableOpacity
-                  style={{marginLeft: 100, marginTop: -30}}
+                  style={{ marginLeft: 100, marginTop: -30 }}
                   onPress={() => setModalVisible(false)}>
-                  <Ionic name="close-outline" style={{fontSize: 35,color:"black"}} />
+                  <Ionic name="close-outline" style={{ fontSize: 35, color: "black" }} />
                 </TouchableOpacity>
               </View>
               <ScrollView>
@@ -91,7 +91,7 @@ export default function Card(props) {
                       marginBottom: 10,
                     }}>
                     <Image
-                      source={{uri: p.userCmntImage}}
+                      source={{ uri: p.userCmntImage }}
                       style={{
                         resizeMode: 'cover',
                         width: 25,
@@ -103,12 +103,15 @@ export default function Card(props) {
                   </View>
                 ))}
               </ScrollView>
-              <View style={{marginBottom: 20, flexDirection: 'row'}}>
+              <View style={{ marginBottom: 20, flexDirection: 'row' }}>
                 <TextInput
                   style={styles.commentInputStyle}
                   value={commentContent}
                   placeholder="New Comment"
-                  onChangeText={cmntContent => setCommentContent(cmntContent)}
+                  onChangeText={cmntContent => {
+                    setCommentContent(cmntContent),
+                    cmntContent !== '' ? setIsDisabled(false) : setIsDisabled(true);
+                  }}
                 />
                 <TouchableOpacity
                   style={styles.postCommentStyle}
@@ -120,10 +123,11 @@ export default function Card(props) {
                       content: commentContent,
                     };
                     comment.push(obj);
-                    postReference.update({comments: comment});
+                    postReference.update({ comments: comment });
                     setCommentContent('');
                   }}>
                   <Text
+                   // disabled={isDisabled}
                     style={{
                       fontSize: 17,
                       fontWeight: 'bold',
@@ -142,7 +146,7 @@ export default function Card(props) {
           {user?.userProfileImage ? (
             <Image
               style={styles.UserImage}
-              source={{uri: user?.userProfileImage}}
+              source={{ uri: user?.userProfileImage }}
             />
           ) : null}
           <View style={styles.UserInfoText}>
@@ -157,7 +161,7 @@ export default function Card(props) {
             style={styles.Interaction}
             onPress={() => {
               let like = props.cardDetails?.likes ?? [];
-              let myLike = like.findIndex(i => i == myUserid); //return number
+              let myLike = like.findIndex(i => i == myUserid); //return number of my like
               if (myLike == -1) {
                 like.push(myUserid);
                 // setLikeIcon('heart-sharp');
@@ -166,7 +170,7 @@ export default function Card(props) {
                 like.splice(myLike, 1);
                 // setLikeIcon('heart-outline');
               } //exist
-              postReference.update({likes: like});
+              postReference.update({ likes: like });
             }}>
             <Icon
               name={
