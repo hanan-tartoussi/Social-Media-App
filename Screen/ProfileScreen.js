@@ -13,12 +13,7 @@ import { AuthContext } from '../Navigation/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
 import Card from '../Components/Card';
-<<<<<<< HEAD
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { Alert } from 'react-native';
-=======
-
->>>>>>> parent of d8ce828 (Swipeable post first step)
 const ProfileScreen = ({ navigation, route }) => {
   const { user, logout } = useContext(AuthContext);
   let dispatch = useDispatch();
@@ -36,15 +31,7 @@ const ProfileScreen = ({ navigation, route }) => {
     dispatch(fetchUser(user.uid));
     dispatch(fetchPosts());
   }, []);
-<<<<<<< HEAD
-  renderItem = ({ item }) => {
-    
-      <Card cardDetails={item} />
-    ;
-  }
-=======
-  renderItem = ({ item }) => <Card cardDetails={item} />;
->>>>>>> parent of d8ce828 (Swipeable post first step)
+  renderItem = ({ item }) => <Swipeable renderRightActions={() => <View style={{ width: 100, height: 100 }}><Text>Hello</Text></View>}><Card cardDetails={item} /></Swipeable>;
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
     setOnRefresh(true);
@@ -114,10 +101,8 @@ const ProfileScreen = ({ navigation, route }) => {
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
             contentContainerStyle={{ paddingBottom: 200 }}
-<<<<<<< HEAD
             showsVerticalScrollIndicator={false}
-=======
->>>>>>> parent of d8ce828 (Swipeable post first step)
+           // scrollEnabled={false}
           />
         </View>
       </View>
