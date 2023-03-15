@@ -284,25 +284,24 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
             <Ionic name="checkmark" style={{ fontSize: 35, color: '#f57c00' }} />
           </TouchableOpacity>
         </View> */}
-        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={50}>
-          <TouchableOpacity
-            onPress={() => {
-              setModalVisible(true);
-            }}>
-            <View style={{ padding: 20, alignItems: 'center' }}>
-              <Image
-                source={{ uri: userProfileImg }}
-                style={{ width: 80, height: 80, borderRadius: 100 }}
-              />
-              <Text
-                style={{
-                  color: '#f57c00',
-                }}>
-                Change profile photo
-              </Text>
-            </View>
-          </TouchableOpacity>
-
+        <TouchableOpacity
+          onPress={() => {
+            setModalVisible(true);
+          }}>
+          <View style={{ padding: 20, alignItems: 'center' }}>
+            <Image
+              source={{ uri: userProfileImg }}
+              style={{ width: 80, height: 80, borderRadius: 100 }}
+            />
+            <Text
+              style={{
+                color: '#f57c00',
+              }}>
+              Change profile photo
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <KeyboardAvoidingView style={{ flex: 1 }} keyboardVerticalOffset={400}>
           <View style={{ padding: 10 }}>
             <View>
               <Text
@@ -341,15 +340,13 @@ const EditProfileScreen = ({ route, navigation, username, name, setUsername }) =
                 placeholder="Bio"
                 defaultValue={userBio}
                 maxLength={100}
-                // multiline
-                numberOfLines={2}
+                multiline
+                numberOfLines={4}
                 onChangeText={useruserbio => setUserbio(useruserbio)}
                 onBlur={() => { scroll.current.scrollTo({ x: 0, y: 0, animated: true }); }}
                 style={{
                   color : "black",
                   fontSize: 16,
-                  height:80,
-                  flexWrap:'wrap',
                   borderBottomWidth: 1,
                   borderColor: '#CDCDCD',
                 }} />
