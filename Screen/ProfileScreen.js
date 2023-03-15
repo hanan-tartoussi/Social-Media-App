@@ -33,29 +33,9 @@ const ProfileScreen = ({ navigation, route }) => {
     dispatch(fetchPosts());
   }, []);
   renderItem = ({ item }) => {
-    <Swipeable
-      renderRightActions={() =>
-        <TouchableOpacity style={{
-          width: 100, height: '100%', justifyContent: 'center',
-          alignItems: 'center', backgroundColor: 'white'
-        }}
-          onPress={ Alert.alert(
-            'Hey There!'
-            // 'Two button alert dialog',
-            // [
-            //   { text: 'Yes', onPress: () => console.log('Yes button clicked') },
-            //   { text: 'No', onPress: () => console.log('No button clicked'), style: 'cancel' },
-            // ],
-            // // {
-            // //   cancelable: true
-            // // }
-          )
-          }>
-          <Ionic name="trash-outline" style={{ fontSize: 35, color: 'red' }} />
-          <Text style={{ color: 'red' }}>Delete</Text>
-        </TouchableOpacity>}>
+    
       <Card cardDetails={item} />
-    </Swipeable>;
+    ;
   }
   const [isRefreshing, setOnRefresh] = useState(false);
   const handleRefresh = () => {
