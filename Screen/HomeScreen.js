@@ -41,7 +41,6 @@ export default function HomeScreen() {
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
         removeClippedSubviews={false}
-        showsVerticalScrollIndicator={false}
         //refreshing={isRefreshing}
         //onRefresh={handleRefresh}
       />
@@ -52,6 +51,5 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:'white'
   },
 });

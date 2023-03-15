@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   FlatList,
 } from 'react-native';
-import Ionic from 'react-native-vector-icons/Ionicons';
 import { AuthContext } from '../Navigation/AuthProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, fetchUser } from '../Redux/FetchData';
